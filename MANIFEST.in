@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include pibidesk *.css
+recursive-include pibidesk *.csv
+recursive-include pibidesk *.html
+recursive-include pibidesk *.ico
+recursive-include pibidesk *.js
+recursive-include pibidesk *.json
+recursive-include pibidesk *.md
+recursive-include pibidesk *.png
+recursive-include pibidesk *.py
+recursive-include pibidesk *.svg
+recursive-include pibidesk *.txt
+recursive-exclude pibidesk *.pyc
