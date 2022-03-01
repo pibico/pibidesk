@@ -8,6 +8,4 @@ def get_context(context):
   context.message = "Hello Portal!"
   context.pibico = ["pibiCo", "pibiDesk"]
   
-  if frappe.session.user == "Administrator":
-    frappe.msgprint("Here are you")
   return context
