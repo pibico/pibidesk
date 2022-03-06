@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="60" />
+    <!-- <meta http-equiv="refresh" content="60" />  -->
     <link
       rel="shortcut icon"
       href="/assets/pibidesk/images/favicon.svg"
@@ -18,13 +18,83 @@
     <link rel="stylesheet" href="/assets/pibidesk/css/materialdesignicons.min.css" />
     <link rel="stylesheet" href="/assets/pibidesk/css/main.css" />
     <link rel="stylesheet" href="/assets/pibidesk/css/style.css" />
+    
+    <link rel="stylesheet" href="/assets/pibidesk/dist/leaflet/leaflet.css" />
+    
     <style>
     .card {
       min-height: 420px;
     }
-    .link {
-      cursor: pointer;
+    .menu-nav {
+      display: flex;
+      justify-content: space-between;
     }
+    .menu-item {
+      color: #222;
+      padding: 3px;
+    }
+    .three-dots:after {
+      cursor: pointer;
+      color: #444;
+      content: '\2807';
+      font-size: 20px;
+      padding: 0 5px;
+    }
+    /*a {
+      text-decoration: none;
+      color: white;
+    }
+    a div {
+      padding: 2px;
+    }*/
+    .dropdown {
+      position: absolute;
+      right: 10px;
+      background-color: #ddd;
+        
+      outline: none;
+      opacity: 0;
+      z-index: -1;
+      max-height: 0;
+      transition: opacity 0.1s, z-index 0.1s, max-height: 5s;
+    }
+    .dropdown-container:focus {
+      outline: none;
+    }
+    .dropdown-container:focus .dropdown {
+      opacity: 1;
+      z-index: 100;
+      max-height: 100vh;
+      transition: opacity 0.2s, z-index 0.2s, max-height: 0.2s;
+    }
+    #map1 { 
+			width: 100%;
+			min-height: 300px;
+			}
+    .drawcard {
+      background: url("/assets/pibidesk/images/background/cardat.jpg");
+      /* Full height */
+      height: 100%; 
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .olas{
+      position: absolute;
+      padding: 0px;
+      margin: 0px;
+      top: 30%;
+      right: 50%;
+    }
+    .nave{
+      position: absolute;
+      padding: 0px;
+      margin: 0px;
+      top: 50%;
+      left: 60%;
+    }  
+      
     </style>
   </head>
   <body>
@@ -545,10 +615,10 @@
                   <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                       <li class="breadcrumb-item">
-                        <a href="#0">Paneles</a>
+                        <a href="index">Home</a>
                       </li>
                       <li class="breadcrumb-item active" aria-current="page">
-                        Control
+                        Paneles
                       </li>
                     </ol>
                   </nav>
@@ -560,119 +630,274 @@
           </div>
           
           <div class="row">
-      
-      <div class="col-xl-3 col-lg-4 col-md-6">
-        <div class="card">
-          <!-- Header -->
-          <div class="card-header">
-            <span class="card-title"><i data-feather="sliders" class="svg-icon"></i> <strong>Dispositivos Tipo n</strong>
-              <span class="badge badge-danger badge-counter badge-pill ml-1">1</span>
-            </span>
-          </div>
-          <!-- End Header -->
-          <!-- Body -->
-          <div class="card-body">
-            <div class="tab-content" id="pills-tabContent">
-              <div class="tab-pane fade show active" id="pills-1" role="tabpanel" aria-labelledby="pills-1-tab">
-                <div class="row align-items-center">  
-                  <div class="col-8 text-left">
-                      <a href="#" target="_blank"><i class="fa fa-newspaper text-warning"></i>
-                      <small>(6)</a></small>
-                      <a href="#" target="_blank" style="padding-left: 3px;">
-                        <span class="text-primary">Dispositivo</span>
-                      </a>
-                      <br>
-                      <i class="lni lni-ruler text-danger"></i>
-                      <span> alias</span>
-                      <br>
-                      <i class="fa fa-thermometer-full text-primary"></i><span class="ml-1"> 23C</span>
-                      <i class="fa fa-thermometer-half text-info"></i><span class="ml-1"> 18C</span>
-                      <br>
-                      <i class="fa fa-clock text-primary"></i><span class="ml-1"> 6/3/2022 8:25:34</span>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="card">
+                <!-- Header -->
+                <div class="card-header">
+                  <span class="card-title"><i data-feather="sliders" class="svg-icon"></i> <strong>Centros de Formacion</strong>
+                    <span class="badge badge-danger badge-counter badge-pill ml-1">3</span>
+                  </span>
+                </div>
+                <!-- End Header -->
+                <!-- Body -->
+                <div class="card-body m-0 p-0">
+                  <div id="map1"></div>
+                </div>
+                <!-- End Body -->
+                <!-- Footer -->
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div> 
+                <!-- End Footer -->
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title menu-nav">
+                    <span><i data-feather="menu" class="svg-icon"></i> <strong>Panel</strong></span>
+                    <div class="dropdown-container" tabindex="-1">
+                      <div class="three-dots"></div>
+                      <div class="dropdown p-1">
+                        <a href="#"><div>menu 1</div></a>
+                        <br>
+                        <a href="#"><div>menu 2</div></a>
+                        <br>
+                        <a href="#"><div>menu 3</div></a>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <div class="card-body">
+                  <div class="avatar">
+                    <img alt="" src="/assets/pibidesk/images/profile/pibiCo_circular.svg">
                   </div>
-                  <div class="col-4 text-left">
-                    <b style="m-0 p-0">
+                  <div class="title">
+                    <a target="_blank" href="https://www.pibico.org">PibiCo</a>
+                  </div>
+                  <div class="desc">Caracteristica</div>
+                  <div class="desc">Nombre</div>
+                  <div class="desc">Experiencia</div>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="facebook" class="svg-icon"></i></a>
+                    </li>
+                  </ul>  
+                </div>
+              </div>        
+            </div>
+        
+            <div class="col-xl-3 col-lg-4 col-md-6">
+	            <div class="card">
+		            <div class="card-header">
+			            <span class="card-title"><i data-feather="home" class="svg-icon"></i> <strong>Control</strong></span>
+			          </div>				
+			          <div class="card-body p-1 m-1">
+				          <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="1">
+                    <label class="custom-control-label" for="customSwitch1">Interruptor 1</label>
+                  </div>
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch2">
+                    <label class="custom-control-label" for="customSwitch2">Interruptor 2</label>
+                  </div>
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch3">
+                    <label class="custom-control-label" for="customSwitch3">Interruptor 3</label>
+                  </div>
+                  <h5 class="mt-3">Brillo</h5>
+				          <div class="range range-primary">
+						        <input type="range" id="BrightnessInput" name="BrightnessInput" min="0" max="254" value="0" oninput="BrightnessOutput.value=value" onchange="">
+						        <output id="BrightnessOutput">10</output>
+					        </div>
+				        </div>
+			          <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>  
+                </div>
+	            </div>
+            </div>
+            
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="card">
+                <div class="card-header">
+		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
+                    <strong>Area</strong>
+                  </span>
+ 		            </div>
+                <div class="card-body drawcard">
+                  <span>
+                    <a href="#" title="Nave" class="nave btn btn-success rounded-circle text-white m-0 p-1"><i data-feather="sunset" class="svg-icon font-30"></i></a>
+                    <a href="#" title="Olas" class="olas btn btn-danger rounded-circle text-white m-0 p-1"><i data-feather="sunset" class="svg-icon font-30"></i></a>
+                  </span>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>       
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="card">
+                <!-- Header -->
+                <div class="card-header">
+                  <span class="card-title"><i data-feather="share-2" class="svg-icon"></i> <strong>Dispositivos</strong>
+                    <span class="badge badge-danger badge-counter badge-pill ml-1">1</span>
+                  </span>
+                </div>
+                <!-- End Header -->
+                <!-- Body -->
+                <div class="card-body">
+                  <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-1" role="tabpanel" aria-labelledby="pills-1-tab">
+                      <div class="row align-items-center">  
+                        <div class="col-8 text-left">
+                          <a href="#" target="_blank"><i class="fa fa-newspaper text-warning"></i><small class="text-info"> (6)</small></a>
+                          <a href="#" target="_blank">
+                            <span class="text-primary">Dispositivo</span>
+                          </a>
+                          <br>
+                          <i class="lni lni-ruler text-danger"></i>
+                          <span> alias</span>
+                          <br>
+                          <i class="fa fa-thermometer-full text-primary"></i><span class="ml-1"> 23C</span>
+                          <i class="fa fa-thermometer-half text-info"></i><span class="ml-1"> 18C</span>
+                          <br>
+                          <i class="fa fa-clock text-primary"></i><span class="ml-1"> 6/3/2022 8:25:34</span>
+                        </div>
+                        <div class="col-4 text-left">
+                          <b style="m-0 p-0">
                     
-                    <span class="fa-stack fa-1x">
-                      <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
-                      <i class="fa fa-snowflake fa-stack-1x" style="color: white;"></i>
-                    </span>
-                      <a href="#" target="_blank">19.4C</a>
-                    </b>
-                    <br>
-                    <p class="mr-3 text-right">
-                      <small>
-                       <a href="#" target="_blank"> Alerta </a>
-                       <i class="fa fa-bell text-danger"></i>
-                      </small> 
-                    </p>  
+                            <span class="fa-stack fa-1x">
+                              <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                              <i class="fa fa-snowflake fa-stack-1x" style="color: white;"></i>
+                            </span>
+                            <a href="#" class="text-info" target="_blank">19.4C</a>
+                          </b>
+                          <br>
+                          <p class="mr-3 text-right">
+                            <small>
+                              <a href="#" class="text-danger" target="_blank"> Alerta </a>
+                              <i class="fa fa-bell text-danger"></i>
+                            </small> 
+                          </p>  
+                        </div>
+                      </div>
+                      <hr class="m-0 mt-1 mb-1">
+                    </div>
+              
                   </div>
                 </div>
-                <hr class="m-0 mt-1 mb-1">
+                <!-- End Body -->
+                <!-- Footer -->
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>
+                <!-- End Footer -->
               </div>
-              
             </div>
-          </div>
-          <!-- End Body -->
-          <!-- Footer -->
-          <div class="card-footer m-0 p-0">
-            <ul class="nav nav-pills">
-              <li class="nav-item">
-                <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
-              </li>
-            </ul>
-          </div>
-          <!-- End Footer -->
-        </div>
-      </div>
       
-      <div class="col-xl-3 col-lg-4 col-md-6">
-        <div class="card">
-		      <div class="card-header">
-		        <span class="card-title"><i data-feather="clock" class="svg-icon"></i>
-              <strong>
-                <a><span class="badge hours"></span></a> :
-                <a><span class="badge min"></span></a> :
-                <a><span class="badge sec"></span></a>
-              </strong>
-		          Localizaciones
-              <span class="badge badge-danger badge-counter badge-pill mr-1"> 6</span>
-            </span>
- 		      </div>
-		      <div>
-            <iframe class="mb-1" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=-5.665544271469116%2C43.53550607619477%2C-5.653570890426636%2C43.53973707521311&amp;layer=mapnik&amp;marker=43.537621612814235%2C-5.659557580947876" style="border: none;" width="100%" height="120px"></iframe>
-          </div>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="card">
+		            <div class="card-header">
+		              <span class="card-title"><i data-feather="map-pin" class="svg-icon"></i>
+                    Localizaciones
+                    <span class="badge badge-danger badge-counter badge-pill mr-1"> 6</span>
+                  </span>
+ 		            </div>
+		            <div>
+                  <iframe class="mb-1" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=-5.665544271469116%2C43.53550607619477%2C-5.653570890426636%2C43.53973707521311&amp;layer=mapnik&amp;marker=43.537621612814235%2C-5.659557580947876" style="border: none;" width="100%" height="120px"></iframe>
+                </div>
           
-		      <div class="px-4 pb-4 pt-3-5">
-            <h5 class="card-subtitle font-weight-light mt-3">pibi<strong>Desk</strong> de <a href="https://www.pibico.org" target="_blank">PibiCo</a></h5>  
-            <a class="main-btn primary-btn btn-hover" href="#" target="_blank">Saber m&aacute;s</a>
+		            <div class="px-4 pb-4 pt-3-5">
+                  <h5 class="card-subtitle font-weight-light mt-3">pibi<strong>Desk</strong> de <a href="https://www.pibico.org" target="_blank">PibiCo</a></h5>  
+                  <a class="main-btn primary-btn btn-hover" href="#" target="_blank">Saber m&aacute;s</a>
+                </div>
+		            <div class="card-body">
+                  <ul class="list-style-none mb-0">
+                    <li class="link">
+                      <i class="fas fa-circle text-primary mr-2"></i>
+                      <span class="text-muted link" onclick="window.open('/desk#List/Device/List','_blank')"><i data-feather="airplay" class="svg-icon"></i> Otros Dispositivos</span>
+                      <span class="text-dark float-right font-weight-medium">0</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>      
+              </div>
+            </div>
+            
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">
+                    <i data-feather="camera" class="svg-icon"></i> 
+                    Camaras
+                  </span>
+                </div>
+                <div class="card-body p-0 m-0">
+                  <iframe src="http://pibiconet.sytes.net:8765" width="100%" height="100%"></iframe>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>     
+              </div>
+            </div>
+            
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">
+                    <i data-feather="bar-chart" class="svg-icon"></i> 
+                    Grafico
+                  </span>
+                </div>
+                <div class="card-body">
+                  <div class="chart">
+                    <canvas
+                      id="Chart1"
+                      style="width: 100%;"
+                    ></canvas>
+                  </div>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>     
+              </div>
+            </div>
+            
           </div>
-		      <div class="card-body">
-            <ul class="list-style-none mb-0">
-              <li class="link">
-                <i class="fas fa-circle text-primary mr-2"></i>
-                <span class="text-muted link" onclick="window.open('/desk#List/Device/List','_blank')"><i data-feather="airplay" class="svg-icon"></i> Otros Dispositivos</span>
-                <span class="text-dark float-right font-weight-medium">0</span>
-              </li>
-            </ul>
-          </div>
-          <div class="card-footer m-0 p-0">
-            <ul class="nav nav-pills">
-              <li class="nav-item">
-                <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
-              </li>
-            </ul>
-          </div>      
-        </div>
-      </div>
-
-      
-    </div>
-    <!-- *************************************************************** -->
-    <!-- End Sales Charts Section -->
-    <!-- *************************************************************** -->
-          
-          
         </div>
         <!-- end container -->
       </section>
@@ -721,27 +946,230 @@
     <!-- ========= All Javascript files linkup ======== -->
     
     <script src="/assets/pibidesk/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/pibidesk/js/Chart.min.js"></script>
     <script src="/assets/pibidesk/js/moment.min.js"></script>
     <script src="/assets/pibidesk/js/feather.min.js"></script>
-    <script src="/assets/pibidesk/js/main.js"></script>
     <script>
       feather.replace()
-    </script>  
+    </script> 
+    
+    <script src="/assets/pibidesk/dist/leaflet/leaflet.js"></script>
+    <script src="/assets/pibidesk/js/barcos1.js"></script>
+    
     <script>
-    $(document).ready(function() {
-      setInterval(function() {
-        var hours = new Date().getHours();
-        $(".hours").html((hours < 10 ? "0" : "") + hours);
-      }, 1000);
-      setInterval(function() {
-        var minutes = new Date().getMinutes();
-        $(".min").html((minutes < 10 ? "0" : "") + minutes);
-      }, 1000);
-      setInterval(function() {
-        var seconds = new Date().getSeconds();
-        $(".sec").html((seconds < 10 ? "0" : "") + seconds);
-      }, 1000);
-    });
-  </script> 
+	    //variables de capas sobrepuestas
+		  var cities = L.layerGroup();
+		  var boats = L.layerGroup();
+		  var boatRoute= L.layerGroup();
+      var mstc = L.layerGroup();
+      
+		  //cities
+		  L.marker([43.5314071, -5.7384944]).bindPopup('Gijon').addTo(cities),
+		  //mstc
+      L.marker([38.690664, -9.300033]).bindPopup("<b>Escola Superior Nautica Infante D. Henrique</b><br><a href='https://www.enautica.pt/' target='_blank'>ENIDH</a>").addTo(mstc),
+      L.marker([43.4901352, -5.7611543]).bindPopup("<b>Centro de Seguridad Maritima Integral</b><br><a href='https://www.centrojovellanos.es/' target='_blank'>Centro Jovellanos</a>").addTo(mstc),
+      L.marker([51.833855, -8.305259]).bindPopup("<b>National Maritime College of Ireland</b><br><a href='https://www.nmci.ie/' target='_blank'>NMCI</a>").addTo(mstc);
+
+      var overlays = {
+			  "Ciudades": cities, 
+			  "Barcos": boats,
+			  "Rutas": boatRoute,
+        "MSTC": mstc
+			};
+		
+		  //variables de capas sobrepuestas
+		  var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' + 'Imagery <a href="https://www.mapbox.com/">Mapbox</a>, Data <a href="https://www.pibico.org">pibiCo</a>',
+		  mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
+		  mbAttr2 = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+		  mbUrl2 ='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		
+		  var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
+		  streets = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
+		  satellite = L.tileLayer(mbUrl, {id: 'mapbox/satellite-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
+		  normal  = L.tileLayer(mbUrl2, {tileSize: 512, zoomOffset: -1, attribution: mbAttr2});
+		  var baseLayers = {
+			  "Escala grises": grayscale,
+			  "Carreteras": streets,
+			  "Satelite": satellite,
+			  "Normal": normal };
+		
+		  //variables de coordenadas de centro
+		  var vlat = 46.528635;
+		  var vlong = -8.750027;
+		  //variable de creacion de mapa y filtros a activar
+		  var map = L.map('map1', {
+			  center: [vlat, vlong],
+			  zoom: 4,
+			  layers: [satellite, boats, boatRoute, cities, mstc ]
+			});
+		  
+		  //Barcos
+		  var barcoIconGreen = L.icon({ iconUrl: '/assets/pibidesk/images/leaflet/icon0g.png', iconSize: [40, 20], });
+		  var barcoIconRed = L.icon({ iconUrl: '/assets/pibidesk/images/leaflet/icon0g.png', iconSize: [40, 20], });
+	
+		  var barcos = barcos1.features;
+		  var vdescbarco = "";
+		  L.geoJSON(barcos, {
+			  pointToLayer: function (feature, latlng) {
+				  vdescbarco = '<b>' + feature.properties.vessel_name + '</b><br>'
+                       + feature.properties.vessel_type + '<br>'
+                       + feature.properties.flag_country;
+				  if (feature.properties.vessel_type === "Fishing") {
+						return L.marker(latlng, {icon: barcoIconGreen}).addTo(boats).bindPopup(vdescbarco);
+					} else {
+						return L.marker(latlng, {icon: barcoIconRed}).addTo(boats).bindPopup(vdescbarco);
+					}
+			  }
+		  });
+		
+	 	  //Supongamos que tenemos un calculo de trayectoria de los barcos
+		  //plasmariamos las lineas con esos datos, pero para el ejemplo solo hago una
+		  var boatRouteLines = [{
+			  "type": "LineString",
+			  "coordinates": [[-5.56681, 43.58661], [-3.8025687, 43.6570279], [ -3.744675889342295, 43.4678933015832], [-3.8395188, 43.4328088]]  
+		  }, {
+			  "type": "LineString",
+			  "coordinates": [[-5.265974, 43.51589], [-5.265874, 43.51589], [-5.265774, 43.51589]]
+		  }];
+
+		  var boatRouteStyle = { "color": "#ff7800", "weight": 5, "opacity": 0.65 };
+
+		  L.geoJSON(boatRouteLines, {
+			  style: boatRouteStyle
+		  }).addTo(boatRoute);
+				
+		  // anadir control de capas
+		  L.control.layers(baseLayers, overlays).addTo(map);
+		
+		  // anadir control de escala
+		  L.control.scale().addTo(map);
+		
+      // anadir funcion click en map para mostrar coordenadas
+      var popup = L.popup();
+	    function onMapClick(e) {
+		    popup
+          .setLatLng(e.latlng)
+          .setContent("<b>Clicked on</b><br><i>" + e.latlng.toString() + "</i>")
+          .openOn(map);
+	      }
+	    map.on('click', onMapClick);
+			
+	</script>
+    
+  <script src="/assets/pibidesk/js/main.js"></script>
+  <script>
+    // =========== chart one start
+      const ctx1 = document.getElementById("Chart1").getContext("2d");
+      const chart1 = new Chart(ctx1, {
+        // The type of chart we want to create
+        type: "line", // also try bar or other graph types
+
+        // The data for our dataset
+        data: {
+          labels: [
+            "Jan",
+            "Fab",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ],
+          // Information about the dataset
+          datasets: [
+            {
+              label: "",
+              backgroundColor: "transparent",
+              borderColor: "#4A6CF7",
+              data: [
+                600, 800, 750, 880, 940, 880, 900, 770, 920, 890, 976, 1100,
+              ],
+              pointBackgroundColor: "transparent",
+              pointHoverBackgroundColor: "#4A6CF7",
+              pointBorderColor: "transparent",
+              pointHoverBorderColor: "#fff",
+              pointHoverBorderWidth: 5,
+              pointBorderWidth: 5,
+              pointRadius: 8,
+              pointHoverRadius: 8,
+            },
+          ],
+        },
+
+        // Configuration options
+        defaultFontFamily: "Raleway",
+        options: {
+          tooltips: {
+            callbacks: {
+              labelColor: function (tooltipItem, chart) {
+                return {
+                  backgroundColor: "#ffffff",
+                };
+              },
+            },
+            intersect: false,
+            backgroundColor: "#f9f9f9",
+            titleFontFamily: "Raleway",
+            titleFontColor: "#8F92A1",
+            titleFontColor: "#8F92A1",
+            titleFontSize: 12,
+            bodyFontFamily: "Raleway",
+            bodyFontColor: "#171717",
+            bodyFontStyle: "bold",
+            bodyFontSize: 16,
+            multiKeyBackground: "transparent",
+            displayColors: false,
+            xPadding: 30,
+            yPadding: 10,
+            bodyAlign: "center",
+            titleAlign: "center",
+          },
+
+          title: {
+            display: false,
+          },
+          legend: {
+            display: false,
+          },
+
+          scales: {
+            yAxes: [
+              {
+                gridLines: {
+                  display: true,
+                  drawTicks: false,
+                  drawBorder: false,
+                },
+                ticks: {
+                  padding: 35,
+                  max: 1200,
+                  min: 500,
+                },
+              },
+            ],
+            xAxes: [
+              {
+                gridLines: {
+                  drawBorder: false,
+                  color: "rgba(143, 146, 161, .1)",
+                  zeroLineColor: "rgba(143, 146, 161, .1)",
+                },
+                ticks: {
+                  padding: 20,
+                },
+              },
+            ],
+          },
+        },
+      });
+
+      // =========== chart one end
+  
+  </script>  
   </body>
 </html>
