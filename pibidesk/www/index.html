@@ -94,6 +94,12 @@
               <li>
                 <a href="{{frappe.utils.get_url()}}/entries"> Paneles </a>
               </li>
+              <li>
+                <a href="{{frappe.utils.get_url()}}/dashboard"> Indicadores </a>
+              </li>
+              <li>
+                <a href="{{frappe.utils.get_url()}}/map"> Mapa </a>
+              </li>
               <!-- Paginas -->
               <li class="nav-item nav-item-has-children">
                 <a
@@ -568,7 +574,6 @@
                 />
               </div>
             </div>
-
             <div class="p-2 col-md-6 align-self-center">
               <h3 class="mb-3 title">El MIoT de pibiCo</h3>
               <p>pibiCo lanza <i class="miot"><strong>pibi</strong>Desk</i>, un proyecto de innovaci&oacute;n en el marco de PILoT con el que se busca incorporar el Internet de las Cosas en la vida cotidiana y en la Peque&ntilde;a y Mediana Empresa.</p>
@@ -720,6 +725,17 @@
     <script src="/assets/pibidesk/js/jvectormap.min.js"></script>
     <script src="/assets/pibidesk/js/world-merc.js"></script>
     <script src="/assets/pibidesk/js/polyfill.js"></script>
+    <!-- Cookie Consent by https://www.FreePrivacyPolicy.com -->
+    <script type="text/javascript" src="/assets/pibidesk/dist/cookie-consent/cookie-consent.js"></script>
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palette":"light","language":"es","cookies_policy_url":"https://www.pibico.org/privacy","website_name":"http://pibidesk.espib.co:8888"});
+    });
+    </script>
+
+    <noscript>Cookie Consent by <a href="https://www.FreePrivacyPolicy.com/free-cookie-consent/" rel="nofollow noopener">FreePrivacyPolicy.com</a></noscript>
+<!-- End Cookie Consent -->
+    
     <script src="/assets/pibidesk/js/main.js"></script>
 
   </body>
