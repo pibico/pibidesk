@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="/assets/pibidesk/css/lineicons.css" />
     <link rel="stylesheet" href="/assets/pibidesk/css/materialdesignicons.min.css" />
     <link rel="stylesheet" href="/assets/pibidesk/css/fullcalendar.css" />
-    <link rel="stylesheet" href="/assets/pibidesk/css/fullcalendar.css" />
     <link rel="stylesheet" href="/assets/pibidesk/css/main.css" />
   </head>
   <body>
@@ -344,7 +343,7 @@
         <h3><strong>pibi</strong>Desk</h3>
         <p>de pibiCo</p>
         <a
-          href="https://www.pibico.org"
+          href="https://www.pibico.org#contact"
           target="_blank"
           rel="nofollow"
           class="main-btn primary-btn btn-hover"
@@ -372,139 +371,20 @@
                     <i class="lni lni-chevron-left me-2"></i> Menu
                   </button>
                 </div>
-                <!-- <div class="header-search d-none d-md-flex">
-                  <form action="#">
-                    <input type="text" placeholder="Search..." />
-                    <button><i class="lni lni-search-alt"></i></button>
-                  </form>
-                </div> -->
               </div>
             </div>
             <div class="col-lg-7 col-md-7 col-6">
               <div class="header-right">
-                <!-- notification start -->
-                <div class="notification-box ml-15 d-none d-md-flex">
-                  <button
-                    class="dropdown-toggle"
-                    type="button"
-                    id="notification"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="lni lni-alarm"></i>
-                    <span>2</span>
-                  </button>
-                  <ul
-                    class="dropdown-menu dropdown-menu-end"
-                    aria-labelledby="notification"
-                  >
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="/assets/pibidesk/images/lead/lead-6.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>
-                            John Doe
-                            <span class="text-regular">
-                              comment on a product.
-                            </span>
-                          </h6>
-                          <p>
-                            Lorem ipsum dolor sit amet, consect etur adipiscing
-                            elit Vivamus tortor.
-                          </p>
-                          <span>10 mins ago</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="/assets/pibidesk/images/lead/lead-1.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>
-                            Jonathon
-                            <span class="text-regular">
-                              like on a product.
-                            </span>
-                          </h6>
-                          <p>
-                            Lorem ipsum dolor sit amet, consect etur adipiscing
-                            elit Vivamus tortor.
-                          </p>
-                          <span>10 mins ago</span>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <!-- notification end -->
-                <!-- message start -->
-                <div class="header-message-box ml-15 d-none d-md-flex">
-                  <button
-                    class="dropdown-toggle"
-                    type="button"
-                    id="message"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="lni lni-envelope"></i>
-                    <span>3</span>
-                  </button>
-                  <ul
-                    class="dropdown-menu dropdown-menu-end"
-                    aria-labelledby="message"
-                  >
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="/assets/pibidesk/images/lead/lead-5.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>Jacob Jones</h6>
-                          <p>Hey!I can across your profile and ...</p>
-                          <span>10 mins ago</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="/assets/pibidesk/images/lead/lead-3.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>John Doe</h6>
-                          <p>Would you mind please checking out</p>
-                          <span>12 mins ago</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="/assets/pibidesk/images/lead/lead-2.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>Anee Lee</h6>
-                          <p>Hey! are you available for freelance?</p>
-                          <span>1h ago</span>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <!-- message end -->
-                <!-- filter start -->
-                <div class="filter-box ml-15 d-none d-md-flex">
-                  <button class="" type="button" id="filter">
-                    <i class="lni lni-funnel"></i>
-                  </button>
-                </div>
-                <!-- filter end -->
                 <!-- profile start -->
                 <div class="profile-box ml-15">
+                  {% if frappe.session.user == 'Guest' %}
+                  <a class="nav-link" href="login?redirect-to=index">
+                    <img src="/assets/pibidesk/images/profile/pibiCo_circular.svg" alt="user" class="rounded-circle" width="40">
+                    <span class="ml-2 d-none d-lg-inline-block">
+                      <span class="text-dark">Entrada</span>
+                    </span>
+                  </a>
+                  {% else %}
                   <button
                     class="dropdown-toggle bg-transparent border-0"
                     type="button"
@@ -514,14 +394,7 @@
                   >
                     <div class="profile-info">
                       <div class="info">
-                        <h6>John Doe</h6>
-                        <div class="image">
-                          <img
-                            src="/assets/pibidesk/images/profile/profile-image.png"
-                            alt=""
-                          />
-                          <span class="status"></span>
-                        </div>
+                        <h6>{{ frappe.session.user }}</h6>
                       </div>
                     </div>
                     <i class="lni lni-chevron-down"></i>
@@ -531,25 +404,17 @@
                     aria-labelledby="profile"
                   >
                     <li>
-                      <a href="#0">
-                        <i class="lni lni-user"></i> View Profile
-                      </a>
+                      <a href="{{frappe.utils.get_url()}}/app/user/{{ frappe.session.user }}">
+                        <i class="lni lni-user"></i> Ajustes</a>
                     </li>
                     <li>
-                      <a href="#0">
-                        <i class="lni lni-alarm"></i> Notifications
-                      </a>
+                      <a href="{{frappe.utils.get_url()}}/app/home"> <i class="lni lni-home"></i> Escritorio</a>
                     </li>
                     <li>
-                      <a href="#0"> <i class="lni lni-inbox"></i> Messages </a>
-                    </li>
-                    <li>
-                      <a href="#0"> <i class="lni lni-cog"></i> Settings </a>
-                    </li>
-                    <li>
-                      <a href="#0"> <i class="lni lni-exit"></i> Sign Out </a>
+                      <a href="{{frappe.utils.get_url()}}?cmd=web_logout"> <i class="lni lni-exit"></i> Salida</a>
                     </li>
                   </ul>
+                  {% endif %}
                 </div>
                 <!-- profile end -->
               </div>
@@ -680,13 +545,13 @@
             <div class="col-md-6 order-last order-md-first">
               <div class="copyright text-center text-md-start">
                 <p class="text-sm">
-                  Designed and Developed by
+                  Desarrollado por
                   <a
-                    href="https://plainadmin.com"
+                    href="https://www.pibico.org"
                     rel="nofollow"
                     target="_blank"
                   >
-                    PlainAdmin
+                    pibiCo
                   </a>
                 </p>
               </div>
@@ -700,8 +565,8 @@
                   justify-content-center justify-content-md-end
                 "
               >
-                <a href="#0" class="text-sm">Term & Conditions</a>
-                <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+                <a href="https://www.pibico.org/terminos_es" target="_blank" class="text-sm">Aviso Legal</a>
+                <a href="https://www.pibico.org/privacidad_es" target="_blank" class="text-sm ml-15">Privacidad</a>
               </div>
             </div>
           </div>
@@ -715,13 +580,7 @@
 
     <!-- ========= All Javascript files linkup ======== -->
     <script src="/assets/pibidesk/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/pibidesk/js/Chart.min.js"></script>
-    <script src="/assets/pibidesk/js/dynamic-pie-chart.js"></script>
     <script src="/assets/pibidesk/js/moment.min.js"></script>
-    <script src="/assets/pibidesk/js/fullcalendar.js"></script>
-    <script src="/assets/pibidesk/js/jvectormap.min.js"></script>
-    <script src="/assets/pibidesk/js/world-merc.js"></script>
-    <script src="/assets/pibidesk/js/polyfill.js"></script>
     <!-- Cookie Consent by https://www.FreePrivacyPolicy.com -->
     <script type="text/javascript" src="/assets/pibidesk/dist/cookie-consent/cookie-consent.js"></script>
     <script type="text/javascript">
