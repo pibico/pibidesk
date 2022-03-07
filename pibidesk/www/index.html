@@ -50,19 +50,19 @@
                   />
                 </svg>
               </span>
-              <span class="text">Navega</span>
+              <span class="text"></span>
             </a>
             <ul id="ddmenu_0" class="collapse show dropdown-nav">
               {% if frappe.session.user == "Guest" %}
               <li>
-                <a href="{{frappe.utils.get_url()}}/login?redirect-to=index" class="active"> Entrada </a>
+                <a href="{{frappe.utils.get_url()}}/login?redirect-to=index" class="active"> Login </a>
               </li>
               {% else %}
                 <li>
-                  <a href="{{frappe.utils.get_url()}}/index?cmd=web_logout" class="active"> Salida </a>
+                  <a href="{{frappe.utils.get_url()}}/index?cmd=web_logout" class="active"> Logout </a>
                 </li>
                 <li>
-                  <a href="{{frappe.utils.get_url()}}/app"> Controles </a>
+                  <a href="{{frappe.utils.get_url()}}/app"> Controles/Desk </a>
                 </li>
               {% endif %}  
             </ul>
@@ -86,15 +86,15 @@
                   />
                 </svg>
               </span>
-              <span class="text">Ejemplos</span>
+              <span class="text"></span>
             </a>
             <ul id="ddmenu_1" class="collapse dropdown-nav">
               <!-- Indice -->
               <li>
-                <a href="{{frappe.utils.get_url()}}/entries"> Paneles </a>
+                <a href="{{frappe.utils.get_url()}}/entries"> Ejemplo/Sample </a>
               </li>
               <li>
-                <a href="{{frappe.utils.get_url()}}/dashboard"> Indicadores </a>
+                <a href="{{frappe.utils.get_url()}}/dashboard"> Indicador/Dashboard </a>
               </li>
               <!-- Paginas -->
               <li class="nav-item nav-item-has-children">
@@ -120,15 +120,15 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">P&aacute;ginas
+                  <span class="text">P&aacute;gina/Page
                   </span>
                 </a>
                 <ul id="ddmenu_2" class="collapse dropdown-nav">
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/settings"> Ajustes </a>
+                    <a href="{{frappe.utils.get_url()}}/settings"> Ajuste/Setting </a>
                   </li>
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/blank-page"> P&aacute;gina Vac&iacute;a </a>
+                    <a href="{{frappe.utils.get_url()}}/blank-page"> P&aacute;gina/Blank </a>
                   </li>
                 </ul>
               </li>
@@ -148,7 +148,7 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">Factura</span>
+                  <span class="text">Factura/Invoice</span>
                 </a>
               </li>
               <!-- Autorizaciones -->
@@ -175,14 +175,14 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">Autorizar</span>
+                  <span class="text">Autoriza/Auth</span>
                 </a>
                 <ul id="ddmenu_3" class="collapse dropdown-nav">
                   <li>
                     <a href="{{frappe.utils.get_url()}}/signin"> Login </a>
                   </li>
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/signup"> Registro </a>
+                    <a href="{{frappe.utils.get_url()}}/signup"> Registro/Sign Up </a>
                   </li>
                 </ul>
               </li>
@@ -211,20 +211,20 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">Elementos </span>
+                  <span class="text">Item </span>
                 </a>
                 <ul id="ddmenu_4" class="collapse dropdown-nav">
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/alerts"> Alertas </a>
+                    <a href="{{frappe.utils.get_url()}}/alerts"> Alerta/Alert </a>
                   </li>
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/buttons"> Botones </a>
+                    <a href="{{frappe.utils.get_url()}}/buttons"> Boton/Button </a>
                   </li>
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/cards"> Paneles </a>
+                    <a href="{{frappe.utils.get_url()}}/cards"> Panel/Card </a>
                   </li>
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/typography"> Tipograf&iacute;a </a>
+                    <a href="{{frappe.utils.get_url()}}/typography"> Tipograf&iacute;a/Font </a>
                   </li>
                 </ul>
               </li>
@@ -252,11 +252,11 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">Iconos</span>
+                  <span class="text">Icono/Icon</span>
                 </a>
                 <ul id="ddmenu_55" class="collapse dropdown-nav">
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/icons"> Lineales </a>
+                    <a href="{{frappe.utils.get_url()}}/icons"> Lineal/Linear </a>
                   </li>
                   <li>
                     <a href="{{frappe.utils.get_url()}}/mdi-icons"> MDI </a>
@@ -287,11 +287,11 @@
                       />
                     </svg>
                   </span>
-                  <span class="text"> Formularios </span>
+                  <span class="text"> Formulario/Form </span>
                 </a>
                 <ul id="ddmenu_5" class="collapse dropdown-nav">
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/form-elements"> Elementos </a>
+                    <a href="{{frappe.utils.get_url()}}/form-elements"> Elemento/Item </a>
                   </li>
                 </ul>
               </li>
@@ -311,7 +311,7 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">Tablas</span>
+                  <span class="text">Tabla/Table</span>
                 </a>
               </li>
               <!-- Notificaciones -->
@@ -331,7 +331,7 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">Notificaciones</span>
+                  <span class="text">Notificaci&oacute;n/Alert</span>
                 </a>
               </li>
               <!-- Fin ejemplos -->
@@ -341,14 +341,14 @@
       </nav>
       <div class="promo-box">
         <h3><strong>pibi</strong>Desk</h3>
-        <p>de pibiCo</p>
+        <p>by pibiCo</p>
         <a
           href="https://www.pibico.org#contact"
           target="_blank"
           rel="nofollow"
           class="main-btn primary-btn btn-hover"
         >
-          Cont&aacute;ctanos
+          Cont&aacute;ctanos<br>Contact Us
         </a>
       </div>
     </aside>
@@ -377,11 +377,11 @@
               <div class="header-right">
                 <!-- profile start -->
                 <div class="profile-box ml-15">
-                  {% if frappe.session.user == 'Guest' %}
+                {% if frappe.session.user == 'Guest' %}
                   <a class="nav-link" href="login?redirect-to=index">
                     <img src="/assets/pibidesk/images/profile/pibiCo_circular.svg" alt="user" class="rounded-circle" width="40">
                     <span class="ml-2 d-none d-lg-inline-block">
-                      <span class="text-dark">Entrada</span>
+                      <span class="text-dark">Login</span>
                     </span>
                   </a>
                   {% else %}
@@ -405,13 +405,13 @@
                   >
                     <li>
                       <a href="{{frappe.utils.get_url()}}/app/user/{{ frappe.session.user }}">
-                        <i class="lni lni-user"></i> Ajustes</a>
+                        <i class="lni lni-user"></i> Ajustes/Settings</a>
                     </li>
                     <li>
-                      <a href="{{frappe.utils.get_url()}}/app/home"> <i class="lni lni-home"></i> Escritorio</a>
+                      <a href="{{frappe.utils.get_url()}}/app/home"> <i class="lni lni-home"></i> Escritorio/Desk</a>
                     </li>
                     <li>
-                      <a href="{{frappe.utils.get_url()}}?cmd=web_logout"> <i class="lni lni-exit"></i> Salida</a>
+                      <a href="{{frappe.utils.get_url()}}?cmd=web_logout"> <i class="lni lni-exit"></i> Salida/Logout</a>
                     </li>
                   </ul>
                   {% endif %}
@@ -437,15 +437,19 @@
               </div>
             </div>
             <div class="p-2 col-md-6 align-self-center">
-              <h3 class="mb-3 title">El MIoT de pibiCo</h3>
+              <h3 class="mb-3 title">El MIoT de pibiCo / MIOT by PibiCo</h3>
               <p>pibiCo lanza <i class="miot"><strong>pibi</strong>Desk</i>, un proyecto de innovaci&oacute;n en el marco de PILoT con el que se busca incorporar el Internet de las Cosas en la vida cotidiana y en la Peque&ntilde;a y Mediana Empresa.</p>
-              <h4 class="mt-3 mb-1">Objetivo</h4>
+              <p style="color: #4682b4;"><i class="miot"><strong>pibi</strong>Desk</i> is launched by pibiCo. An innovation project under PILoT Framework seeking to incorporate Internet Of Things in the ordinary life and in Small and Medium Enterprises.</p>
+              
+              <h4 class="mt-3 mb-1">Objetivo / Goal</h4>
               <p class="my-0">El fin del Proyecto PILoT es la gesti&oacute;n con Internet de las Cosas (Managemente with IoT - MIoT).
               PILoT permite despreocuparse de seleccionar componentes compatibles entre s&iacute;, y de su integraci&oacute;n. El producto despliega la web corporativa, sistema de videoconferencia privada, gesti&oacute;n de procesos, terminal punto de venta, documentaci&oacute;n en nube privada, comercio electr&oacute;nico, captura de datos mediante IoT, calendario o agenda de contactos, sin costes de licenciamiento. Los usuarios finales se conectan desde cualquier dispositivo m&oacute;vil o de sobremesa, sin instalaci&oacute;n, s&oacute;lo con un navegador.
 </p>
-              <h4 class="mt-3 mb-1">Plataforma</h4>
-              <p class="my-0">Basada en software y librer&iacute;as de c&oacute;digo abierto, completamente aut&oacute;noma y segura, sobre una aplicaci&oacute;n web responsiva y adaptable a cualquier dispositivo.<p>
-              <p class="mt-1">Optimizada para los navegadores Chrome, Safari, Edge y Firefox.</p>
+              <p style="color: #4682b4;" class="my-0">The aim of PILoT Project is the management with Internet of Things (MIoT). PILoT allows not to worry about selecting compatible components and their integration. The product can deploy the corporate website, a private videoconference system, process management, Point of Sale, private documents cloud, e-commerce, data collection through IoT, calendar and contacts, without license fees. Final Users are connected through any mobile or desk device, without any installation, only through their browser.</p>
+
+              <h4 class="mt-3 mb-1">Plataforma / Framework</h4>
+              <p class="my-0">Basada en software y librer&iacute;as de c&oacute;digo abierto, completamente aut&oacute;noma y segura, sobre una aplicaci&oacute;n web responsiva y adaptable a cualquier dispositivo. Optimizada para los navegadores Chrome, Safari, Edge y Firefox.</p>
+              <p style="color: #4682b4;" class="my-0">Based on Open Source Software and Libraries, is fully autonomous and secure, over a responsive web app and adapted to any device. Optimized for browsers Chrome, Safari, Edge and Firefox.</p>
             </div>
           </div>
         </div>
@@ -461,7 +465,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="title mt-30 mb-30">
-                  <h2 style="color: #4682B4;">La Gesti&oacute;n con Internet de las Cosas</h2>
+                  <h2 style="color: #4682B4;">La Gesti&oacute;n con Internet de las Cosas / Management with IoT</h2>
                 </div>
               </div>
               <!-- end col -->
@@ -476,11 +480,16 @@
                     </a>
                   </div>
                   <div class="card-content">
-                    <h4><a href="#0">Sistemas de Gesti&oacute;n Empresarial </a></h4>
+                    <h4><a href="#0">Sistemas de Gesti&oacute;n Empresarial / Enterprise Resource Planning </a></h4>
                     <p>
                       Son necesarios a&uacute;n hoy
                       para conseguir optimizar los procesos de negocio
                       y conseguir la mejora de la productividad
+                    </p>
+                    <p style="color: #4682B4;">
+                      As necessary today as before
+                      in order to optimize the business processes and
+                      to obtain the productivity improvement
                     </p>
                   </div>
                 </div>
@@ -497,11 +506,16 @@
                     </a>
                   </div>
                   <div class="card-content">
-                    <h4><a href="#0">Dispositivos Interconectados </a></h4>
+                    <h4><a href="#0">Dispositivos Interconectados / Interconnected Devices </a></h4>
                     <p>
                       Los dispositivos se digitalizan y se interconectan.
                       Ya sea a trav&eacute;s de Internet o de una red local,
                       los datos se comunican entre ellos.
+                    </p>
+                    <p style="color: #4682B4;">
+                      Devices are digital and interconnected.
+                      Through Internet or a Local Network
+                      data travel through them.
                     </p>
                   </div>
                 </div>
@@ -518,11 +532,16 @@
                     </a>
                   </div>
                   <div class="card-content">
-                    <h4><a href="#0">El proyecto PILoT de pibiCo </a></h4>
+                    <h4><a href="#0">El proyecto PILoT de pibiCo / PILoT Project from pibiCo </a></h4>
                     <p>
                       Los datos tomados por dispositivos IoT se graban en un
                       &uacute;nico sistema integr&aacute;ndolo con el negocio 
                       en una &uacute;nica capa virtual de acceso 360
+                    </p>
+                    <p style="color: #4682B4;">
+                      The data acquired by IoT Devices are recorded
+                      in only one system integrated with the Business 
+                      in an unique 360 degrees virtual layer
                     </p>
                   </div>
                 </div>
@@ -545,7 +564,7 @@
             <div class="col-md-6 order-last order-md-first">
               <div class="copyright text-center text-md-start">
                 <p class="text-sm">
-                  Desarrollado por
+                  Desarrollado por / Developed by
                   <a
                     href="https://www.pibico.org"
                     rel="nofollow"
@@ -565,8 +584,8 @@
                   justify-content-center justify-content-md-end
                 "
               >
-                <a href="https://www.pibico.org/terminos_es" target="_blank" class="text-sm">Aviso Legal</a>
-                <a href="https://www.pibico.org/privacidad_es" target="_blank" class="text-sm ml-15">Privacidad</a>
+                <a href="https://www.pibico.org/terminos_es" target="_blank" class="text-sm">Aviso Legal / Ts&Cs</a>
+                <a href="https://www.pibico.org/privacidad_es" target="_blank" class="text-sm ml-15">Privacidad / Privacy</a>
               </div>
             </div>
           </div>
