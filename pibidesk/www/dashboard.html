@@ -29,10 +29,48 @@
       </div>
       <nav class="sidebar-nav">
         <ul>
-          <li>
-            <a href="{{frappe.utils.get_url()}}/login" class="active"> Login </a>
+          <!-- Autorizaciones -->
+          <li class="nav-item nav-item-has-children">
+            <a
+              href="#0"
+              data-bs-toggle="collapse"
+              data-bs-target="#ddmenu_0"
+              aria-controls="ddmenu_0"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="icon">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                d="M12.9067 14.2908L15.2808 11.9167H6.41667V10.0833H15.2808L12.9067 7.70917L14.2083 6.41667L18.7917 11L14.2083 15.5833L12.9067 14.2908ZM17.4167 2.75C17.9029 2.75 18.3692 2.94315 18.713 3.28697C19.0568 3.63079 19.25 4.0971 19.25 4.58333V8.86417L17.4167 7.03083V4.58333H4.58333V17.4167H17.4167V14.9692L19.25 13.1358V17.4167C19.25 17.9029 19.0568 18.3692 18.713 18.713C18.3692 19.0568 17.9029 19.25 17.4167 19.25H4.58333C3.56583 19.25 2.75 18.425 2.75 17.4167V4.58333C2.75 3.56583 3.56583 2.75 4.58333 2.75H17.4167Z"
+                  />
+                </svg>
+              </span>
+              <span class="text"></span>
+            </a>
+            <ul id="ddmenu_0" class="collapse show dropdown-nav">
+              {% if frappe.session.user == "Guest" %}
+              <li>
+                <a href="{{frappe.utils.get_url()}}/login?redirect-to=index" class="active"> Login </a>
+              </li>
+              {% else %}
+                <li>
+                  <a href="{{frappe.utils.get_url()}}/index?cmd=web_logout" class="active"> Logout </a>
+                </li>
+                <li>
+                  <a href="{{frappe.utils.get_url()}}/app"> Controles/Desk </a>
+                </li>
+              {% endif %}  
+            </ul>
           </li>
-        <!-- Ejemplos -->
+
+          <!-- Ejemplos -->
           <li class="nav-item nav-item-has-children">
             <a
               href="#0"
@@ -50,12 +88,15 @@
                   />
                 </svg>
               </span>
-              <span class="text">Ejemplos</span>
+              <span class="text"></span>
             </a>
             <ul id="ddmenu_1" class="collapse dropdown-nav">
               <!-- Indice -->
               <li>
-                <a href="{{frappe.utils.get_url()}}/entries" class="active"> Paneles </a>
+                <a href="{{frappe.utils.get_url()}}/entries"> Ejemplo/Sample </a>
+              </li>
+              <li>
+                <a href="{{frappe.utils.get_url()}}/dashboard"> Indicador/Dashboard </a>
               </li>
               <!-- Paginas -->
               <li class="nav-item nav-item-has-children">
@@ -81,15 +122,15 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">P&aacute;ginas
+                  <span class="text">P&aacute;gina/Page
                   </span>
                 </a>
                 <ul id="ddmenu_2" class="collapse dropdown-nav">
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/settings"> Ajustes </a>
+                    <a href="{{frappe.utils.get_url()}}/settings"> Ajuste/Setting </a>
                   </li>
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/blank-page"> P&aacute;gina Vac&iacute;a </a>
+                    <a href="{{frappe.utils.get_url()}}/blank-page"> P&aacute;gina/Blank </a>
                   </li>
                 </ul>
               </li>
@@ -109,7 +150,7 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">Factura</span>
+                  <span class="text">Factura/Invoice</span>
                 </a>
               </li>
               <!-- Autorizaciones -->
@@ -136,14 +177,14 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">Autorizar</span>
+                  <span class="text">Autoriza/Auth</span>
                 </a>
                 <ul id="ddmenu_3" class="collapse dropdown-nav">
                   <li>
                     <a href="{{frappe.utils.get_url()}}/signin"> Login </a>
                   </li>
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/signup"> Registro </a>
+                    <a href="{{frappe.utils.get_url()}}/signup"> Registro/Sign Up </a>
                   </li>
                 </ul>
               </li>
@@ -172,20 +213,20 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">Elementos </span>
+                  <span class="text">Item </span>
                 </a>
                 <ul id="ddmenu_4" class="collapse dropdown-nav">
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/alerts"> Alertas </a>
+                    <a href="{{frappe.utils.get_url()}}/alerts"> Alerta/Alert </a>
                   </li>
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/buttons"> Botones </a>
+                    <a href="{{frappe.utils.get_url()}}/buttons"> Boton/Button </a>
                   </li>
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/cards"> Paneles </a>
+                    <a href="{{frappe.utils.get_url()}}/cards"> Panel/Card </a>
                   </li>
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/typography"> Tipograf&iacute;a </a>
+                    <a href="{{frappe.utils.get_url()}}/typography"> Tipograf&iacute;a/Font </a>
                   </li>
                 </ul>
               </li>
@@ -213,11 +254,11 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">Iconos</span>
+                  <span class="text">Icono/Icon</span>
                 </a>
                 <ul id="ddmenu_55" class="collapse dropdown-nav">
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/icons"> Lineales </a>
+                    <a href="{{frappe.utils.get_url()}}/icons"> Lineal/Linear </a>
                   </li>
                   <li>
                     <a href="{{frappe.utils.get_url()}}/mdi-icons"> MDI </a>
@@ -248,11 +289,11 @@
                       />
                     </svg>
                   </span>
-                  <span class="text"> Formularios </span>
+                  <span class="text"> Formulario/Form </span>
                 </a>
                 <ul id="ddmenu_5" class="collapse dropdown-nav">
                   <li>
-                    <a href="{{frappe.utils.get_url()}}/form-elements"> Elementos </a>
+                    <a href="{{frappe.utils.get_url()}}/form-elements"> Elemento/Item </a>
                   </li>
                 </ul>
               </li>
@@ -272,7 +313,7 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">Tablas</span>
+                  <span class="text">Tabla/Table</span>
                 </a>
               </li>
               <!-- Notificaciones -->
@@ -292,7 +333,7 @@
                       />
                     </svg>
                   </span>
-                  <span class="text">Notificaciones</span>
+                  <span class="text">Notificaci&oacute;n/Alert</span>
                 </a>
               </li>
               <!-- Fin ejemplos -->
@@ -301,15 +342,15 @@
         </ul>
       </nav>
       <div class="promo-box">
-        <h3>PibiDesk</h3>
-        <p>de PibiCo</p>
+        <h3><strong>pibi</strong>Desk</h3>
+        <p>by pibiCo</p>
         <a
-          href="https://www.pibico.org"
+          href="https://www.pibico.org#contact"
           target="_blank"
           rel="nofollow"
           class="main-btn primary-btn btn-hover"
         >
-          Cont&aacute;ctanos
+          Cont&aacute;ctanos<br>Contact Us
         </a>
       </div>
     </aside>
@@ -332,139 +373,20 @@
                     <i class="lni lni-chevron-left me-2"></i> Menu
                   </button>
                 </div>
-                <div class="header-search d-none d-md-flex">
-                  <form action="#">
-                    <input type="text" placeholder="Search..." />
-                    <button><i class="lni lni-search-alt"></i></button>
-                  </form>
-                </div>
               </div>
             </div>
             <div class="col-lg-7 col-md-7 col-6">
               <div class="header-right">
-                <!-- notification start -->
-                <div class="notification-box ml-15 d-none d-md-flex">
-                  <button
-                    class="dropdown-toggle"
-                    type="button"
-                    id="notification"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="lni lni-alarm"></i>
-                    <span>2</span>
-                  </button>
-                  <ul
-                    class="dropdown-menu dropdown-menu-end"
-                    aria-labelledby="notification"
-                  >
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="/assets/pibidesk/images/lead/lead-6.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>
-                            John Doe
-                            <span class="text-regular">
-                              comment on a product.
-                            </span>
-                          </h6>
-                          <p>
-                            Lorem ipsum dolor sit amet, consect etur adipiscing
-                            elit Vivamus tortor.
-                          </p>
-                          <span>10 mins ago</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="/assets/pibidesk/images/lead/lead-1.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>
-                            Jonathon
-                            <span class="text-regular">
-                              like on a product.
-                            </span>
-                          </h6>
-                          <p>
-                            Lorem ipsum dolor sit amet, consect etur adipiscing
-                            elit Vivamus tortor.
-                          </p>
-                          <span>10 mins ago</span>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <!-- notification end -->
-                <!-- message start -->
-                <div class="header-message-box ml-15 d-none d-md-flex">
-                  <button
-                    class="dropdown-toggle"
-                    type="button"
-                    id="message"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="lni lni-envelope"></i>
-                    <span>3</span>
-                  </button>
-                  <ul
-                    class="dropdown-menu dropdown-menu-end"
-                    aria-labelledby="message"
-                  >
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="/assets/pibidesk/images/lead/lead-5.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>Jacob Jones</h6>
-                          <p>Hey!I can across your profile and ...</p>
-                          <span>10 mins ago</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="/assets/pibidesk/images/lead/lead-3.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>John Doe</h6>
-                          <p>Would you mind please checking out</p>
-                          <span>12 mins ago</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="/assets/pibidesk/images/lead/lead-2.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>Anee Lee</h6>
-                          <p>Hey! are you available for freelance?</p>
-                          <span>1h ago</span>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <!-- message end -->
-                <!-- filter start -->
-                <div class="filter-box ml-15 d-none d-md-flex">
-                  <button class="" type="button" id="filter">
-                    <i class="lni lni-funnel"></i>
-                  </button>
-                </div>
-                <!-- filter end -->
                 <!-- profile start -->
                 <div class="profile-box ml-15">
+                {% if frappe.session.user == 'Guest' %}
+                  <a class="nav-link" href="login?redirect-to=index">
+                    <img src="/assets/pibidesk/images/profile/pibiCo_circular.svg" alt="user" class="rounded-circle" width="40">
+                    <span class="ml-2 d-none d-lg-inline-block">
+                      <span class="text-dark">Login</span>
+                    </span>
+                  </a>
+                  {% else %}
                   <button
                     class="dropdown-toggle bg-transparent border-0"
                     type="button"
@@ -474,14 +396,7 @@
                   >
                     <div class="profile-info">
                       <div class="info">
-                        <h6>John Doe</h6>
-                        <div class="image">
-                          <img
-                            src="/assets/pibidesk/images/profile/profile-image.png"
-                            alt=""
-                          />
-                          <span class="status"></span>
-                        </div>
+                        <h6>{{ frappe.session.user }}</h6>
                       </div>
                     </div>
                     <i class="lni lni-chevron-down"></i>
@@ -491,25 +406,17 @@
                     aria-labelledby="profile"
                   >
                     <li>
-                      <a href="#0">
-                        <i class="lni lni-user"></i> View Profile
-                      </a>
+                      <a href="{{frappe.utils.get_url()}}/app/user/{{ frappe.session.user }}">
+                        <i class="lni lni-user"></i> Ajustes/Settings</a>
                     </li>
                     <li>
-                      <a href="#0">
-                        <i class="lni lni-alarm"></i> Notifications
-                      </a>
+                      <a href="{{frappe.utils.get_url()}}/app/home"> <i class="lni lni-home"></i> Escritorio/Desk</a>
                     </li>
                     <li>
-                      <a href="#0"> <i class="lni lni-inbox"></i> Messages </a>
-                    </li>
-                    <li>
-                      <a href="#0"> <i class="lni lni-cog"></i> Settings </a>
-                    </li>
-                    <li>
-                      <a href="#0"> <i class="lni lni-exit"></i> Sign Out </a>
+                      <a href="{{frappe.utils.get_url()}}?cmd=web_logout"> <i class="lni lni-exit"></i> Salida/Logout</a>
                     </li>
                   </ul>
+                  {% endif %}
                 </div>
                 <!-- profile end -->
               </div>
@@ -528,8 +435,7 @@
               <div class="col-md-6">
                 <div class="title mb-30">
                   <!-- jinja -->
-                  <h2>eCommerce Dashboard {{frappe.utils.get_url()}}</h2>
-                  {{ message }} {{ pibico }}
+                  <h2>eCommerce Dashboard</h2>
                 </div>
               </div>
               <!-- end col -->
@@ -538,7 +444,7 @@
                   <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                       <li class="breadcrumb-item">
-                        <a href="#0">Dashboard</a>
+                        <a href="index">Home</a>
                       </li>
                       <li class="breadcrumb-item active" aria-current="page">
                         eCommerce
@@ -1430,13 +1336,13 @@
             <div class="col-md-6 order-last order-md-first">
               <div class="copyright text-center text-md-start">
                 <p class="text-sm">
-                  Designed and Developed by
+                  Desarrollado por / Developed by
                   <a
-                    href="https://plainadmin.com"
+                    href="https://www.pibico.org"
                     rel="nofollow"
                     target="_blank"
                   >
-                    PlainAdmin
+                    pibiCo
                   </a>
                 </p>
               </div>
@@ -1450,8 +1356,8 @@
                   justify-content-center justify-content-md-end
                 "
               >
-                <a href="#0" class="text-sm">Term & Conditions</a>
-                <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+                <a href="https://www.pibico.org/terminos_es" target="_blank" class="text-sm">Aviso Legal / Ts&Cs</a>
+                <a href="https://www.pibico.org/privacidad_es" target="_blank" class="text-sm ml-15">Privacidad / Privacy</a>
               </div>
             </div>
           </div>
