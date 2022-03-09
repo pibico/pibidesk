@@ -47,6 +47,13 @@ app_license = "MIT"
 #	"Role": "home_page"
 # }
 
+brand_html = '<div><img width="27px" src="/assets/pibidesk/images/logo/logo-icon.png"> pibi<strong>Desk</strong></div>'
+
+website_context = {
+  "favicon": "/assets/pibidesk/images/favicon.ico",
+  "splash_image": "/assets/pibidesk/images/logo/logo-horizontal.png"
+}
+
 # Generators
 # ----------
 
@@ -171,6 +178,8 @@ user_data_fields = [
 		"doctype": "{doctype_4}"
 	}
 ]
+
+fixtures = ['Role Profile', 'Role', 'Custom Field', 'Client Script', 'Property Setter', 'Translation']
 
 # Authentication and authorization
 # --------------------------------
