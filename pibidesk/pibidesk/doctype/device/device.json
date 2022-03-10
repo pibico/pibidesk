@@ -1,0 +1,194 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:device_shortcut",
+ "creation": "2022-03-10 18:08:04.211015",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "hostname",
+  "disabled",
+  "alias",
+  "device_shortcut",
+  "wifi_mac",
+  "connected",
+  "cb_01",
+  "sensor_type",
+  "is_gateway",
+  "local_url",
+  "serial",
+  "ble_mac",
+  "ip",
+  "warning_data_section",
+  "last_warning",
+  "warning_item",
+  "current_data_section",
+  "last_seen",
+  "data_item",
+  "alert_data_section",
+  "last_alert",
+  "alert_item"
+ ],
+ "fields": [
+  {
+   "fieldname": "hostname",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Hostname",
+   "search_index": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.sensor_type=='cpu';",
+   "fieldname": "is_gateway",
+   "fieldtype": "Check",
+   "label": "Is Gateway"
+  },
+  {
+   "depends_on": "eval:doc.is_gateway;",
+   "fieldname": "local_url",
+   "fieldtype": "Data",
+   "label": "Local URL"
+  },
+  {
+   "fieldname": "device_shortcut",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Device Shortcut",
+   "unique": 1
+  },
+  {
+   "fieldname": "cb_01",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sensor_type",
+   "fieldtype": "Link",
+   "label": "Sensor Type",
+   "options": "Sensor Type"
+  },
+  {
+   "fieldname": "alias",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Alias"
+  },
+  {
+   "default": "0",
+   "fieldname": "connected",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Connected"
+  },
+  {
+   "fieldname": "serial",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Serial"
+  },
+  {
+   "fieldname": "ip",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Connection IP"
+  },
+  {
+   "fieldname": "wifi_mac",
+   "fieldtype": "Data",
+   "label": "WiFi MAC"
+  },
+  {
+   "fieldname": "ble_mac",
+   "fieldtype": "Data",
+   "label": "BLE MAC"
+  },
+  {
+   "fieldname": "last_seen",
+   "fieldtype": "Datetime",
+   "label": "Last Seen"
+  },
+  {
+   "fieldname": "current_data_section",
+   "fieldtype": "Section Break",
+   "label": "Current Data"
+  },
+  {
+   "fieldname": "data_item",
+   "fieldtype": "Table",
+   "label": "Data Items",
+   "options": "Data Item"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "alert_data_section",
+   "fieldtype": "Section Break",
+   "label": "Alert Data"
+  },
+  {
+   "fieldname": "last_alert",
+   "fieldtype": "Datetime",
+   "label": "Last Alert"
+  },
+  {
+   "fieldname": "alert_item",
+   "fieldtype": "Table",
+   "label": "Alert Items",
+   "options": "Alert Item"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "warning_data_section",
+   "fieldtype": "Section Break",
+   "label": "Warning Data"
+  },
+  {
+   "fieldname": "last_warning",
+   "fieldtype": "Datetime",
+   "label": "Last Warning"
+  },
+  {
+   "fieldname": "warning_item",
+   "fieldtype": "Table",
+   "label": "Warning Items",
+   "options": "Warning Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-03-10 19:05:46.267936",
+ "modified_by": "Administrator",
+ "module": "Pibidesk",
+ "name": "Device",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "search_fields": "device_shortcut,alias",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "device_shortcut",
+ "track_changes": 1
+}

@@ -1,0 +1,54 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-03-09 22:41:33.162655",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "weather_url",
+  "cb_01",
+  "api_key"
+ ],
+ "fields": [
+  {
+   "fieldname": "weather_url",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Weather URL",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_01",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "api_key",
+   "fieldtype": "Data",
+   "label": "API Key"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2022-03-09 22:41:33.162655",
+ "modified_by": "Administrator",
+ "module": "Pibidesk",
+ "name": "Weather Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,0 +1,79 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-03-10 18:57:13.857707",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "place",
+  "description",
+  "repeat",
+  "by_email",
+  "by_sms",
+  "by_telegram",
+  "by_mqtt"
+ ],
+ "fields": [
+  {
+   "fieldname": "place",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Place",
+   "options": "Place"
+  },
+  {
+   "default": "0",
+   "fieldname": "repeat",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Repeat"
+  },
+  {
+   "default": "0",
+   "fieldname": "by_email",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "By Email"
+  },
+  {
+   "default": "0",
+   "fieldname": "by_sms",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "By SMS"
+  },
+  {
+   "default": "0",
+   "fieldname": "by_telegram",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "By Telegram"
+  },
+  {
+   "default": "0",
+   "fieldname": "by_mqtt",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "By MQTT"
+  },
+  {
+   "fetch_from": "place.description",
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "label": "Description",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-03-10 19:00:37.536192",
+ "modified_by": "Administrator",
+ "module": "Pibidesk",
+ "name": "Warning Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

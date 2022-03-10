@@ -1,0 +1,45 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-03-10 16:50:57.129341",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sensor_var",
+  "cb_01",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "sensor_var",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sensor Var",
+   "options": "Sensor Var"
+  },
+  {
+   "fieldname": "cb_01",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "sensor_var.description",
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Description",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-03-10 16:50:57.129341",
+ "modified_by": "Administrator",
+ "module": "Pibidesk",
+ "name": "Var Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

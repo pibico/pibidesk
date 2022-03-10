@@ -1,0 +1,84 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-03-10 18:47:13.112446",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sensor_var",
+  "uom",
+  "cb_01",
+  "low_value",
+  "high_value",
+  "cb_02",
+  "warning_disabled",
+  "active_low",
+  "active_high"
+ ],
+ "fields": [
+  {
+   "fieldname": "sensor_var",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sensor Var",
+   "options": "Sensor Var"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "UOM"
+  },
+  {
+   "fieldname": "cb_01",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "low_value",
+   "fieldtype": "Float",
+   "label": "Low Value",
+   "search_index": 1
+  },
+  {
+   "fieldname": "high_value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "High Value"
+  },
+  {
+   "fieldname": "cb_02",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "warning_disabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Warning Disabled"
+  },
+  {
+   "default": "0",
+   "fieldname": "active_low",
+   "fieldtype": "Check",
+   "label": "Active Low"
+  },
+  {
+   "default": "0",
+   "fieldname": "active_high",
+   "fieldtype": "Check",
+   "label": "Active High"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-03-10 18:47:13.112446",
+ "modified_by": "Administrator",
+ "module": "Pibidesk",
+ "name": "Alert Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

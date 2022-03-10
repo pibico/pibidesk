@@ -1,0 +1,95 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-03-10 18:40:29.212325",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sensor_var",
+  "uom",
+  "last_recorded",
+  "cb_01",
+  "value",
+  "reading",
+  "average",
+  "cb_02",
+  "maximum",
+  "minimum",
+  "alert"
+ ],
+ "fields": [
+  {
+   "fieldname": "sensor_var",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sensor Var",
+   "options": "Sensor Var"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "UOM"
+  },
+  {
+   "fieldname": "cb_01",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Value"
+  },
+  {
+   "fieldname": "reading",
+   "fieldtype": "Int",
+   "label": "Reading"
+  },
+  {
+   "fieldname": "average",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Average"
+  },
+  {
+   "fieldname": "cb_02",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "maximum",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Max"
+  },
+  {
+   "fieldname": "minimum",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Min"
+  },
+  {
+   "default": "0",
+   "fieldname": "alert",
+   "fieldtype": "Check",
+   "label": "Alert"
+  },
+  {
+   "fieldname": "last_recorded",
+   "fieldtype": "Datetime",
+   "label": "Last Recorded"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-03-10 18:41:11.125215",
+ "modified_by": "Administrator",
+ "module": "Pibidesk",
+ "name": "Data Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

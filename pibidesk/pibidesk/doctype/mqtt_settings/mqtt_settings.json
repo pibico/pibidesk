@@ -1,0 +1,113 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-03-09 21:26:58.983665",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "broker_gateway",
+  "port",
+  "cb_01",
+  "user",
+  "secret",
+  "is_ssl",
+  "sb_01",
+  "ssl_port",
+  "ca",
+  "cb_02",
+  "client_crt",
+  "client_key"
+ ],
+ "fields": [
+  {
+   "description": "Enter url without http, ie: iot.pibico.es",
+   "fieldname": "broker_gateway",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Broker Gateway",
+   "reqd": 1
+  },
+  {
+   "fieldname": "port",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Port",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_01",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Data",
+   "label": "User"
+  },
+  {
+   "fieldname": "secret",
+   "fieldtype": "Password",
+   "label": "Secret"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_ssl",
+   "fieldtype": "Check",
+   "label": "Is SSL"
+  },
+  {
+   "collapsible": 1,
+   "collapsible_depends_on": "eval:doc.is_ssl;",
+   "fieldname": "sb_01",
+   "fieldtype": "Section Break",
+   "label": "Security Settings"
+  },
+  {
+   "fieldname": "ca",
+   "fieldtype": "Attach",
+   "label": "CA"
+  },
+  {
+   "fieldname": "cb_02",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client_crt",
+   "fieldtype": "Attach",
+   "label": "Client CRT"
+  },
+  {
+   "fieldname": "client_key",
+   "fieldtype": "Attach",
+   "label": "Client KEY"
+  },
+  {
+   "fieldname": "ssl_port",
+   "fieldtype": "Int",
+   "label": "SSL Port"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2022-03-09 22:04:29.768168",
+ "modified_by": "Administrator",
+ "module": "Pibidesk",
+ "name": "MQTT Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

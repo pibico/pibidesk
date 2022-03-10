@@ -90,6 +90,13 @@ website_context = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
 
+jenv = {
+  "methods": [
+    "get_qrcode:pibidesk.jinja_filters.get_qrcode",
+    "get_svg:pibidesk.jinja_filters.get_svg"
+  ]
+}
+
 # DocType Class
 # ---------------
 # Override standard doctype classes
@@ -188,3 +195,8 @@ fixtures = ['Role Profile', 'Role', 'Custom Field', 'Client Script', 'Property S
 # 	"pibidesk.auth.validate"
 # ]
 
+default_mail_footer = """
+    <div>
+        Sent via <a href="http://www.pibico.org" target="_blank">pibiCo through PibiDesk</a>
+    </div>
+"""

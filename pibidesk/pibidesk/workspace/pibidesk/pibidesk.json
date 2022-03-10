@@ -1,0 +1,153 @@
+{
+ "cards_label": "Pibidesk",
+ "category": "Modules",
+ "charts": [],
+ "creation": "2022-03-09 21:58:06.884606",
+ "developer_mode_only": 0,
+ "disable_user_customization": 0,
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "extends_another_page": 0,
+ "hide_custom": 0,
+ "icon": "tag",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "label": "Pibidesk",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sensors & Views",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Devices",
+   "link_to": "Device",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "icon": "setting",
+   "is_query_report": 0,
+   "label": "Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Places",
+   "link_to": "Place",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sensor Type",
+   "link_to": "Sensor Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sensor Vars",
+   "link_to": "Sensor Var",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Clients",
+   "link_to": "Client",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Contacts",
+   "link_to": "Contact",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "icon": "support",
+   "is_query_report": 0,
+   "label": "Channels",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Weather Settings",
+   "link_to": "Weather Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "MQTT Settings",
+   "link_to": "MQTT Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "only_for": "",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "SMS Settings",
+   "link_to": "SMS Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Telegram Settings",
+   "link_to": "Telegram Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Email Acounts",
+   "link_to": "Email Account",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2022-03-10 18:16:41.319766",
+ "modified_by": "Administrator",
+ "module": "Pibidesk",
+ "name": "Pibidesk",
+ "owner": "Administrator",
+ "pin_to_bottom": 0,
+ "pin_to_top": 0,
+ "shortcuts": []
+}
