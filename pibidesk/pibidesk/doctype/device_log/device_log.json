@@ -1,0 +1,134 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{YY}{MM}{DD}_{device}-{##}",
+ "creation": "2022-03-10 20:23:17.693024",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "device",
+  "min",
+  "max",
+  "cb_01",
+  "date",
+  "average",
+  "points",
+  "sb_01",
+  "main_chart",
+  "main_pic",
+  "cb_02",
+  "second_chart",
+  "second_pic",
+  "sb_02",
+  "log_item"
+ ],
+ "fields": [
+  {
+   "fieldname": "device",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Device",
+   "options": "Device"
+  },
+  {
+   "fieldname": "min",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Min"
+  },
+  {
+   "fieldname": "max",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Max"
+  },
+  {
+   "fieldname": "cb_01",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "average",
+   "fieldtype": "Float",
+   "label": "Average"
+  },
+  {
+   "fieldname": "points",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Points"
+  },
+  {
+   "fieldname": "sb_01",
+   "fieldtype": "Section Break",
+   "label": "Dashboard"
+  },
+  {
+   "fieldname": "main_chart",
+   "fieldtype": "HTML",
+   "label": "Main Chart",
+   "options": "<div id=\"main_chart\"></div>"
+  },
+  {
+   "fieldname": "cb_02",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "second_chart",
+   "fieldtype": "HTML",
+   "label": "Second Chart"
+  },
+  {
+   "fieldname": "sb_02",
+   "fieldtype": "Section Break",
+   "label": "Log Data"
+  },
+  {
+   "fieldname": "log_item",
+   "fieldtype": "Table",
+   "label": "Log Item",
+   "options": "Log Item"
+  },
+  {
+   "fieldname": "main_pic",
+   "fieldtype": "Attach Image",
+   "label": "Main to Picture"
+  },
+  {
+   "fieldname": "second_pic",
+   "fieldtype": "Attach Image",
+   "label": "Second to Picture"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-03-10 20:27:14.130073",
+ "modified_by": "Administrator",
+ "module": "Pibidesk",
+ "name": "Device Log",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

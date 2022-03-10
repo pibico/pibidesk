@@ -133,7 +133,7 @@
    "collapsible": 1,
    "fieldname": "alert_data_section",
    "fieldtype": "Section Break",
-   "label": "Alert Data"
+   "label": "Alert Thresholds"
   },
   {
    "fieldname": "last_alert",
@@ -150,7 +150,7 @@
    "collapsible": 1,
    "fieldname": "warning_data_section",
    "fieldtype": "Section Break",
-   "label": "Warning Data"
+   "label": "Warning Channels"
   },
   {
    "fieldname": "last_warning",
@@ -166,7 +166,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-10 19:05:46.267936",
+ "modified": "2022-03-10 21:09:06.562919",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device",

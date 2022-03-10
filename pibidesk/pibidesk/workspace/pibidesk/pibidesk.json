@@ -34,6 +34,33 @@
   },
   {
    "hidden": 0,
+   "is_query_report": 0,
+   "label": "Device Views",
+   "link_to": "Device View",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Device Logs",
+   "link_to": "Device Log",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Device Alerts",
+   "link_to": "Alert Log",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
    "icon": "setting",
    "is_query_report": 0,
    "label": "Settings",
@@ -135,14 +162,14 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Email Acounts",
+   "label": "Email Accounts",
    "link_to": "Email Account",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2022-03-10 18:16:41.319766",
+ "modified": "2022-03-10 21:18:42.424098",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Pibidesk",
