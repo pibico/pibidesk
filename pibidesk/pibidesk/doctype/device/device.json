@@ -12,23 +12,26 @@
   "disabled",
   "alias",
   "device_shortcut",
-  "wifi_mac",
-  "connected",
+  "place",
+  "place_name",
+  "assigned_to",
+  "last_seen",
   "cb_01",
   "sensor_type",
   "is_gateway",
   "local_url",
   "serial",
+  "wifi_mac",
   "ble_mac",
   "ip",
+  "connected",
+  "cb_02",
+  "location",
   "warning_data_section",
-  "last_warning",
   "warning_item",
   "current_data_section",
-  "last_seen",
   "data_item",
   "alert_data_section",
-  "last_alert",
   "alert_item"
  ],
  "fields": [
@@ -98,6 +101,7 @@
    "label": "Serial"
   },
   {
+   "depends_on": "eval:doc.connected;",
    "fieldname": "ip",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -136,11 +140,6 @@
    "label": "Alert Thresholds"
   },
   {
-   "fieldname": "last_alert",
-   "fieldtype": "Datetime",
-   "label": "Last Alert"
-  },
-  {
    "fieldname": "alert_item",
    "fieldtype": "Table",
    "label": "Alert Items",
@@ -153,9 +152,37 @@
    "label": "Warning Channels"
   },
   {
-   "fieldname": "last_warning",
-   "fieldtype": "Datetime",
-   "label": "Last Warning"
+   "fieldname": "cb_02",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "{\n \"type\":\"FeatureCollection\",\n \"features\":[\n   {\n    \"type\":\"Feature\",\n    \"properties\":{},\n    \"geometry\":{\n     \"type\":\"Point\",\n     \"coordinates\":[-5.659431,43.537639]\n     }\n   }\n  ]\n}",
+   "fieldname": "location",
+   "fieldtype": "Geolocation",
+   "ignore_user_permissions": 1,
+   "label": "Location"
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Assigned To",
+   "options": "Client"
+  },
+  {
+   "fieldname": "place",
+   "fieldtype": "Link",
+   "label": "Place",
+   "options": "Place"
+  },
+  {
+   "fetch_from": "place.description",
+   "fieldname": "place_name",
+   "fieldtype": "Data",
+   "label": "Place Name",
+   "read_only": 1
   },
   {
    "fieldname": "warning_item",
@@ -166,7 +193,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-10 21:09:06.562919",
+ "modified": "2022-03-12 20:14:46.068395",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device",

@@ -87,6 +87,24 @@
       background-repeat: no-repeat;
       background-size: cover;
     }
+    .greencard {
+      background: url("/assets/pibidesk/images/cards/greenhouse.jpg");
+      /* Full height */
+      height: 100%; 
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .shipcard {
+      background: url("/assets/pibidesk/images/cards/ship_in_smartphone.jpg");
+      /* Full height */
+      height: 100%; 
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
     .olas{
       position: absolute;
       padding: 0px;
@@ -100,6 +118,39 @@
       margin: 0px;
       top: 50%;
       left: 60%;
+    }
+    .extractor{
+      position: absolute;
+      padding: 0px;
+      margin: 0px;
+      top: 13%;
+      left: 33%;
+    }
+    .calefactor{
+      position: absolute;
+      padding: 0px;
+      margin: 0px;
+      top: 18%;
+      left: 25%;
+    }
+    .element{
+      position: absolute;
+      padding: 0px;
+      margin: 0px;
+    }
+    .grua1{
+      position: absolute;
+      padding: 0px;
+      margin: 0px;
+      top: 30%;
+      left: 70%;
+    }
+    .grua2{
+      position: absolute;
+      padding: 0px;
+      margin: 0px;
+      top: 30%;
+      left: 50%;
     }
     .infotag{
       position: absolute;
@@ -530,7 +581,7 @@
               <div class="col-md-6">
                 <div class="title mb-30">
                   <!-- jinja -->
-                  <h2>Paneles/Cards</h2>
+                  <h2>M&aacute;s Paneles/More Cards</h2>
                 </div>
               </div>
               <!-- end col -->
@@ -542,7 +593,7 @@
                         <a href="index">Home</a>
                       </li>
                       <li class="breadcrumb-item active" aria-current="page">
-                        Paneles/Cards
+                        M&aacute;s Paneles/More Cards
                       </li>
                     </ol>
                   </nav>
@@ -554,71 +605,32 @@
           </div>
           
           <div class="row">
+            <!-- start column 1 -->
+            <!-- card 1 -->
             <div class="col-xl-4 col-lg-4 col-md-6">
-              <div class="card">
+              <div class="card mb-3" style="height:700px;">
                 <div class="card-header">
-                  <span class="card-title menu-nav">
-                    <span><i data-feather="menu" class="svg-icon"></i> <strong>Panel</strong></span>
-                    <div class="dropdown-container" tabindex="-1">
-                      <div class="three-dots"></div>
-                      <div class="dropdown p-3">
-                        <a href="#"><div>menu 1</div></a>
-                        <br>
-                        <a href="#"><div>menu 2</div></a>
-                        <br>
-                        <a href="#"><div>menu 3</div></a>
-                      </div>
-                    </div>
+		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
+                    <strong>Area</strong>
+                  </span>
+ 		            </div>
+                <div class="card-body greencard">
+                  <span>
+                    <a href="javascript:alert('Pulsado Boton Extractor')" title="Extractor" class="extractor btn btn-success rounded-circle text-white m-0 p-1"><i data-feather="sunset" class="svg-icon font-30"></i></a>
+                    <a href="javascript:alert('Pulsado Boton Calefactor')" title="Calefactor" class="calefactor btn btn-danger rounded-circle text-white m-0 p-1"><i data-feather="sunset" class="svg-icon font-30"></i></a>
+                    <a href="javascript:alert('Grafico de Interior')" title="interior" class="element bg-primary text-white m-0 p-1" style="top: 40%; left: 50%;"><i data-feather="thermometer" class="svg-icon font-30" ></i> 22 &#176;C</a>
+                    
                   </span>
                 </div>
-                <div class="card-body">
-                  <div class="avatar">
-                    <img alt="" src="/assets/pibidesk/images/profile/pibiCo_circular.svg">
-                  </div>
-                  <div class="title">
-                    <a target="_blank" href="https://www.pibico.org">PibiCo</a>
-                  </div>
-                  <div class="desc">Caracteristicas/Features</div>
-                  <div class="desc">Nombre/Name</div>
-                  <div class="desc">Experiencia/Experience</div>
-                </div>
-                <div class="card-footer m-0 p-0">
-                  <ul class="nav nav-pills">
-                    <li class="nav-item">
-                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
-                    </li>
-                  </ul>  
-                </div>
-              </div>        
-            </div>
-        
-            <div class="col-xl-4 col-lg-4 col-md-6">
-              <div class="card">
-                <!-- Header -->
-                <div class="card-header">
-                  <span class="card-title"><i data-feather="sliders" class="svg-icon"></i> <strong>Formacion/Training</strong>
-                    <span class="badge badge-danger badge-counter badge-pill ml-1">3</span>
-                  </span>
-                </div>
-                <!-- End Header -->
-                <!-- Body -->
-                <div class="card-body m-0 p-0">
-                  <div id="map1"></div>
-                </div>
-                <!-- End Body -->
-                <!-- Footer -->
                 <div class="card-footer m-0 p-0">
                   <ul class="nav nav-pills">
                     <li class="nav-item">
                       <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
                     </li>
                   </ul>
-                </div> 
-                <!-- End Footer -->
+                </div>       
               </div>
-            </div>
-        
-            <div class="col-xl-4 col-lg-4 col-md-6">
+              <!-- card 2 -->
 	            <div class="card">
 		            <div class="card-header">
 			            <span class="card-title"><i data-feather="home" class="svg-icon"></i> <strong>Control</strong></span>
@@ -673,7 +685,6 @@
 						          <input type="range" id="BrightnessInput" name="BrightnessInput" min="0" max="100" value="10" oninput="BrightnessOutput.value=value" onchange="">
 						          <output id="BrightnessOutput">10</output>
 					          </div>
-                    <p></p>
                   </div>             
 				        </div>
 			          <div class="card-footer m-0 p-0">
@@ -684,10 +695,34 @@
                   </ul>  
                 </div>
 	            </div>
+            <!-- end column 1 -->
             </div>
             
             <div class="col-xl-4 col-lg-4 col-md-6">
-              <div class="card">
+            <!-- start column 2 -->  
+              <!-- card 1 -->
+              <div class="card mb-3" style="height:600px;">
+                <div class="card-header">
+		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
+                    <strong>Area</strong>
+                  </span>
+ 		            </div>
+                <div class="card-body shipcard">
+                  <span>
+                    <a href="javascript:alert('Pulsado Boton Grua 1')" title="Nave" class="grua1 btn btn-success rounded-circle text-white m-0 p-1"><i data-feather="sunset" class="svg-icon font-30"></i></a>
+                    <a href="javascript:alert('Pulsado Boton Grua 2')" title="Olas" class="grua2 btn btn-danger rounded-circle text-white m-0 p-1"><i data-feather="sunset" class="svg-icon font-30"></i></a>
+                  </span>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>       
+              </div>
+              <!-- card 2 -->
+              <div class="card mb-3" style="height:480px;">
                 <div class="card-header">
 		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
                     <strong>Area</strong>
@@ -707,9 +742,26 @@
                   </ul>
                 </div>       
               </div>
+            <!-- end column 2 -->
             </div>
             
             <div class="col-xl-4 col-lg-4 col-md-6">
+            <!-- column 3 -->
+              <!-- card 1 -->
+              <div class="icon-card mb-30">
+                <div class="icon purple">
+                  <i class="lni lni-cart-full"></i>
+                </div>
+                <div class="content">
+                  <h6 class="mb-10">New Orders</h6>
+                  <h3 class="text-bold mb-10">34567</h3>
+                  <p class="text-sm text-success">
+                    <i class="lni lni-arrow-up"></i> +2.00%
+                    <span class="text-gray">(30 days)</span>
+                  </p>
+                </div>
+              </div>
+              <!-- card 2 -->
               <div class="card">
                 <!-- Header -->
                 <div class="card-header">
@@ -771,80 +823,42 @@
                 </div>
                 <!-- End Footer -->
               </div>
-            </div>
-      
-            <div class="col-xl-4 col-lg-4 col-md-6">
-              <div class="card">
-		            <div class="card-header">
-		              <span class="card-title"><i data-feather="map-pin" class="svg-icon"></i>
-                    Localizaciones/Places
-                    <span class="badge badge-danger badge-counter badge-pill mr-1"> 6</span>
+              <!-- card 3 -->
+              <div class="card mb-3">
+                <div class="card-header">
+		              <span class="card-title"><i data-feather="trending-up" class="svg-icon"></i>
+                    <strong>Econom&iacute;a/Economics</strong>
                   </span>
  		            </div>
-		            <div>
-                  <iframe class="mb-1" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=-5.665544271469116%2C43.53550607619477%2C-5.653570890426636%2C43.53973707521311&amp;layer=mapnik&amp;marker=43.537621612814235%2C-5.659557580947876" style="border: none;" width="100%" height="120px"></iframe>
-                </div>
-          
-		            <div class="px-4 pb-4 pt-3-5">
-                  <h5 class="card-subtitle font-weight-light mt-3">pibi<strong>Desk</strong> by <a href="https://www.pibico.org" target="_blank">PibiCo</a></h5>  
-                </div>
-		            <div class="card-body">
-                  <ul class="list-style-none mb-0">
-                    <li class="link">
-                      <i class="fas fa-circle text-primary mr-2"></i>
-                      <span class="text-muted link" onclick="window.open('/desk#List/Device/List','_blank')"><i data-feather="airplay" class="svg-icon"></i> Otros/Others</span>
-                      <span class="text-dark float-right font-weight-medium">0</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="card-footer m-0 p-0">
-                  <ul class="nav nav-pills">
-                    <li class="nav-item">
-                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
-                    </li>
-                  </ul>
-                </div>      
-              </div>
-            </div>
-            
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-              <div class="card">
-                <div class="card-header">
-                  <span class="card-title">
-                    <i data-feather="camera" class="svg-icon"></i> 
-                    Camaras/Cameras
-                  </span>
-                </div>
-                <div class="card-body  m-1 p-0">
-                  <div class="chart embed-responsive embed-responsive-16by9">
-                    <iframe src="{{frappe.utils.get_url()}}/assets/pibidesk/images/cards/camera.jpg" class="embed-responsive-item"></iframe>
+                <div class="card-body">
+                  <div class="
+                    title
+                    d-flex
+                    flex-wrap
+                    align-items-center
+                    justify-content-between
+                  ">
+                    <div class="left">
+                      <h6 class="text-medium mb-30">Gastos/Expenses</h6>
+                    </div>
+                    <div class="right">
+                      <div class="select-style-1">
+                        <div class="select-position select-sm">
+                          <select class="light-bg">
+                            <option value="">Anual/Yearly</option>
+                            <option value="">Mensual/Monthly</option>
+                            <option value="">Semanal/Weekly</option>
+                          </select>
+                        </div>
+                      </div>
+                      <!-- end select -->
+                    </div>
                   </div>
-                </div>
-                <div class="card-footer m-0 p-0">
-                  <ul class="nav nav-pills">
-                    <li class="nav-item">
-                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
-                    </li>
-                  </ul>
-                </div>     
-              </div>
-            </div>
-            
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-              <div class="card">
-                <div class="card-header">
-                  <span class="card-title">
-                    <i data-feather="bar-chart" class="svg-icon"></i> 
-                    Grafico/Chart
-                  </span>
-                </div>
-                <div class="card-body m-1 p-0">
-                  <div class="chart embed-responsive embed-responsive-16by9">
-                    <canvas
-                      id="Chart1"
-                      class="embed-responsive-item"
-                    ></canvas>
+                  <!-- End Title -->
+                  <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <canvas id="Chart2" style="width: 100%; height: 210; display: block;" class="chartjs-render-monitor" width="360" height="210"></canvas>
                   </div>
+                  <!-- End Chart -->
                 </div>
                 <div class="card-footer m-0 p-0">
                   <ul class="nav nav-pills">
@@ -852,10 +866,11 @@
                       <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
                     </li>
                   </ul>
-                </div>     
+                </div>       
               </div>
+             <!-- end column 3 -->
             </div>
-            
+              
           </div>
         </div>
         <!-- end container -->
@@ -911,224 +926,36 @@
     <script src="/assets/pibidesk/js/feather.min.js"></script>
     <script>
       feather.replace()
-    </script> 
-    <script src="/assets/pibidesk/dist/leaflet/leaflet.js"></script>
-    <script src="/assets/pibidesk/js/barcos1.js"></script>
+    </script>
     
     <script>
-	    //variables de capas sobrepuestas
-		  var cities = L.layerGroup();
-		  var boats = L.layerGroup();
-		  var boatRoute= L.layerGroup();
-      var mstc = L.layerGroup();
-      
-		  //cities
-		  L.marker([43.5314071, -5.7384944]).bindPopup('Gijon').addTo(cities),
-		  //mstc
-      L.marker([38.690664, -9.300033]).bindPopup("<b>Escola Superior Nautica Infante D. Henrique</b><br><a href='https://www.enautica.pt/' target='_blank'>ENIDH</a>").addTo(mstc),
-      L.marker([43.4901352, -5.7611543]).bindPopup("<b>Centro de Seguridad Maritima Integral</b><br><a href='https://www.centrojovellanos.es/' target='_blank'>Centro Jovellanos</a>").addTo(mstc),
-      L.marker([51.833855, -8.305259]).bindPopup("<b>National Maritime College of Ireland</b><br><a href='https://www.nmci.ie/' target='_blank'>NMCI</a>").addTo(mstc);
-
-      var overlays = {
-			  "Ciudades": cities, 
-			  "Barcos": boats,
-			  "Rutas": boatRoute,
-        "MSTC": mstc
-			};
-		
-		  //variables de capas sobrepuestas
-		  var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' + 'Imagery <a href="https://www.mapbox.com/">Mapbox</a>, Data <a href="https://www.pibico.org">pibiCo</a>',
-		  mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
-		  mbAttr2 = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-		  mbUrl2 ='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-		
-		  var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
-		  streets = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
-		  satellite = L.tileLayer(mbUrl, {id: 'mapbox/satellite-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
-		  normal  = L.tileLayer(mbUrl2, {tileSize: 512, zoomOffset: -1, attribution: mbAttr2});
-		  var baseLayers = {
-			  "Escala grises": grayscale,
-			  "Carreteras": streets,
-			  "Satelite": satellite,
-			  "Normal": normal };
-		
-		  //variables de coordenadas de centro
-		  var vlat = 46.528635;
-		  var vlong = -8.750027;
-		  //variable de creacion de mapa y filtros a activar
-		  var map = L.map('map1', {
-			  center: [vlat, vlong],
-			  zoom: 4,
-			  layers: [satellite, boats, boatRoute, cities, mstc ]
-			});
-		  
-		  //Barcos
-		  var barcoIconGreen = L.icon({ iconUrl: '/assets/pibidesk/images/leaflet/icon0g.png', iconSize: [40, 20], });
-		  var barcoIconRed = L.icon({ iconUrl: '/assets/pibidesk/images/leaflet/icon0g.png', iconSize: [40, 20], });
-	
-		  var barcos = barcos1.features;
-		  var vdescbarco = "";
-		  L.geoJSON(barcos, {
-			  pointToLayer: function (feature, latlng) {
-				  vdescbarco = '<b>' + feature.properties.vessel_name + '</b><br>'
-                       + feature.properties.vessel_type + '<br>'
-                       + feature.properties.flag_country;
-				  if (feature.properties.vessel_type === "Fishing") {
-						return L.marker(latlng, {icon: barcoIconGreen}).addTo(boats).bindPopup(vdescbarco);
-					} else {
-						return L.marker(latlng, {icon: barcoIconRed}).addTo(boats).bindPopup(vdescbarco);
-					}
-			  }
-		  });
-		
-	 	  //Supongamos que tenemos un calculo de trayectoria de los barcos
-		  //plasmariamos las lineas con esos datos, pero para el ejemplo solo hago una
-		  var boatRouteLines = [{
-			  "type": "LineString",
-			  "coordinates": [[-5.56681, 43.58661], [-3.8025687, 43.6570279], [ -3.744675889342295, 43.4678933015832], [-3.8395188, 43.4328088]]  
-		  }, {
-			  "type": "LineString",
-			  "coordinates": [[-5.265974, 43.51589], [-5.265874, 43.51589], [-5.265774, 43.51589]]
-		  }];
-
-		  var boatRouteStyle = { "color": "#ff7800", "weight": 5, "opacity": 0.65 };
-
-		  L.geoJSON(boatRouteLines, {
-			  style: boatRouteStyle
-		  }).addTo(boatRoute);
-				
-		  // anadir control de capas
-		  L.control.layers(baseLayers, overlays).addTo(map);
-		
-		  // anadir control de escala
-		  L.control.scale().addTo(map);
-		
-      // anadir funcion click en map para mostrar coordenadas
-      var popup = L.popup();
-	    function onMapClick(e) {
-		    popup
-          .setLatLng(e.latlng)
-          .setContent("<b>Clicked on</b><br><i>" + e.latlng.toString() + "</i>")
-          .openOn(map);
-	      }
-	    map.on('click', onMapClick);
-			
-	</script>
-    
-  <script src="/assets/pibidesk/js/main.js"></script>
-  <script>
-    // =========== chart one start
-      const ctx1 = document.getElementById("Chart1").getContext("2d");
-      const chart1 = new Chart(ctx1, {
+    // =========== chart two start
+      const ctx2 = document.getElementById("Chart2").getContext("2d");
+      const chart2 = new Chart(ctx2, {
         // The type of chart we want to create
-        type: "line", // also try bar or other graph types
-
+        type: "doughnut", // also try bar or other graph types
         // The data for our dataset
         data: {
-          labels: [
-            "Jan",
-            "Fab",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
-          // Information about the dataset
-          datasets: [
-            {
-              label: "",
-              backgroundColor: "transparent",
-              borderColor: "#4A6CF7",
-              data: [
-                600, 800, 750, 880, 940, 880, 900, 770, 920, 890, 976, 1100,
-              ],
-              pointBackgroundColor: "transparent",
-              pointHoverBackgroundColor: "#4A6CF7",
-              pointBorderColor: "transparent",
-              pointHoverBorderColor: "#fff",
-              pointHoverBorderWidth: 5,
-              pointBorderWidth: 5,
-              pointRadius: 8,
-              pointHoverRadius: 8,
-            },
-          ],
-        },
-
-        // Configuration options
-        defaultFontFamily: "Raleway",
-        options: {
-          tooltips: {
-            callbacks: {
-              labelColor: function (tooltipItem, chart) {
-                return {
-                  backgroundColor: "#ffffff",
-                };
-              },
-            },
-            intersect: false,
-            backgroundColor: "#f9f9f9",
-            titleFontFamily: "Raleway",
-            titleFontColor: "#8F92A1",
-            titleFontColor: "#8F92A1",
-            titleFontSize: 12,
-            bodyFontFamily: "Raleway",
-            bodyFontColor: "#171717",
-            bodyFontStyle: "bold",
-            bodyFontSize: 16,
-            multiKeyBackground: "transparent",
-            displayColors: false,
-            xPadding: 30,
-            yPadding: 10,
-            bodyAlign: "center",
-            titleAlign: "center",
-          },
-
-          title: {
-            display: false,
-          },
-          legend: {
-            display: false,
-          },
-
-          scales: {
-            yAxes: [
-              {
-                gridLines: {
-                  display: true,
-                  drawTicks: false,
-                  drawBorder: false,
-                },
-                ticks: {
-                  padding: 35,
-                  max: 1200,
-                  min: 500,
-                },
-              },
-            ],
-            xAxes: [
-              {
-                gridLines: {
-                  drawBorder: false,
-                  color: "rgba(143, 146, 161, .1)",
-                  zeroLineColor: "rgba(143, 146, 161, .1)",
-                },
-                ticks: {
-                  padding: 20,
-                },
-              },
-            ],
-          },
-        },
+           labels: [
+             'Rojo/Red',
+             'Azul/Blue',
+             'Amarillo/Yellow'
+           ],
+           datasets: [{
+             label: 'My First Dataset',
+             data: [300, 50, 100],
+             backgroundColor: [
+               'rgb(255, 99, 132)',
+               'rgb(54, 162, 235)',
+               'rgb(255, 205, 86)'
+             ],
+             hoverOffset: 4
+           }]
+        }
       });
-
-      // =========== chart one end
-  
-  </script>  
+      // =========== chart two end
+    </script> 
+    <script src="/assets/pibidesk/js/main.js"></script>
+ 
   </body>
 </html>

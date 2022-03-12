@@ -109,13 +109,16 @@ jenv = {
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
+#doc_events = {
 # 	"*": {
 # 		"on_update": "method",
 # 		"on_cancel": "method",
 # 		"on_trash": "method"
 #	}
-# }
+#    "Device Log": {
+#      "after_save": "pibidesk.pibidesk.custom.update_device"
+#    }
+#}
 
 # Scheduled Tasks
 # ---------------

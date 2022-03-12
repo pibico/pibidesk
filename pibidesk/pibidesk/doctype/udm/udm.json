@@ -2,48 +2,37 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "field:title",
- "creation": "2022-03-10 16:35:31.165011",
+ "creation": "2022-03-11 17:33:08.015498",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "title",
-  "uom",
-  "cb_01",
   "description"
  ],
  "fields": [
   {
    "fieldname": "title",
    "fieldtype": "Data",
-   "label": "Title",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "title",
    "unique": 1
   },
   {
    "fieldname": "description",
-   "fieldtype": "Small Text",
-   "in_global_search": 1,
+   "fieldtype": "Data",
    "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Description"
-  },
-  {
-   "fieldname": "cb_01",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "uom",
-   "fieldtype": "Link",
-   "label": "UOM",
-   "options": "UdM"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-11 17:35:07.843503",
+ "modified": "2022-03-11 17:33:08.015498",
  "modified_by": "Administrator",
  "module": "Pibidesk",
- "name": "Sensor Var",
+ "name": "UdM",
  "owner": "Administrator",
  "permissions": [
   {

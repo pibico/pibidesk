@@ -8,18 +8,11 @@
  "engine": "InnoDB",
  "field_order": [
   "device",
-  "min",
-  "max",
   "cb_01",
   "date",
-  "average",
-  "points",
   "sb_01",
-  "main_chart",
-  "main_pic",
-  "cb_02",
-  "second_chart",
-  "second_pic",
+  "chart",
+  "pic",
   "sb_02",
   "log_item"
  ],
@@ -34,18 +27,6 @@
    "options": "Device"
   },
   {
-   "fieldname": "min",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Min"
-  },
-  {
-   "fieldname": "max",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Max"
-  },
-  {
    "fieldname": "cb_01",
    "fieldtype": "Column Break"
   },
@@ -55,35 +36,9 @@
    "label": "Date"
   },
   {
-   "fieldname": "average",
-   "fieldtype": "Float",
-   "label": "Average"
-  },
-  {
-   "fieldname": "points",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Points"
-  },
-  {
    "fieldname": "sb_01",
    "fieldtype": "Section Break",
    "label": "Dashboard"
-  },
-  {
-   "fieldname": "main_chart",
-   "fieldtype": "HTML",
-   "label": "Main Chart",
-   "options": "<div id=\"main_chart\"></div>"
-  },
-  {
-   "fieldname": "cb_02",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "second_chart",
-   "fieldtype": "HTML",
-   "label": "Second Chart"
   },
   {
    "fieldname": "sb_02",
@@ -97,19 +52,20 @@
    "options": "Log Item"
   },
   {
-   "fieldname": "main_pic",
-   "fieldtype": "Attach Image",
-   "label": "Main to Picture"
+   "fieldname": "chart",
+   "fieldtype": "HTML",
+   "label": "Chart",
+   "options": "<div id=\"main_chart\"></div>"
   },
   {
-   "fieldname": "second_pic",
+   "fieldname": "pic",
    "fieldtype": "Attach Image",
-   "label": "Second to Picture"
+   "label": "Chart to Picture"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-10 20:27:14.130073",
+ "modified": "2022-03-12 19:54:50.314777",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device Log",

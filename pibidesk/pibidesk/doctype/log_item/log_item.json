@@ -8,10 +8,9 @@
  "field_order": [
   "sensor_var",
   "uom",
-  "value",
-  "data_date",
   "cb_01",
-  "payload"
+  "value",
+  "data_date"
  ],
  "fields": [
   {
@@ -24,9 +23,10 @@
   {
    "fetch_from": "sensor_var.uom",
    "fieldname": "uom",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "label": "UOM",
+   "options": "UdM",
    "read_only": 1
   },
   {
@@ -40,11 +40,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "payload",
-   "fieldtype": "Long Text",
-   "label": "Payload"
-  },
-  {
    "fieldname": "data_date",
    "fieldtype": "Datetime",
    "in_list_view": 1,
@@ -54,7 +49,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-03-10 20:44:00.062076",
+ "modified": "2022-03-11 19:03:38.202752",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Log Item",
