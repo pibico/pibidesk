@@ -150,9 +150,30 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
   if len(alert_log_item) > 0:
     ## Check active alerts for each var 
     alert_log = frappe.get_doc("Alert Log", frappe.utils.getdate().strftime("%y%m%d") + "_" + doc.name)
-    
-    
-            
+    if len(alert_log.alert_log_item) > 0:
+      doStart = True
+      for row in alert_log.alert_log_item:
+        if row.sensor_var == sensor_var:
+          if not row.to_time and reason == 'finish':
+            doStart = False
+            row.to_time = datadate.strftime("%Y-%m-%d %H:%M:%S")
+            row.save()
+      if doStart and reason == 'start':
+        _alert_log_item = {}
+        _alert_log_item['sensor_var'] = sensor_var
+        _alert_log_item['uom'] = uom
+        _alert_log_item['from_time'] = datadate.strftime("%Y-%m-%d %H:%M:%S")
+        if 'Email' in alert_channel:
+          _alert_log_item['by_email'] = True
+        if 'SMS' in alert_channel:
+          _alert_log_item['by_sms'] = True
+        if 'Telegram' in alert_channel:
+          _alert_log_item['by_telegram'] = True  
+        _alert_log_item['value'] = value
+        _alert_log_item['alert_type'] = cmd
+        log_item = alert_log.append("alert_log_item", _alert_log_item)
+        alert_log.save()
+        frappe.db.commit()    
   else:
     ## Create new empty Daily Alert Log
     alert_log = frappe.new_doc("Alert Log")
@@ -183,9 +204,9 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
       strAlert = sensor_var + " low by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"
   if reason == 'finish':
     if cmd == 'high':
-      strAlert = sensor_var + " high by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"
+      strAlert = sensor_var + " high finished by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"
     if cmd == 'low':
-      strAlert = sensor_var + " low by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"  
+      strAlert = sensor_var + " low finished by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"  
   if len(email_recipients) > 0:
     subject = ""
     if reason == 'start':
