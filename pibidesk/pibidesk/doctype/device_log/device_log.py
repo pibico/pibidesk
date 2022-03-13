@@ -110,8 +110,7 @@ class DeviceLog(Document):
             stat = device.append("data_item", data_item)
             ## Save and Commit Modifications
             device.save()
-            frappe.db.commit()
-          
+            frappe.db.commit()         
           ## End Code           
     else:
       frappe.msgprint(_("No data yet registered"))   
@@ -196,7 +195,7 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
     alert_log.save()
     frappe.db.commit()
   
-  ## Finally send messages through channels
+  ## Finally enqueu to send messages through channels
   if reason == 'start':
     if cmd == 'high':
       strAlert = sensor_var + " high by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"
@@ -225,6 +224,7 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
 		  'retry':3
 	  }
     enqueue(method=frappe.sendmail,queue='short',timeout=300,now=True,**email_args)  
+    
   if len(sms_recipients) > 0:
     smsAlert = "[SMS pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")"
     #send_sms(sms_recipients, cstr(smsAlert))

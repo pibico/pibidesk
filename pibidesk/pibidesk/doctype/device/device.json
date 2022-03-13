@@ -26,6 +26,7 @@
   "ip",
   "connected",
   "cb_02",
+  "notes",
   "location",
   "warning_data_section",
   "warning_item",
@@ -189,11 +190,16 @@
    "fieldtype": "Table",
    "label": "Warning Items",
    "options": "Warning Item"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-13 00:29:31.953854",
+ "modified": "2022-03-13 21:01:12.239914",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device",

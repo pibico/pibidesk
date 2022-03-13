@@ -141,6 +141,14 @@ jenv = {
 # 	]
 # }
 
+scheduler_events = {
+ 	"cron": {
+		"0 0 * * *": [
+			"pibidesk.pibidesk.custom.alerts_reschedule"
+		]
+	}
+}
+
 # Testing
 # -------
 
