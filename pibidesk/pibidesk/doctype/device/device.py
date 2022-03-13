@@ -5,15 +5,6 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 
-from frappe import _, msgprint, throw
-from frappe.utils import cstr, time_diff_in_seconds, get_files_path
-from frappe.core.doctype.sms_settings.sms_settings import send_sms
-
-from pibidesk.pibidesk.doctype.telegram_settings.telegram_settings import send_telegram
-from pibidesk.pibidesk.doctype.mqtt_settings.mqtt_settings import send_mqtt
-
-import datetime
-
 class Device(Document):
   pass
           

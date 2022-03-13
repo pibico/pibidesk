@@ -4,8 +4,13 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
-from frappe import _, msgprint, throw
+
+from frappe import _, msgprint, throw, enqueue
+from frappe.utils import cstr, time_diff_in_seconds, get_files_path
 from frappe.utils import nowdate, now_datetime
+from frappe.core.doctype.sms_settings.sms_settings import send_sms
+
+from pibidesk.pibidesk.doctype.telegram_settings.telegram_settings import send_telegram
 
 import json, datetime
 
@@ -120,9 +125,21 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
     parent=%s AND docstatus<2 AND active
   """, doc.name, as_dict = True)
   alert_channel = []
+  sms_recipients = []
+  email_recipients = []
+  telegram_recipients = []
   for c in channels:
     if c['channel_type'] not in alert_channel:
       alert_channel.append(c['channel_type'])      
+    if c['channel_type'] == 'Email':
+      if c['email'] not in email_recipients:
+        email_recipients.append(c['email'])
+    if c['channel_type'] == 'SMS':
+      if c['mobile'] not in sms_recipients:
+       sms_recipients.append(c['mobile'])
+    if c['channel_type'] == 'Telegram':
+      if c['mobile'] not in telegram_recipients:
+        telegram_recipients.append(c['mobile'])
   ## Prepare Alerts for Device on each Sensor Var
   alert_log_item = frappe.get_list(
     doctype = "Alert Log Item",
@@ -157,3 +174,53 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
     log_item = alert_log.append("alert_log_item", _alert_log_item)
     alert_log.save()
     frappe.db.commit()
+  
+  ## Finally send messages through channels
+  if reason == 'start':
+    if cmd == 'high':
+      strAlert = sensor_var + " high by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"
+    if cmd == 'low':
+      strAlert = sensor_var + " low by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"
+  if reason == 'finish':
+    if cmd == 'high':
+      strAlert = sensor_var + " high by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"
+    if cmd == 'low':
+      strAlert = sensor_var + " low by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"  
+  if len(email_recipients) > 0:
+    subject = ""
+    if reason == 'start':
+      subject = "Alert Started by pibiDesk on " + doc.alias + " (" + doc.name + ")"
+    if reason == 'finish':
+      subject = "Alert Finished by pibiDesk on " + doc.alias + " (" + doc.name + ")"
+    emlAlert = "[Email pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")"
+    #frappe.sendmail(recipients=email_recipients, subject=subject, message=cstr(emlAlert))
+    email_args = {
+		  'recipients': email_recipients,
+		  'sender': None,
+		  'subject': subject,
+		  'message': cstr(emlAlert),
+		  'header': [_('pibiDesk Alert Information'), 'blue'],
+		  'delayed': False,
+		  'retry':3
+	  }
+    enqueue(method=frappe.sendmail,queue='short',timeout=300,now=True,**email_args)  
+  if len(sms_recipients) > 0:
+    smsAlert = "[SMS pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")"
+    #send_sms(sms_recipients, cstr(smsAlert))
+    sms_args = {
+      'receiver_list': sms_recipients,
+      'msg': cstr(smsAlert),
+      'sender_name': '',
+      'success_msg': True
+    }
+    enqueue(method=send_sms,queue='short',timeout=300,now=True,**sms_args)             
+  if len(telegram_recipients) > 0:
+    tgAlert = "[TGM pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")"
+    #send_telegram(telegram_recipients, cstr(tgAlert))
+    tg_args = {
+      'receiver_list': telegram_recipients,
+      'msg': cstr(tgAlert),
+      'sender_name': '',
+      'success_msg': True
+    }
+    enqueue(method=send_telegram,queue='short',timeout=300,now=True,**tg_args) 
