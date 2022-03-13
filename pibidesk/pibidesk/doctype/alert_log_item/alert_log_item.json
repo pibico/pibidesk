@@ -9,13 +9,13 @@
   "sensor_var",
   "from_time",
   "value",
+  "alert_type",
   "cb_01",
   "to_time",
   "uom",
   "by_sms",
   "by_email",
-  "by_telegram",
-  "by_mqtt"
+  "by_telegram"
  ],
  "fields": [
   {
@@ -74,16 +74,16 @@
    "label": "By Telegram"
   },
   {
-   "default": "0",
-   "fieldname": "by_mqtt",
-   "fieldtype": "Check",
-   "label": "By MQTT"
+   "fieldname": "alert_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Alert Type"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-03-11 17:34:25.445370",
+ "modified": "2022-03-13 17:45:01.948977",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Alert Log Item",

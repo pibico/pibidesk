@@ -115,8 +115,8 @@ jenv = {
 # 		"on_cancel": "method",
 # 		"on_trash": "method"
 #	}
-#    "Device Log": {
-#      "after_save": "pibidesk.pibidesk.custom.update_device"
+#    "Device": {
+#      "after_insert": "pibidesk.pibidesk.custom.update_alert"
 #    }
 #}
 

@@ -193,7 +193,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-12 20:14:46.068395",
+ "modified": "2022-03-13 00:29:31.953854",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device",
@@ -216,6 +216,5 @@
  "search_fields": "device_shortcut,alias",
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "device_shortcut",
- "track_changes": 1
+ "title_field": "device_shortcut"
 }

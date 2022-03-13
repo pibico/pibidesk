@@ -8,6 +8,7 @@
  "field_order": [
   "channel_type",
   "contact",
+  "active",
   "repeat"
  ],
  "fields": [
@@ -32,12 +33,19 @@
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Repeat"
+  },
+  {
+   "default": "1",
+   "fieldname": "active",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Active"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-03-12 21:08:12.999404",
+ "modified": "2022-03-13 08:43:51.624404",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Warning Item",
