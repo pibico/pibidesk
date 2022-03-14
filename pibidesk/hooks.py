@@ -123,10 +123,10 @@ jenv = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"pibidesk.tasks.all"
-# 	],
+scheduler_events = {
+ 	"all": [
+ 		"pibidesk.pibidesk.custom.check_status"
+ 	],
 # 	"daily": [
 # 		"pibidesk.tasks.daily"
 # 	],
@@ -139,11 +139,11 @@ jenv = {
 # 	"monthly": [
 # 		"pibidesk.tasks.monthly"
 # 	]
-# }
+}
 
 scheduler_events = {
  	"cron": {
-		"0 0 * * *": [
+    "0 0 * * *": [
 			"pibidesk.pibidesk.custom.alerts_reschedule"
 		]
 	}

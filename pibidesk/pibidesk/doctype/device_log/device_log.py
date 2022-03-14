@@ -155,13 +155,13 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
         if row.sensor_var == sensor_var:
           if not row.to_time and reason == 'finish':
             doStart = False
-            row.to_time = datadate.strftime("%Y-%m-%d %H:%M:%S")
+            row.to_time = datadate
             row.save()
       if doStart and reason == 'start':
         _alert_log_item = {}
         _alert_log_item['sensor_var'] = sensor_var
         _alert_log_item['uom'] = uom
-        _alert_log_item['from_time'] = datadate.strftime("%Y-%m-%d %H:%M:%S")
+        _alert_log_item['from_time'] = datadate
         if 'Email' in alert_channel:
           _alert_log_item['by_email'] = True
         if 'SMS' in alert_channel:
@@ -198,14 +198,14 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
   ## Finally enqueu to send messages through channels
   if reason == 'start':
     if cmd == 'high':
-      strAlert = sensor_var + " high by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"
+      strAlert = sensor_var + " high by " + str(value) + uom + ' at ' + datadate + ". Please check"
     if cmd == 'low':
-      strAlert = sensor_var + " low by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"
+      strAlert = sensor_var + " low by " + str(value) + uom + ' at ' + datadate + ". Please check"
   if reason == 'finish':
     if cmd == 'high':
-      strAlert = sensor_var + " high finished by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"
+      strAlert = sensor_var + " high finished by " + str(value) + uom + ' at ' + datadate + ". Please check"
     if cmd == 'low':
-      strAlert = sensor_var + " low finished by " + str(value) + uom + ' at ' + datadate.strftime("%Y-%m-%d %H:%M:%S") + ". Please check"  
+      strAlert = sensor_var + " low finished by " + str(value) + uom + ' at ' + datadate + ". Please check"  
   if len(email_recipients) > 0:
     subject = ""
     if reason == 'start':

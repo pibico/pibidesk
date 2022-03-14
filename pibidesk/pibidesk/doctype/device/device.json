@@ -192,6 +192,7 @@
    "options": "Warning Item"
   },
   {
+   "depends_on": "eval:frappe.session.user==\"Administrator\";",
    "fieldname": "notes",
    "fieldtype": "Small Text",
    "label": "Notes"
@@ -199,7 +200,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-13 21:01:12.239914",
+ "modified": "2022-03-13 22:08:18.966821",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device",
