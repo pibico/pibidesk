@@ -41,6 +41,7 @@
    "label": "Dashboard"
   },
   {
+   "collapsible": 1,
    "fieldname": "sb_02",
    "fieldtype": "Section Break",
    "label": "Log Data"
@@ -65,7 +66,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-12 19:54:50.314777",
+ "modified": "2022-03-15 10:31:02.587263",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device Log",
