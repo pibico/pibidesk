@@ -8,9 +8,10 @@ frappe.ui.form.on('Device Log', {
       // Do something
       //create_pic(frm);
     //});
-    frm.add_custom_button("Chart To Picture", function() {
+    frm.add_custom_button("Charts To Picture", function() {
       // code to be executed after button is click
-      create_pic(frm);
+      create_pic1(frm);
+      create_pic2(frm);
     });
 	}
 });
@@ -39,18 +40,8 @@ function create_chart(frm) {
         datasets: [
           { 
             name: res[0],
-            type: 'line',
+            chartType: 'line',
             values: res[3]
-          },
-          {
-            name: res[4],
-            type: 'line',
-            values: res[7]
-          },
-          {
-            name: res[8],
-            type: 'line',
-            values: res[11]
           }
         ],
         tooltipOptions: {
@@ -62,11 +53,10 @@ function create_chart(frm) {
         "#main_chart", {
           // or a DOM element,
           // new Chart() in case of ES6 module with above usage
-          title: res[0] + " [" + res[1] + "] " + res[4] + " [" + res[5] + "] " + res[8] + " [" + res[9] + "]",
+          title: res[0] + " [" + res[1] + "] ",
           data: main_data,
-          type: 'axis-mixed', // or 'bar', 'line', 'scatter', 'pie', 'percentage'
+          type: 'bar', // or 'bar', 'line', 'scatter', 'pie', 'percentage'
           height: 300,
-          colors: ['#ff2233', '#224433', '#4682b4'],
           axisOptions: {
             xAxisMode: 'tick', // default: 'span'
             xIsSeries: true // default: false
@@ -76,11 +66,50 @@ function create_chart(frm) {
             hideDots: 1
           }
       });
+      const second_data = {
+        labels: res[6],
+        datasets: [
+          {
+            name: res[4],
+            chartType: 'line',
+            values: res[7]
+          },
+          {
+            name: res[8],
+            chartType: 'line',
+            values: res[11]
+          }
+        ],
+        tooltipOptions: {
+          formatTooltipX: d => (d + '').toUpperCase(),
+          formatTooltipY: d => d + ' pts',
+        }
+      };
+      // Second Chart
+      const second_chart = new frappe.Chart(
+        "#second_chart", {
+          // or a DOM element,
+          // new Chart() in case of ES6 module with above usage
+          title: res[4] + " [" + res[5] + "] " + res[8] + " [" + res[9] + "]",
+          data: second_data,
+          type: 'axis-mixed', // or 'bar', 'line', 'scatter', 'pie', 'percentage'
+          height: 300,
+          colors: ['#ff2233', '#224433'],
+          axisOptions: {
+            xAxisMode: 'tick', // default: 'span'
+            xIsSeries: true // default: false
+          },
+          lineOptions: {
+            spline: 0,
+            hideDots: 1
+          }
+      });
+      
     // end callback
     }
   });  
 }
-function create_pic(frm){
+function create_pic1(frm){
   SVGToImage({
     // 1. Provide the SVG DOM element
     svg: document.querySelector("#main_chart svg"),
@@ -102,8 +131,42 @@ function create_pic(frm){
     // Or with Blob (Blob)
     //  Blob {size: 14353, type: "image/png"}
     //console.log(outputData);
-    frm.set_value('pic', outputData);
-    refresh_field('pic');
+    frm.set_value('main_pic', outputData);
+    refresh_field('main_pic');
+  }).catch(function(err){
+    // Log any error
+    console.log(err);
+  }); 
+};
+function sleep(ms) {
+  return(new Promise(function(resolve, reject) {
+    setTimeout(function() { resolve(); }, ms);
+  }));
+};
+function create_pic2(frm){
+  SVGToImage({
+    // 1. Provide the SVG DOM element
+    svg: document.querySelector("#second_chart svg"),
+    // 2. Provide the format of the output image
+    mimetype: "image/png",
+    // 3. Provide the dimensions of the image if you want a specific size.
+    //  - if they remain in auto, the width and height attribute of the svg will be used
+    //  - You can provide a single dimension and the other one will be automatically calculated
+    // width: "auto",
+    // height: "auto",
+    width: "auto",
+    // 4. Specify the quality of the image
+    quality: 1,
+    // 5. Define the format of the output (base64 or blob)
+    outputFormat: "base64"
+  }).then(function(outputData){
+    // If using base64 (outputs a DataURL)
+    //  data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0...
+    // Or with Blob (Blob)
+    //  Blob {size: 14353, type: "image/png"}
+    //console.log(outputData);
+    frm.set_value('second_pic', outputData);
+    refresh_field('second_pic');
   }).catch(function(err){
     // Log any error
     console.log(err);

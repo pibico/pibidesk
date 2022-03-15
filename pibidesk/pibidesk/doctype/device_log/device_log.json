@@ -11,8 +11,11 @@
   "cb_01",
   "date",
   "sb_01",
-  "chart",
-  "pic",
+  "main_chart",
+  "main_pic",
+  "column_break_7",
+  "second_chart",
+  "second_pic",
   "sb_02",
   "log_item"
  ],
@@ -53,20 +56,35 @@
    "options": "Log Item"
   },
   {
-   "fieldname": "chart",
+   "fieldname": "main_chart",
    "fieldtype": "HTML",
-   "label": "Chart",
+   "label": "Main Chart",
    "options": "<div id=\"main_chart\"></div>"
   },
   {
-   "fieldname": "pic",
+   "fieldname": "main_pic",
    "fieldtype": "Attach Image",
-   "label": "Chart to Picture"
+   "label": "Chart 1 to Pic"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "second_chart",
+   "fieldtype": "HTML",
+   "label": "Second Chart",
+   "options": "<div id=\"second_chart\"></div>"
+  },
+  {
+   "fieldname": "second_pic",
+   "fieldtype": "Attach Image",
+   "label": "Chart2 to Pic"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-15 10:31:02.587263",
+ "modified": "2022-03-15 11:14:24.019661",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device Log",
