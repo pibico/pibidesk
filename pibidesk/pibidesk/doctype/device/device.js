@@ -31,26 +31,28 @@ frappe.ui.form.on('Device', {
         });
       }, "MQTT Commands");
       // Last Command
-      frm.add_custom_button("Restart VNC", function() {
-        // code to be executed after button is click
-        frappe.call({
-          method: "pibidesk.pibidesk.custom.mqtt_command",
-          args: {
-            host: frm.doc.hostname,
-            action: "vnc"
-          }
-        });
-      }, "MQTT Commands");
-      frm.add_custom_button("ReBoot Server", function() {
-        // code to be executed after button is click
-        frappe.call({
-          method: "pibidesk.pibidesk.custom.mqtt_command",
-          args: {
-            host: frm.doc.hostname,
-            action: "boot"
-          }
-        });
-      }, "MQTT Commands");
+      if (frm.doc.sensor_type == 'cpu') {
+        frm.add_custom_button("Restart VNC", function() {
+          // code to be executed after button is click
+          frappe.call({
+            method: "pibidesk.pibidesk.custom.mqtt_command",
+            args: {
+              host: frm.doc.hostname,
+              action: "vnc"
+            }
+          });
+        }, "MQTT Commands");
+        frm.add_custom_button("ReBoot Server", function() {
+          // code to be executed after button is click
+          frappe.call({
+            method: "pibidesk.pibidesk.custom.mqtt_command",
+            args: {
+              host: frm.doc.hostname,
+              action: "boot"
+            }
+          });
+        }, "MQTT Commands");
+      }  
     }
   }
 });

@@ -65,24 +65,24 @@ class DeviceLog(Document):
                 ## Low Alert
                 if threshold[0].active_low:
                   ## If value in low alert and not alerted before
-                  if float(seq[0]) < threshold[0].low_value and not threshold[0].alert_low:
+                  if float(seq[0]) < float(threshold[0].low_value) and not threshold[0].alert_low:
                     threshold[0].alert_low = True
                     threshold[0].save()
                     manage_alert(i, var_uom, seq[0], 'low', 'start', last_recorded, device) 
                   ## If value recovered and alerted before
-                  if float(seq[0]) >= threshold[0].low_value and threshold[0].alert_low:
+                  if float(seq[0]) >= float(threshold[0].low_value) and threshold[0].alert_low:
                     threshold[0].alert_low = False
                     threshold[0].save()
                     manage_alert(i, var_uom, seq[0], 'low', 'finish', last_recorded, device)   
                 ## High Alert
                 if threshold[0].active_high:
                   ## If value in high alert and not alerted before
-                  if float(seq[0]) > threshold[0].high_value and not threshold[0].alert_high:
+                  if float(seq[0]) > float(threshold[0].high_value) and not threshold[0].alert_high:
                     threshold[0].alert_high = True
                     threshold[0].save()
                     manage_alert(i, var_uom, seq[0], 'high', 'start', last_recorded, device) 
                   ## If value recovered and alerted before
-                  if float(seq[0]) <= threshold[0].high_value and threshold[0].alert_high:
+                  if float(seq[0]) <= float(threshold[0].high_value) and threshold[0].alert_high:
                     threshold[0].alert_high = False
                     threshold[0].save()
                     manage_alert(i, var_uom, seq[0], 'high', 'finish', last_recorded, device)
@@ -195,17 +195,19 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
     alert_log.save()
     frappe.db.commit()
   
+  date_alert = datadate.strftime("%d/%m/%y %H:%M")
+    
   ## Finally enqueu to send messages through channels
   if reason == 'start':
     if cmd == 'high':
-      strAlert = sensor_var + " high by " + str(value) + uom + ' at ' + datadate + ". Please check"
+      strAlert = sensor_var + " high by " + str(value) + uom + ' at ' + date_alert + ". Please check"
     if cmd == 'low':
-      strAlert = sensor_var + " low by " + str(value) + uom + ' at ' + datadate + ". Please check"
+      strAlert = sensor_var + " low by " + str(value) + uom + ' at ' + date_alert + ". Please check"
   if reason == 'finish':
     if cmd == 'high':
-      strAlert = sensor_var + " high finished by " + str(value) + uom + ' at ' + datadate + ". Please check"
+      strAlert = sensor_var + " high finished by " + str(value) + uom + ' at ' + date_alert + ". Please check"
     if cmd == 'low':
-      strAlert = sensor_var + " low finished by " + str(value) + uom + ' at ' + datadate + ". Please check"  
+      strAlert = sensor_var + " low finished by " + str(value) + uom + ' at ' + date_alert + ". Please check"  
   if len(email_recipients) > 0:
     subject = ""
     if reason == 'start':
