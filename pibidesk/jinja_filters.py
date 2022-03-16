@@ -5,6 +5,11 @@ import qrcode
 from PIL import Image
 import base64
 from io import BytesIO
+from datetime import tzinfo, timedelta, datetime
+
+def timestamp_to_date(value, format='%a %d/%m/%y %H:%M'):
+  if value:
+    return datetime.fromtimestamp(int(value)).strftime(format)
 
 def get_qrcode(input_str):
   qr = qrcode.make(input_str)

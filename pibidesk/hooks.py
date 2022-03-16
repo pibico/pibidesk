@@ -93,7 +93,8 @@ website_context = {
 jenv = {
   "methods": [
     "get_qrcode:pibidesk.jinja_filters.get_qrcode",
-    "get_svg:pibidesk.jinja_filters.get_svg"
+    "get_svg:pibidesk.jinja_filters.get_svg",
+    "timestamp_to_date:pibidesk.jinja_filters.timestamp_to_date"
   ]
 }
 
