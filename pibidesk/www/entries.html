@@ -54,6 +54,9 @@
     a div {
       padding: 2px;
     }*/
+    .modal-header{
+      height: 90px; 
+    }
     .dropdown {
       position: absolute;
       right: 10px;
@@ -87,14 +90,14 @@
       background-repeat: no-repeat;
       background-size: cover;
     }
-    .olas{
+    .comedor{
       position: absolute;
       padding: 0px;
       margin: 0px;
       top: 30%;
-      right: 50%;
+      left: 40%;
     }
-    .nave{
+    .room{
       position: absolute;
       padding: 0px;
       margin: 0px;
@@ -110,6 +113,17 @@
     }    
       
     </style>
+    <!-- Needed this script in head for activating frappe -->
+    <script>
+		  window.frappe = {};
+		  frappe.ready_events = [];
+		  frappe.ready = function(fn) {
+			  frappe.ready_events.push(fn);
+		  }
+		  window.dev_server = 0;
+		  window.socketio_port = 9000;
+		  window.show_language_picker = 0;
+	  </script>
   </head>
   <body>
     <!-- ======== sidebar-nav start =========== -->
@@ -695,8 +709,8 @@
  		            </div>
                 <div class="card-body drawcard">
                   <span>
-                    <a href="javascript:alert('Pulsado Boton Habitacion Infantil')" title="Nave" class="nave btn btn-success rounded-circle text-white m-0 p-1"><i data-feather="sunset" class="svg-icon font-30"></i></a>
-                    <a href="javascript:alert('Pulsado Boton Comedor')" title="Olas" class="olas btn btn-danger rounded-circle text-white m-0 p-1"><i data-feather="sunset" class="svg-icon font-30"></i></a>
+                    <a href="javascript:room()" title="room" class="room btn btn-success rounded-circle text-white m-0 p-1"><i data-feather="sunset" class="svg-icon font-30"></i></a>
+                    <a href="javascript:comedor()" title="Comedor" class="comedor btn btn-danger rounded-circle text-white m-0 p-1"><i data-feather="sunset" class="svg-icon font-30"></i></a>
                   </span>
                 </div>
                 <div class="card-footer m-0 p-0">
@@ -914,6 +928,50 @@
     </script> 
     <script src="/assets/pibidesk/dist/leaflet/leaflet.js"></script>
     <script src="/assets/pibidesk/js/barcos1.js"></script>
+    
+    <!-- js should be loaded in body! -->
+    <script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+	  <script type="text/javascript" src="/assets/js/frappe-web.min.js?ver={{ build_version }}"></script>
+	  <!-- <script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script> -->
+	  <script>
+		  frappe.boot = {
+			  sysdefaults: {
+				  float_precision: parseInt("{{ frappe.get_system_settings('float_precision') or 3 }}"),
+				  date_format: "{{ frappe.get_system_settings('date_format') or 'yyyy-mm-dd' }}",
+			  }
+		  };
+		  // for backward compatibility of some libs
+		  frappe.sys_defaults = frappe.boot.sysdefaults;
+	  </script>
+    
+    <script>
+    function comedor() {
+        let message="<img src='/assets/pibidesk/images/favicon.svg' />";
+        message+="<span><h3>Titulo</h3><p>Subtitulo</p></span>";
+         
+        message+="<b>Server Status</b>";
+        message+= "<hr>";
+        message+= "<ul>";
+        message+= "<li><b>28%</b> Memory</li>";
+        message+= "<li><b>12%</b> Processor</li>";
+        message+= "<li><b>0.3%</b> Disk</li>";
+        message+= "</ul>";
+        
+        frappe.confirm(
+          message,
+          function(){
+            window.close();
+          },
+          function(){
+            frappe.show_alert('Thanks for continue here!')
+          }
+        );
+        
+      };
+      function room() {
+        frappe.msgprint('Pulsado Boton Habitacion Infantil')
+      };
+    </script>
     
     <script>
 	    //variables de capas sobrepuestas
