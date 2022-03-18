@@ -11,12 +11,24 @@ from pibidesk.pibidesk.doctype.mqtt_settings.mqtt_settings import send_mqtt
 from pibidesk.pibidesk.doctype.device_log.device_log import manage_alert
 
 import json, datetime
+import urllib.request as urllib2
 
 @frappe.whitelist()
 def mqtt_command(host, action):
   topic = []
   topic.append(host + "/pibico/cmd")
   send_mqtt(topic, cstr(action))
+
+@frappe.whitelist()
+def call_api(url, action):
+  try:
+    urlapi = str(url) + "/" + str(action)
+    json_relay = urllib2.urlopen(urlapi)
+    relay = json.load(json_relay)
+  except Exception as error:
+    relay = {'data': {'error': error}}
+
+  return relay
 
 def check_status():
   devices = frappe.get_list(
