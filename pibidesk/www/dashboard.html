@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/assets/pibidesk/css/materialdesignicons.min.css" />
     <link rel="stylesheet" href="/assets/pibidesk/css/fullcalendar.css" />
     <link rel="stylesheet" href="/assets/pibidesk/css/fullcalendar.css" />
+    <link href="/assets/pibidesk/css/frappe-datatable.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/pibidesk/css/main.css" />
   </head>
   <body>
@@ -530,6 +531,21 @@
               <!-- End Icon Cart -->
             </div>
             <!-- End Col -->
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card-style mb-30">
+                <div class="card-header">
+                  <h4>DataTable</h4>
+                </div>
+                <div class="card-body">
+                  <div id="app"></div>
+                </div>
+                <div class="card-footer">
+                
+                </div>  
+              </div>  
+            </div>
           </div>
           <!-- End Row -->
           <div class="row">
@@ -1381,9 +1397,35 @@
     <script src="/assets/pibidesk/js/jvectormap.min.js"></script>
     <script src="/assets/pibidesk/js/world-merc.js"></script>
     <script src="/assets/pibidesk/js/polyfill.js"></script>
+    
+    <script type="text/javascript" src="/assets/pibidesk/js/Sortable.min.js"></script>
+    <script type="text/javascript" src="/assets/pibidesk/js/clusterize.js"></script>
+    <script type="text/javascript" src="/assets/pibidesk/js/frappe-datatable.min.js"></script>
+    
     <script src="/assets/pibidesk/js/main.js"></script>
 
     <script>
+      const element = document.getElementById("app");
+      let datatabel = new DataTable(element, {
+	      columns: [
+		      { name: 'Framework' },
+		      { name: 'Built By' },
+		      { name: 'GitHub Stars', format: value => `${value} ??`},
+		      { name: 'License' },
+		      { name: 'Contributors' },
+		      { name: 'Age', format: value => `${value} Years` },
+		      { name: 'Project Home', format: value => `<a class="text-primary" href="${value}">${value}</a>` },
+		      { name: 'Project Link', format: value => `<a class="text-primary" href="${value}">${value}</a>` }
+	],
+	      data: [
+		      ['React', 'Facebook', 149017, 'MIT', 1385, 7, 'https://reactjs.org', 'https://github.com/facebook/react'],
+		      ['Angular', 'Google', 61263, 'MIT', 1119, 5, 'https://angular.io', 'https://github.com/angular/angular'],
+		      ['Vue', 'Evan You', 164408, 'MIT', 293, 4, 'https://vuejs.org', 'https://github.com/vuejs/vue'],
+		      ['Svelte', 'Rich Harris', 33865, 'MIT', 298, 3, 'https://svelte.dev', 'https://github.com/sveltejs/svelte/'],
+		      ['Stencil', 'Ionic Team', 7749, 'MIT', 132, 3, 'https://stenciljs.com', 'https://github.com/ionic-team/stencil'],
+	      ]
+      });
+   
       // ======== jvectormap activation
       var markers = [
         { name: "Egypt", coords: [26.8206, 30.8025] },

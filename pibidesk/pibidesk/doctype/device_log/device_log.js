@@ -40,7 +40,7 @@ function create_chart(frm) {
         datasets: [
           { 
             name: res[0],
-            chartType: 'line',
+            chartType: 'bar',
             values: res[3]
           }
         ],

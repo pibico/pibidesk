@@ -10,8 +10,8 @@ from frappe.utils import nowdate, now_datetime, cstr, time_diff_in_seconds, get_
 from pibidesk.pibidesk.doctype.mqtt_settings.mqtt_settings import send_mqtt
 from pibidesk.pibidesk.doctype.device_log.device_log import manage_alert
 
-import json, datetime
-import urllib.request as urllib2
+import json, datetime, requests
+#import urllib.request as urllib2
 
 @frappe.whitelist()
 def mqtt_command(host, action):
@@ -23,8 +23,10 @@ def mqtt_command(host, action):
 def call_api(url, action):
   try:
     urlapi = str(url) + "/" + str(action)
-    json_relay = urllib2.urlopen(urlapi)
-    relay = json.load(json_relay)
+    #json_relay = urllib2.urlopen(urlapi)
+    response = requests.get(urlapi)
+    #relay = json.load(json_relay)
+    relay = response.text
   except Exception as error:
     relay = {'data': {'error': error}}
 
