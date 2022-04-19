@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="60" />
+    <link
+      rel="shortcut icon"
+      href="/assets/pibidesk/images/favicon.svg"
+      type="image/x-icon"
+    />
+    <title>pibiDesk</title>
+
+    <!-- ========== All CSS files linkup ========= -->
+    <link rel="stylesheet" href="/assets/pibidesk/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/pibidesk/css/lineicons.css" />
+    <link rel="stylesheet" href="/assets/pibidesk/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="/assets/pibidesk/css/weather-icons.min.css" />
+    <link rel="stylesheet" href="/assets/pibidesk/css/weather-icons-wind.min.css" />
+    <link rel="stylesheet" href="/assets/pibidesk/css/main.css" />
+    <!-- <link rel="stylesheet" href="/assets/pibidesk/css/style.css" /> -->
+    <link rel="stylesheet" href="./greenhouse.css" />
+    
+    <!-- frappe resources -->
+    <link type="text/css" rel="stylesheet" href="/assets/css/desk.min.css?ver={{ build_version }}" />
+    <script>
+		  window.frappe = {};
+		  frappe.ready_events = [];
+		  frappe.ready = function(fn) {
+			  frappe.ready_events.push(fn);
+		  }
+		  window.dev_server = 0;
+		  window.socketio_port = 9000;
+		  window.show_language_picker = 0;  
+	  </script>
+  </head>
+  <body frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} frappe-content-type="markdown" {%- endif %} class="{{ body_class or ''}}">
+    <!-- ======== sidebar-nav start =========== -->
+    <aside class="sidebar-nav-wrapper">
+      <div class="navbar-logo">
+        <a href="{{frappe.utils.get_url()}}/index">
+          <img src="/assets/pibidesk/images/logo/logo.svg" alt="logo" />
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <!-- Autorizaciones -->
+          <li class="nav-item nav-item-has-children">
+            <a
+              href="#0"
+              data-bs-toggle="collapse"
+              data-bs-target="#ddmenu_0"
+              aria-controls="ddmenu_0"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="icon">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                d="M12.9067 14.2908L15.2808 11.9167H6.41667V10.0833H15.2808L12.9067 7.70917L14.2083 6.41667L18.7917 11L14.2083 15.5833L12.9067 14.2908ZM17.4167 2.75C17.9029 2.75 18.3692 2.94315 18.713 3.28697C19.0568 3.63079 19.25 4.0971 19.25 4.58333V8.86417L17.4167 7.03083V4.58333H4.58333V17.4167H17.4167V14.9692L19.25 13.1358V17.4167C19.25 17.9029 19.0568 18.3692 18.713 18.713C18.3692 19.0568 17.9029 19.25 17.4167 19.25H4.58333C3.56583 19.25 2.75 18.425 2.75 17.4167V4.58333C2.75 3.56583 3.56583 2.75 4.58333 2.75H17.4167Z"
+                  />
+                </svg>
+              </span>
+              <span class="text"></span>
+            </a>
+            <ul id="ddmenu_0" class="collapse show dropdown-nav">
+              {% if frappe.session.user == "Guest" %}
+              <li>
+                <a href="{{frappe.utils.get_url()}}/login?redirect-to=index" class="active"> Login </a>
+              </li>
+              {% else %}
+                <li>
+                  <a href="{{frappe.utils.get_url()}}/index?cmd=web_logout" class="active"> Logout </a>
+                </li>
+                <li>
+                  <a href="{{frappe.utils.get_url()}}/app"> Controles/Desk </a>
+                </li>
+              {% endif %}  
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <div class="promo-box">
+        <h3><strong>pibi</strong>Desk</h3>
+        <p>by pibiCo</p>
+        <a
+          href="https://www.pibico.org#contact"
+          target="_blank"
+          rel="nofollow"
+          class="main-btn primary-btn btn-hover"
+        >
+          Cont&aacute;ctanos<br>Contact Us
+        </a>
+      </div>
+    </aside>
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+      <!-- ========== header start ========== -->
+      <header class="header">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-5 col-md-5 col-6">
+              <div class="header-left d-flex align-items-center">
+                <div class="menu-toggle-btn mr-20">
+                  <button
+                    id="menu-toggle"
+                    class="main-btn primary-btn btn-hover"
+                  >
+                    <i class="lni lni-chevron-left me-2"></i> Menu
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-6">
+              <div class="header-right">
+                <!-- profile start -->
+                <div class="profile-box ml-15">
+                {% if frappe.session.user == 'Guest' %}
+                  <a class="nav-link" href="login?redirect-to=index">
+                    <img src="/assets/pibidesk/images/profile/pibiCo_circular.svg" alt="user" class="rounded-circle" width="40">
+                    <span class="ml-2 d-none d-lg-inline-block">
+                      <span class="text-dark">Login</span>
+                    </span>
+                  </a>
+                  {% else %}
+                  <button
+                    class="dropdown-toggle bg-transparent border-0"
+                    type="button"
+                    id="profile"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <div class="profile-info">
+                      <div class="info">
+                        <h6>{{ frappe.session.user }}</h6>
+                      </div>
+                    </div>
+                    <i class="lni lni-chevron-down"></i>
+                  </button>
+                  <ul
+                    class="dropdown-menu dropdown-menu-end"
+                    aria-labelledby="profile"
+                  >
+                    <li>
+                      <a href="{{frappe.utils.get_url()}}/app/user/{{ frappe.session.user }}">
+                        <i class="lni lni-user"></i> Ajustes/Settings</a>
+                    </li>
+                    <li>
+                      <a href="{{frappe.utils.get_url()}}/app/home"> <i class="lni lni-home"></i> Escritorio/Desk</a>
+                    </li>
+                    <li>
+                      <a href="{{frappe.utils.get_url()}}?cmd=web_logout"> <i class="lni lni-exit"></i> Salida/Logout</a>
+                    </li>
+                  </ul>
+                  {% endif %}
+                </div>
+                <!-- profile end -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- ========== header end ========== -->
+
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <!-- jinja -->
+                  <h2>{{ device_list[0].place }}</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper mb-30">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="index">Home</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        Invernadero/Greenhouse
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          
+          <div class="row">
+            <!-- start column 1 -->
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="card mb-3" style="height:780px;">
+                <div class="card-header">
+		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
+                    <strong>Area 3D</strong>
+                  </span>
+                  <span class="badge badge-danger badge-counter badge-pill ml-1">{{ device_list | selectattr('sensor_type', 'in', ["fan", "pump"]) | list | length  }}</span>         
+ 		            </div>
+                <div class="card-body greencard">
+                  <span>
+                    {% for row in device_list %}
+                      {% if row.name == 'fan-01-rpb3b-001' %}
+                        {% for item in data_items %}
+                          {% for val in item %}
+                            {% if val.parent == 'fan-01-rpb3b-001' %}
+                              {% if val.value == 1.0 %}
+                                <button onclick="switch_off('fan-01-rpb3b-001','Extractor')" class="extractor btn btn-md btn-danger" style="font-size: 24px; border-radius: 50%; margin-left: 3px; vertical-align: bottom; margin-bottom: 0px; margin-top: 3px; height: 42px; width: 42px; padding: 3px;">             {% elif val.value == 0.0 %}
+                                <button onclick="switch_on('fan-01-rpb3b-001','Extractor')" id="extractor_on" class="extractor btn btn-md btn-success" style="font-size: 24px; border-radius: 50%; margin-left: 3px; vertical-align: bottom; margin-bottom: 0px; margin-top: 3px; height: 42px; width: 42px; padding: 3px;">  
+                              {% endif %} 
+                              <i class="fa fa-power-off"></i></button>          
+                            {% endif %}
+                          {% endfor %}
+                        {% endfor %}
+                      {% endif %}
+                    {% endfor %}  
+                    {% for row in device_list %}
+                      {% if row.name == 'fan-02-rpb3b-001' %}
+                        {% for item in data_items %}
+                          {% for val in item %}
+                            {% if val.parent == 'fan-02-rpb3b-001' %}
+                              {% if val.value == 1.0 %}
+                                <button onclick="switch_off('fan-02-rpb3b-001','Calefactor')" class="calefactor btn btn-md btn-danger" style="font-size: 24px; border-radius: 50%; margin-left: 3px; vertical-align: bottom; margin-bottom: 0px; margin-top: 3px; height: 42px; width: 42px; padding: 3px;">             {% elif val.value == 0.0 %}
+                                <button onclick="switch_on('fan-02-rpb3b-001','Calefactor')" class="calefactor btn btn-md btn-success" style="font-size: 24px; border-radius: 50%; margin-left: 3px; vertical-align: bottom; margin-bottom: 0px; margin-top: 3px; height: 42px; width: 42px; padding: 3px;">  
+                              {% endif %} 
+                              <i class="fa fa-power-off"></i></button>          
+                            {% endif %}
+                          {% endfor %}
+                        {% endfor %}
+                      {% endif %}
+                    {% endfor %}  
+                    {% for row in device_list %}
+                      {% if row.name == 'pump-01-rpb3b-001' %}
+                        {% for item in data_items %}
+                          {% for val in item %}
+                            {% if val.parent == 'pump-01-rpb3b-001' %}
+                              {% if val.value == 1.0 %}
+                                <button onclick="switch_off('pump-01-rpb3b-001','Bomba Riego')" class="bomba btn btn-md btn-danger" style="font-size: 24px; border-radius: 50%; margin-left: 3px; vertical-align: bottom; margin-bottom: 0px; margin-top: 3px; height: 42px; width: 42px; padding: 3px;">             {% elif val.value == 0.0 %}
+                                <button onclick="switch_on('pump-01-rpb3b-001','Bomba Riego')" class="bomba btn btn-md btn-success" style="font-size: 24px; border-radius: 50%; margin-left: 3px; vertical-align: bottom; margin-bottom: 0px; margin-top: 3px; height: 42px; width: 42px; padding: 3px;">  
+                              {% endif %} 
+                              <i class="fa fa-power-off"></i></button>          
+                            {% endif %}
+                          {% endfor %}
+                        {% endfor %}
+                      {% endif %}
+                    {% endfor %}  
+                    
+                  </span>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>       
+              </div>
+            <!-- end column 1 -->
+            </div>
+            <!-- start column 2 -->
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="card mb-3" style="height:370px;">
+                <div class="card-header">
+		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
+                    <strong>Plano/Drawing</strong>
+                  </span>
+ 		            </div>
+                <div class="card-body drawcard">
+                  <span>
+                    <a href="javascript:camara()" title="camara" class="element bg-danger text-white m-1 p-1" style="top: 15%; left: 70%;">                                        <i data-feather="video" class="svg-icon font-30"></i> Cam
+                    </a>
+                    <a href="javascript:datainfo('lvl-rpb3b-001', 'Deposito Agua')" title="info_lbl-rpb3b-001" class="element bg-success text-white m-1 p-1" style="top: 45%; left: 50%;">                         {% for row in data_items %}
+                      {% for val in row %}
+                        {% if val.parent == 'lvl-rpb3b-001' %}
+                          {% if val.sensor_var == 'volume' %} 
+                          <i data-feather="trash" class="svg-icon font-30"></i>{{ val.value }}{{ val.uom }}
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %} 
+                    {% endfor %}  
+                    </a>
+                    <a href="javascript:datainfo('temp-rpb3b-001', 'Temperatura Exterior')" title="info" class="element bg-secondary text-white m-1 p-1" style="top: 15%; left: 3%;">                 {% for row in data_items %}
+                      {% for val in row %}
+                        {% if val.parent == 'temp-rpb3b-001' %}
+                          {% if val.sensor_var == 'temp' %} 
+                          <i data-feather="thermometer" class="svg-icon font-30" ></i> {{ val.value }}{{ val.uom }}
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %} 
+                    {% endfor %}  
+                    </a>
+                    <a href="javascript:datainfo('th-rpb3b-001', 'Ambiente Interior')" title="info" class="element bg-primary text-white m-1 p-1" style="top: 69%; left: 25%;">             {% for row in data_items %}
+                      {% for val in row %}
+                        {% if val.parent == 'th-rpb3b-001' %}
+                          {% if val.sensor_var == 'temp' %} 
+                          <i data-feather="thermometer" class="svg-icon font-30" ></i> {{ val.value }}{{ val.uom }}
+                          {% elif val.sensor_var == 'humid' %}
+                          <i data-feather="cloud-drizzle" class="svg-icon font-30" ></i> {{ val.value }}{{ val.uom }}
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %} 
+                    {% endfor %}  
+                    </a>
+                  </span>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>       
+              </div>
+              <!-- card 2 -->
+              <div class="card">
+                <!-- Header -->
+                <div class="card-header">
+                  <span class="card-title"><i data-feather="share-2" class="svg-icon"></i> <strong>Sensores/Sensors</strong>
+                    <span class="badge badge-danger badge-counter badge-pill ml-1">{{ device_list | selectattr('sensor_type', 'in', ["temp", "th", "lvl"]) | list | length  }}</span>
+                  </span>
+                </div>
+                <!-- End Header -->
+                <!-- Body -->
+                <div class="card-body m-0 p-2">
+                  <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-1" role="tabpanel" aria-labelledby="pills-1-tab">
+                    {% for row in device_list %}
+                      {% if row.sensor_type not in ["cpu", "pump", "fan"] %}                           <div class="row align-items-center">  
+                        <div class="col-8 text-left">
+                          <a href="{{frappe.utils.get_url()}}/app/device/{{row.name}}" target="_blank"><i class="fa fa-newspaper text-warning"></i><small class="text-info"> 
+                          {% for item in data_items %}
+                            {% for el in item %}
+                              {% if el.parent == row.name %}
+                                ({{ el.reading }})
+                              {% endif %}    
+                            {% endfor %}
+                          {% endfor %}
+                          </small></a>
+                          <a href="{{frappe.utils.get_url()}}/app/device/{{row.name}}" target="_blank">
+                            <span class="text-primary">{{ row.name }}</span>
+                          </a>
+                          <br>
+                          <i class="lni lni-ruler text-danger"></i>
+                          <span class="text-black"> {{ row.alias }}</span>
+                          <br>
+                          {% for item in data_items %}
+                            {% for el in item %}
+                              {% if el.parent == row.name %}
+                                {% if el.sensor_var == "temp" %}
+                                  <!-- <i class="fa fa-thermometer-full text-primary"></i> -->
+                                  <span class="fa-stack fa-1x">
+                                    <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                                    <i class="fa fa-thermometer-full fa-stack-1x" style="color: white;"></i>
+                                  </span>
+                                  <span class="ml-1"> 
+                                {% elif el.sensor_var == "humid" %}
+                                  <!-- <i class="fa fa-tint text-primary"></i> -->
+                                  <span class="fa-stack fa-1x">
+                                    <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                                    <i class="fa fa-tint fa-stack-1x" style="color: white;"></i>
+                                  </span>
+                                  <span class="ml-1">
+                                {% elif el.sensor_var == "humid" %}
+                                  <!-- <i class="fa fa-tint text-primary"></i> -->
+                                  <span class="fa-stack fa-1x">
+                                    <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                                    <i class="fa fa-tint fa-stack-1x" style="color: white;"></i>
+                                  </span>
+                                  <span class="ml-1">
+                                {% elif el.sensor_var == "level" %}
+                                  <!-- <i class="fa fa-table text-primary"></i> -->
+                                  <span class="fa-stack fa-1x">
+                                    <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                                    <i class="fa fa-table fa-stack-1x" style="color: white;"></i>
+                                  </span>
+                                  <span class="ml-1">
+                                {% elif el.sensor_var == "volume" %}
+                                  <!-- <i class="fa fa-bath text-primary"></i> -->
+                                  <span class="fa-stack fa-1x">
+                                    <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                                    <i class="fa fa-bath fa-stack-1x" style="color: white;"></i>
+                                  </span>
+                                  <span class="ml-1">
+                                {% endif %}
+                                <b class="text-black" style="font-size: 13pt;">{{ el.value }}</b>{{ el.uom  }}</span>
+                              {% endif %}    
+                            {% endfor %}
+                          {% endfor %}
+                          <br>
+                          <span style="display: none !important;">
+                          {% set clock = [] %}
+                          {% for item in data_items %}
+                            {% for el in item  %}
+                              {% if el.parent == row.name %}
+                                {{clock.append( frappe.utils.get_datetime(el.last_recorded).strftime("%d/%m/%y %H:%M")) }}
+                              {% endif %}
+                            {% endfor %}
+                          {% endfor %}
+                          </span>
+                          <i class="fa fa-clock text-primary"></i><span class="ml-1"> {{ clock | first }} </span>
+                        </div>
+                        <div class="col-4 text-left">
+                          <p class="mr-3 text-right">
+                          <small>
+                          {% for item in alert_items %}
+                            {% for val in item %}
+                              {% if val.parent == row.name %}
+                                  {% if val.alert_high or val.alert_low %}
+                                    {% if val.sensor_var == "temp" %}
+                                    <!-- <i class="fa fa-thermometer-full text-primary"></i> -->
+                                    <span class="fa-stack fa-1x">
+                                      <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                                      <i class="fa fa-thermometer-full fa-stack-1x" style="color: white;"></i>
+                                    </span>
+                                    <span class="ml-1"> 
+                                    {% elif val.sensor_var == "humid" %}
+                                    <!-- <i class="fa fa-tint text-primary"></i> -->
+                                    <span class="fa-stack fa-1x">
+                                      <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                                      <i class="fa fa-tint fa-stack-1x" style="color: white;"></i>
+                                    </span>
+                                    <span class="ml-1">
+                                    {% elif val.sensor_var == "humid" %}
+                                    <!-- <i class="fa fa-tint text-primary"></i> -->
+                                    <span class="fa-stack fa-1x">
+                                      <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                                      <i class="fa fa-tint fa-stack-1x" style="color: white;"></i>
+                                    </span>
+                                    <span class="ml-1">
+                                    {% elif val.sensor_var == "level" %}
+                                    <!-- <i class="fa fa-table text-primary"></i> -->
+                                    <span class="fa-stack fa-1x">
+                                      <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                                      <i class="fa fa-table fa-stack-1x" style="color: white;"></i>
+                                    </span>
+                                    <span class="ml-1">
+                                    {% elif val.sensor_var == "volume" %}
+                                    <!-- <i class="fa fa-bath text-primary"></i> -->
+                                    <span class="fa-stack fa-1x">
+                                      <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                                      <i class="fa fa-bath fa-stack-1x" style="color: white;"></i>
+                                    </span>
+                                    <span class="ml-1">
+                                    {% endif %}
+                                  <b class="text-warning">Alerta/Alert</b></span>
+                                  {% endif %}
+                              {% endif %}    
+                            {% endfor %}
+                          {% endfor %}
+                          </small> 
+                          </p>  
+                        </div>
+                      </div>
+                      <hr class="m-0 mt-1 mb-1">
+                      {% endif %}
+                    {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                <!-- End Body -->
+                <!-- Footer -->
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>
+                <!-- End Footer -->
+              </div>
+            </div>
+            <!-- end column 2 -->
+            <!-- start column 3 -->
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <!-- <div class="card mb-3">
+		            <div class="card-header">
+			            <span class="card-title"><i data-feather="home" class="svg-icon"></i> <strong>Control</strong></span>
+                  <span class="badge badge-danger badge-counter badge-pill ml-1">{{ device_list | selectattr('sensor_type', 'in', ["fan", "pump"]) | list | length  }}</span>                 
+			          </div>				
+			          <div class="card-body p-1 m-1">
+                  <div class="card-style">
+                  {% for row in device_list %}
+                    {% if row.sensor_type in ["pump", "fan"] %}  
+                    <div class="form-check form-switch toggle-switch mb-1">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="{{row.alias}}"
+                        id="{{row.name}}"
+                        {% for item in data_items %}
+                          {% for val in item %}
+                            {% if val.parent == row.name %}
+                              {% if val.sensor_var == 'status' %}
+                                {%if val.value | int %}
+                                  checked
+                                {% endif %}
+                              {% endif %}
+                            {% endif %}
+                          {% endfor %}
+                        {% endfor %}  
+                      />
+                      <label class="form-check-label" for="{{ row.name }}">
+                        {{ row.alias }}
+                      </label>
+                    </div>
+                    {% endif %}
+                  {% endfor %}  
+                  </div>             
+				        </div>
+			          <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>  
+                </div>
+	            </div> -->
+              <!-- card 2 -->
+              {% if 'current' in weather %}
+              <div class="card mb-3">
+                <div class="card-header">
+		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
+                    <strong>El Tiempo/Weather</strong>
+                  </span>
+ 		            </div>
+                <div class="card-body m-0 p-2">
+	                <i class="info-user fa fa-clock"></i> {{ ts_to_date(weather.current.dt) }}
+                  <br>
+                  <i class="wi wi-owm-{{weather.current.weather.0.id}} pull-right info-user mr-3" style="font-size: 54px;"></i>
+				          <b class="text-warning">{{ weather.current.weather.0.description }}</b><br><small> sensacion/feels {{ weather.current.feels_like }}&deg;C </small>
+                  <hr>
+                  <p>
+                    <i class="info-user fa fa-map-marker"></i> {{ weather.lat }}<sub>lat</sub> {{ weather.lon }}<sub>lon</sub>
+                    <br>                        
+				            <i class="info-user fa fa-thermometer"></i>
+				            <small>Temp</small> {{ weather.current.temp }}&deg;C
+					          <br>
+				            <i class="info-user fa fa-tint"></i>
+                    <small>Humd</small> {{ weather.current.humidity }}%
+				            <br>
+					          <i class="info-user fa fa-shield"></i>
+                    P<small>sl</small>  {{ weather.current.pressure }}hPa
+					          <br>
+				            <!-- <i class="info-user fa fa-sun-o"></i>
+                    <small>Alba/Sunrise</small> {{ timestamp_to_date(weather.current.sunrise) }}
+                    <br> 				  
+				            <i class="info-user fa fa-moon-o"></i>
+                    <small>Ocaso/Sunset</small> {{ timestamp_to_date(weather.current.sunset) }}
+                    <br> --> 
+                    <i class="info-user wi wi-wind towards-{{ weather.current.wind_deg }}-deg"></i>
+					          <small>Viento/Wind</small> {{ weather.current.wind_speed }}m/s
+					          <br>
+					          <i class="info-user wi wi-owm-{{weather.current.weather.0.id}}"></i>
+                    <small>Nubes/Clouds</small> {{ weather.current.clouds }}%
+                    <br>
+					          {% if weather.current.rain %}
+					          <i class="info-user fa fa-bath"></i>
+                    <small>Lluvia/Rain</small> {{ weather.current.rain['1h'] }}mm/h
+					          {% endif %}
+                    <p></p>        
+                    <ul class="card-style m-0 p-3">             
+                    {% for forecast in weather.daily %}
+                      <li class="mb-1">
+                        <small><i class="info-user fa fa-sun-o"></i> {{ timestamp_to_date(forecast.sunrise) }}&nbsp;<i class="info-user fa fa-moon-o"></i> {{ timestamp_to_date(forecast.sunset) }}&nbsp; <i class="info-user wi wi-owm-{{forecast.weather.0.id}}"></i> <strong class="text-warning">{{forecast.weather.0.description}}</small></strong>
+                        <br>&nbsp;&nbsp;<small>
+                          <i class="info-user fa fa-thermometer-half"></i>min {{ forecast.temp.min }}&deg;C
+                          &nbsp;<i class="info-user fa fa-thermometer"></i>Max {{ forecast.temp.max }}&deg;C
+                          &nbsp;<i class="info-user fa fa-tint"></i>humid {{ forecast.humidity }}%
+                          &nbsp;<i class="info-user fa fa-lightbulb-o"></i>uvi {{ forecast.uvi }}
+                        </small>
+                      </li>
+                    {% endfor %}
+                    </ul> 
+				          </p>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>       
+              </div>
+              {% endif %}
+            </div>  
+          </div>
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- ========== section end ========== -->
+
+      <!-- ========== footer start =========== -->
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6 order-last order-md-first">
+              <div class="copyright text-center text-md-start">
+                <p class="text-sm">
+                  Desarrollado por / Developed by
+                  <a
+                    href="https://www.pibico.org"
+                    rel="nofollow"
+                    target="_blank"
+                  >
+                    pibiCo
+                  </a>
+                </p>
+              </div>
+            </div>
+            <!-- end col-->
+            <div class="col-md-6">
+              <div
+                class="
+                  terms
+                  d-flex
+                  justify-content-center justify-content-md-end
+                "
+              >
+                <a href="https://www.pibico.org/terminos_es" target="_blank" class="text-sm">Aviso Legal / Ts&Cs</a>
+                <a href="https://www.pibico.org/privacidad_es" target="_blank" class="text-sm ml-15">Privacidad / Privacy</a>
+              </div>
+            </div>
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- end container -->
+      </footer>
+      <!-- ========== footer end =========== -->
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+    
+    <!-- ========= All Javascript files linkup ======== -->
+    
+    <script src="/assets/pibidesk/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/pibidesk/js/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script> 
+    
+    <!-- frappe resources -->
+    <script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+	  <script type="text/javascript" src="/assets/js/frappe-web.min.js?ver={{ build_version }}"></script>
+	  <script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script>
+    <script type="text/javascript" src="/assets/js/libs.min.js?ver={{ build_version }}"></script>
+    <script type="text/javascript" src="/assets/js/desk.min.js?ver={{ build_version }}"></script>
+    <script type="text/javascript" src="/assets/js/list.min.js?ver={{ build_version }}"></script>
+    <script type="text/javascript" src="/assets/js/form.min.js?ver={{ build_version }}"></script>
+    <script type="text/javascript" src="/assets/js/control.min.js?ver={{ build_version }}"></script>
+    <script type="text/javascript" src="/assets/js/report.min.js?ver={{ build_version }}">
+    <script type="text/javascript" src="/assets/js/messages.min.js?ver={{ build_version }}">
+    
+	  <script>
+      frappe.boot = {
+			  sysdefaults: {
+				  float_precision: parseInt("{{ frappe.get_system_settings('float_precision') or 3 }}"),
+				  date_format: "{{ frappe.get_system_settings('date_format') or 'yyyy-mm-dd' }}",
+			  }
+		  };
+		  // for backward compatibility of some libs
+		  frappe.sys_defaults = frappe.boot.sysdefaults;
+	  </script>
+    <script src="/assets/pibidesk/js/main.js"></script>
+    <script src="./greenhouse.js"></script>
+  </body>
+</html>

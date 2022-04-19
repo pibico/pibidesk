@@ -43,9 +43,9 @@ app_license = "MIT"
 # home_page = "login"
 
 # website user home page (by Role)
-# role_home_page = {
-#	"Role": "home_page"
-# }
+#role_home_page = {
+#	"pibidesk": "greenhouse"
+#}
 
 brand_html = '<div><img width="27px" src="/assets/pibidesk/images/logo/logo-icon.png"> pibi<strong>Desk</strong></div>'
 
