@@ -22,7 +22,7 @@
     <!-- ======== sidebar-nav start =========== -->
     <aside class="sidebar-nav-wrapper">
       <div class="navbar-logo">
-        <a href="{{frappe.utils.get_url()}}/index">
+        <a href="{{frappe.utils.get_url()}}/pibidesk">
           <img src="/assets/pibidesk/images/logo/logo.svg" alt="logo" />
         </a>
       </div>
@@ -56,14 +56,20 @@
             <ul id="ddmenu_0" class="collapse show dropdown-nav">
               {% if frappe.session.user == "Guest" %}
               <li>
-                <a href="{{frappe.utils.get_url()}}/login?redirect-to=index" class="active"> Login </a>
+                <a href="{{frappe.utils.get_url()}}/login?redirect-to=pibidesk" class="active"> Login </a>
+              </li>
+              <li>
+                  <a href="{{frappe.utils.get_url()}}/pibidocs"> pibiDocs </a>
               </li>
               {% else %}
                 <li>
-                  <a href="{{frappe.utils.get_url()}}/index?cmd=web_logout" class="active"> Logout </a>
+                  <a href="{{frappe.utils.get_url()}}/pibidesk?cmd=web_logout" class="active"> Logout </a>
                 </li>
                 <li>
-                  <a href="{{frappe.utils.get_url()}}/app"> Controles/Desk </a>
+                  <a href="{{frappe.utils.get_url()}}/app/pibidesk"> Controles/Desk </a>
+                </li>
+                <li>
+                  <a href="{{frappe.utils.get_url()}}/pibidocs"> pibiDocs </a>
                 </li>
               {% endif %}  
             </ul>
@@ -382,7 +388,7 @@
                 <!-- profile start -->
                 <div class="profile-box ml-15">
                 {% if frappe.session.user == 'Guest' %}
-                  <a class="nav-link" href="login?redirect-to=index">
+                  <a class="nav-link" href="login?redirect-to=pibidesk">
                     <img src="/assets/pibidesk/images/profile/pibiCo_circular.svg" alt="user" class="rounded-circle" width="40">
                     <span class="ml-2 d-none d-lg-inline-block">
                       <span class="text-dark">Login</span>
