@@ -22,7 +22,7 @@ function switch_on(name, alias) {
         async: true,
       });
       frappe.show_alert('Encendiendo ' + name);
-      window.setTimeout(function(){location.reload()},12000);
+      window.setTimeout(function(){location.reload()},6000);
     },
     function(){
       frappe.show_alert('Orden de encendido de ' + alias + ' NO enviada!');
@@ -53,7 +53,7 @@ function switch_off(name, alias) {
         async: true,
       });
       frappe.show_alert('Apagando ' + name);
-      window.setTimeout(function(){location.reload()},12000)
+      window.setTimeout(function(){location.reload()},6000)
     },
     function(){
       frappe.show_alert('Orden de apagado de ' + alias + ' NO enviada!');
