@@ -17,6 +17,15 @@
     <link rel="stylesheet" href="/assets/pibidesk/css/main.css" />
     
     <link type="text/css" rel="stylesheet" href="/assets/css/desk.min.css?ver={{ build_version }}" />
+    <style>
+      body {
+        margin:0;
+      }
+      canvas.webgl {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
   </head>
   <body frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} frappe-content-type="markdown" {%- endif %} class="{{ body_class or ''}}">
     <!-- ======== sidebar-nav start =========== -->
@@ -442,15 +451,16 @@
         <div class="container-fluid">
           <div class="row m-0">
             <div class="p-2 col-md-6">
-              <div class="image">
+              <canvas class="webgl"></canvas>
+              <!--<div class="image">
                 <img
                   src="/assets/pibidesk/images/profile/pibiCo_circular.svg"
                   width="100%"
                 />
-              </div>
+              </div>  -->
             </div>
             <div class="p-2 col-md-6 align-self-center">
-              <h3 class="mb-3 title">El MIoT de pibiCo / MIOT by PibiCo</h3>
+              <h3 class="mb-3 title">El MIoT de pibiCo / MIOT by pibiCo</h3>
               <p>pibiCo lanza <i class="miot"><strong>pibi</strong>Desk</i>, un proyecto de innovaci&oacute;n en el marco de PILoT con el que se busca incorporar el Internet de las Cosas en la vida cotidiana y en la Peque&ntilde;a y Mediana Empresa.</p>
               <p style="color: #4682b4;"><i class="miot"><strong>pibi</strong>Desk</i> is launched by pibiCo. An innovation project under PILoT Framework seeking to incorporate Internet Of Things in the ordinary life and in Small and Medium Enterprises.</p>
               
@@ -625,6 +635,213 @@ cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palet
 <!-- End Cookie Consent -->
     
     <script src="/assets/pibidesk/js/main.js"></script>
+        <!-- Threejs -->
+    <script src="./three/es-module-shims.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./three/build/three.module.js"
+        }
+      }
+    </script>
+    <script type="module">
+      import * as THREE from 'three';
+      import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js';
+      import { FontLoader } from './three/examples/jsm/loaders/FontLoader.js';
+      import { TextGeometry } from './three/examples/jsm/geometries/TextGeometry.js';
+      import { GLTFLoader } from './three/examples/jsm/loaders/GLTFLoader.js';
+      /**
+      * Base
+      */
+      // Canvas
+      const canvas = document.querySelector('canvas.webgl')
+
+      // Scene
+      const scene = new THREE.Scene()
+      scene.background = new THREE.Color( 0xf9fafa );
+
+      
+      //Light
+      const light = new THREE.DirectionalLight("#ffffff", 0.6);
+      const pointLight = new THREE.PointLight("#ffffff", 0.7);
+      const pointLightBack = new THREE.PointLight("#ffffff", 0.8);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+      light.position.set( 2, 3, 6 ).normalize();
+      pointLight.position.set(-3,-4, 9);
+      pointLightBack.position.set(0,-4,-10);
+
+      scene.add(light);
+      scene.add(pointLight);
+      scene.add(pointLightBack);
+      scene.add(ambientLight);
+      
+      /**
+      * Textures
+      */
+      const textureLoader = new THREE.TextureLoader();
+      const matcapTexture = textureLoader.load('./three/static/textures/matcaps/3.png');
+      const claimTexture = textureLoader.load('./three/static/textures/matcaps/2.png');
+      const donutTexture = textureLoader.load('./three/static/textures/matcaps/7.png');
+      
+      /**
+      * Models
+      */
+      
+      const gltfLoader = new GLTFLoader();
+      gltfLoader.load(
+        './three/static/models/pibico_blender.glb',
+        (gltf) =>
+        {
+          const pibicoModel = gltf.scene
+          scene.add(pibicoModel);
+          pibicoModel.rotation.x = Math.PI;
+          pibicoModel.position.x = -6;
+          pibicoModel.color = new THREE.Color(0x4682b4);
+        },
+        // called when loading is in progresses
+        function ( xhr ) {
+            console.log( ( xhr.loaded / xhr.total * 100 ) + ' % loaded' );
+
+        },
+        // called when loading has errors
+        function ( error ) {
+            console.log( 'An error happened' );
+        }
+      )
+
+      /**
+      * Fonts
+      */
+      const fontLoader = new FontLoader();
+      
+      fontLoader.load(
+      './three/static/fonts/raleway_semibold.typeface.json',
+      (font) => {
+        const textGeometry = new TextGeometry(
+          'pibiCo',
+          {
+            font: font,
+            size: 1.5,
+            height: .6,
+            curveSegments: 12,
+            bevelEnabled: true,
+            bevelThickness: 0.03,
+            bevelSize: 0.02,
+            bevelOffset: 0,
+            bevelSegments: 5
+          }
+        )
+        textGeometry.center()
+        
+        const textMaterial = new THREE.MeshMatcapMaterial({ color: 0x266294, matcap: matcapTexture })
+        const text = new THREE.Mesh(textGeometry, textMaterial)
+        scene.add(text)
+        }
+      );
+      
+      fontLoader.load(
+      './three/static/fonts/raleway_medium_italic.typeface.json',
+      (claimFont) => {
+        const claimGeometry = new TextGeometry(
+          'engine to Innovate...',
+          {
+            font: claimFont,
+            size: 0.5,
+            height: .2,
+            curveSegments: 4,
+            bevelEnabled: true,
+            bevelThickness: 0.02,
+            bevelSize: 0.01,
+            bevelOffset: 0,
+            bevelSegments: 2
+          }
+        )
+        claimGeometry.center()
+        
+        const claimMaterial = new THREE.MeshMatcapMaterial({ color: 'grey', matcap: claimTexture, transparent: true, opacity: .93 })
+        const claimText = new THREE.Mesh(claimGeometry, claimMaterial)
+        claimText.position.y = - 1.5
+        scene.add(claimText)
+        
+        // Donuts
+        const donutGeometry = new THREE.TorusGeometry(0.15, 0.1, 32, 64)
+        const donutMaterial = new THREE.MeshMatcapMaterial({ matcap: donutTexture })
+
+        for(let i = 0; i < 300; i++)
+          {
+            const donut = new THREE.Mesh(donutGeometry, donutMaterial)
+            donut.position.x = (Math.random() - 0.5) * 10
+            donut.position.y = (Math.random() - 0.5) * 10
+            donut.position.z = (Math.random() - 0.5) * 10
+            donut.rotation.x = Math.random() * Math.PI
+            donut.rotation.y = Math.random() * Math.PI
+            const scale = Math.random()
+            donut.scale.set(scale, scale, scale)
+
+            scene.add(donut)
+          }
+        }
+      );
+
+    // Sizes
+      const sizes = {
+        width: canvas.clientWidth,
+        height: canvas.clientHeight
+      }
+      // Resize
+      window.addEventListener('resize', () =>
+      {
+        // Update sizes
+        sizes.width = canvas.clientWidth
+        sizes.height = canvas.clientHeight
+        // Update camera
+        camera.aspect = sizes.width / sizes.height
+        camera.updateProjectionMatrix()
+        // Update renderer
+        renderer.setSize(sizes.width, sizes.height)
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+      });
+
+      // Camera
+      const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+      camera.position.x = 0.6
+      camera.position.y = -0.3
+      camera.position.z = 7.5
+      scene.add(camera)
+      
+       // Controls
+       const controls = new OrbitControls(camera, canvas)
+       controls.enableDamping = true
+
+      // Renderer
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvas
+      })
+      renderer.setSize(sizes.width, sizes.height)
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+      // Animate
+      const clock = new THREE.Clock()
+
+      const tick = () =>
+      {
+        const elapsedTime = clock.getElapsedTime()
+
+        // Update objects
+        //claimGeometry.rotation.y = elapsedTime;
+
+        // Update controls
+        controls.update()
+
+        // Render
+        renderer.render(scene, camera)
+
+        // Call tick again on the next frame
+        window.requestAnimationFrame(tick)
+      }
+
+      tick()
+    </script>
 
   </body>
 </html>
