@@ -18,14 +18,87 @@
     
     <link type="text/css" rel="stylesheet" href="/assets/css/desk.min.css?ver={{ build_version }}" />
     <style>
-      body {
-        margin:0;
+      html, body {
+        margin: 0;
+      }
+      .progress-bar-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        background-color: 0xf9fafa;
+        display: flex;
+        flex-direction: column;
+        justify-content: top;
+        align-items: center;
+      }
+      /*#progress-bar {
+        width: 45%;
+        margin-top: 0.5%;
+        height: 2%;
+      }
+      label {
+        color: steelblue;
+        margin: 0px;
+        margin-top: 3px;
+        padding: 0px;
+        font-size: 0.9rem;
+      }*/
+      .loader,
+      .loader:after {
+        border-radius: 50%;
+        width: 4.5em;
+        height: 4.5em;
+      }
+      .loader {
+        margin: 30px auto;
+        font-size: 9px;
+        position: relative;
+        text-indent: -9999em;
+        border-top: 0.6em solid rgba(30, 170, 180, 0.2);
+        border-right: 0.6em solid rgba(30, 170, 180, 0.2);
+        border-bottom: 0.6em solid rgba(30, 170, 180, 0.2);
+        border-left: 0.6em solid #468294;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-animation: load8 1.1s infinite linear;
+        animation: load8 1.1s infinite linear;
+      }
+      @-webkit-keyframes load8 {
+        0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        }
+        100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        }
+      }
+      @keyframes load8 {
+        0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        }
+        100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        }
       }
       canvas.webgl {
         width: 100%;
         height: 100%;
       }
     </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./three/build/three.module.js"
+        }
+      }
+    </script>
   </head>
   <body frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} frappe-content-type="markdown" {%- endif %} class="{{ body_class or ''}}">
     <!-- ======== sidebar-nav start =========== -->
@@ -451,6 +524,11 @@
         <div class="container-fluid">
           <div class="row m-0">
             <div class="p-2 col-md-6">
+              <div class="progress-bar-container">
+                <!--<label for="progress-bar">Loading/Cargando...</label>
+                <progress id="progress-bar" value="0" max="100"></progress>-->
+                <div class="loader">Loading/Cargando...</div>
+              </div>
               <canvas class="webgl"></canvas>
               <!--<div class="image">
                 <img
@@ -637,42 +715,31 @@ cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palet
     <script src="/assets/pibidesk/js/main.js"></script>
         <!-- Threejs -->
     <script src="./three/es-module-shims.js"></script>
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "./three/build/three.module.js"
-        }
-      }
-    </script>
+    
     <script type="module">
       import * as THREE from 'three';
       import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js';
       import { FontLoader } from './three/examples/jsm/loaders/FontLoader.js';
       import { TextGeometry } from './three/examples/jsm/geometries/TextGeometry.js';
       import { GLTFLoader } from './three/examples/jsm/loaders/GLTFLoader.js';
+
       /**
       * Base
       */
       // Canvas
       const canvas = document.querySelector('canvas.webgl')
-
+      
       // Scene
       const scene = new THREE.Scene()
       scene.background = new THREE.Color( 0xf9fafa );
 
       
       //Light
-      const light = new THREE.DirectionalLight("#ffffff", 0.6);
-      const pointLight = new THREE.PointLight("#ffffff", 0.7);
-      const pointLightBack = new THREE.PointLight("#ffffff", 0.8);
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+      const light = new THREE.DirectionalLight("#ffffff", 0.9);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
       light.position.set( 2, 3, 6 ).normalize();
-      pointLight.position.set(-3,-4, 9);
-      pointLightBack.position.set(0,-4,-10);
-
+      
       scene.add(light);
-      scene.add(pointLight);
-      scene.add(pointLightBack);
       scene.add(ambientLight);
       
       /**
@@ -687,6 +754,10 @@ cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palet
       * Models
       */
       
+      //const progressBar = document.getElementById('progress-bar');
+      const progressBarContainer = document.querySelector('.progress-bar-container');
+      const progressLoader = document.querySelector('.loader');
+      
       const gltfLoader = new GLTFLoader();
       gltfLoader.load(
         './three/static/models/pibico_blender.glb',
@@ -696,12 +767,33 @@ cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palet
           scene.add(pibicoModel);
           pibicoModel.rotation.x = Math.PI;
           pibicoModel.position.x = -6;
-          pibicoModel.color = new THREE.Color(0x4682b4);
+          //progressBar.value = 50;
         },
         // called when loading is in progresses
         function ( xhr ) {
             console.log( ( xhr.loaded / xhr.total * 100 ) + ' % loaded' );
-
+        },
+        // called when loading has errors
+        function ( error ) {
+            console.log( 'An error happened' );
+        }
+      )
+      
+      gltfLoader.load(
+        './three/static/models/container.glb',
+        (container) =>
+        {
+          const containerModel = container.scene
+          scene.add(containerModel);
+          containerModel.position.z = -7.5;
+          containerModel.position.y = -6;
+          progressBarContainer.style.display = 'none';
+          progressLoader.style.display = 'none';
+        },
+        // called when loading is in progresses
+        function ( xhr ) {
+            console.log( ( xhr.loaded / xhr.total * 100 ) + ' % loaded' );
+            //progressBar.value = xhr.loaded;
         },
         // called when loading has errors
         function ( error ) {
@@ -826,9 +918,6 @@ cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palet
       const tick = () =>
       {
         const elapsedTime = clock.getElapsedTime()
-
-        // Update objects
-        //claimGeometry.rotation.y = elapsedTime;
 
         // Update controls
         controls.update()
