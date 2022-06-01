@@ -768,6 +768,8 @@ cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palet
           pibicoModel.rotation.x = Math.PI;
           pibicoModel.position.x = -6;
           //progressBar.value = 50;
+          progressBarContainer.style.display = 'none';
+          progressLoader.style.display = 'none';
         },
         // called when loading is in progresses
         function ( xhr ) {
@@ -779,28 +781,6 @@ cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palet
         }
       )
       
-      gltfLoader.load(
-        './three/static/models/container.glb',
-        (container) =>
-        {
-          const containerModel = container.scene
-          scene.add(containerModel);
-          containerModel.position.z = -7.5;
-          containerModel.position.y = -6;
-          progressBarContainer.style.display = 'none';
-          progressLoader.style.display = 'none';
-        },
-        // called when loading is in progresses
-        function ( xhr ) {
-            console.log( ( xhr.loaded / xhr.total * 100 ) + ' % loaded' );
-            //progressBar.value = xhr.loaded;
-        },
-        // called when loading has errors
-        function ( error ) {
-            console.log( 'An error happened' );
-        }
-      )
-
       /**
       * Fonts
       */
