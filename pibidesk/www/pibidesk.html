@@ -138,23 +138,32 @@
             <ul id="ddmenu_0" class="collapse show dropdown-nav">
               {% if frappe.session.user == "Guest" %}
               <li>
-                <a href="{{frappe.utils.get_url()}}/login?redirect-to=pibidesk" class="active"> Login </a>
+                <a href="{{frappe.utils.get_url()}}/login?redirect-to=index" class="active"> Login </a>
               </li>
               <li>
                   <a href="{{frappe.utils.get_url()}}/pibidocs"> pibiDocs </a>
+              </li>
+              <li>
+                  <a href="{{frappe.utils.get_url()}}/pibidocs_es"> pibiDocs Web </a>
               </li>
               {% else %}
                 <li>
                   <a href="{{frappe.utils.get_url()}}/pibidesk?cmd=web_logout" class="active"> Logout </a>
                 </li>
                 <li>
-                  <a href="{{frappe.utils.get_url()}}/app/pibidesk"> Controles/Desk </a>
+                  <a href="{{frappe.utils.get_url()}}/app/pibidesk"> Frappe pibiDesk </a>
                 </li>
                 <li>
                   <a href="{{frappe.utils.get_url()}}/container"> Container </a>
                 </li>
                 <li>
+                  <a href="{{frappe.utils.get_url()}}/vendor"> pibiDAV </a>
+                </li>
+                <li>
                   <a href="{{frappe.utils.get_url()}}/pibidocs"> pibiDocs </a>
+                </li>
+                <li>
+                  <a href="{{frappe.utils.get_url()}}/hsdocs"> HS Docs </a>
                 </li>
               {% endif %}  
             </ul>
