@@ -1,0 +1,100 @@
+html, body {
+  margin: auto;
+  -webkit-text-size-adjust: 100%;
+}
+/* begin fix tall tables when empty */
+.empty-table .dt-scrollable {
+  height     : initial!important;
+  min-height : initial!important;
+}
+/* end fix tall tables when empty */
+/* begin dynamicRowHeight fix */
+.dt-row {
+  position : relative!important;
+  top      : auto!important;
+  height   : initial!important;
+}
+.dt-cell {
+  height : initial!important;
+}
+/* end dynamicRowHeight fix */
+.info-user {
+  text-align:center;
+	font-size: 18px;
+	color: #4682b4;
+}
+.breadcrumb {
+  background: #f9fbfd !important;
+}  
+.modal-title {
+  visibility: hidden;
+}
+.modal-title::after {
+  display: block;
+  visibility: visible;
+  content: 'Action or Info';
+}
+.modal-header {
+  height: 90px;
+}
+.modal-header .indicator {
+  display: none;
+}
+.modal-footer::before {
+  content: '(c) pibiCo 2022. Follow?';
+}
+/*.modal-footer .btn-modal-secondary {
+ visibility: hidden;
+}*/
+.toggle-switch .form-check-input {
+  width: 50px !important;
+  margin-left: -36px;
+}
+.form-check-label {
+  margin-left: 18px;
+}
+/*.menu-nav {
+  display: flex;
+  justify-content: space-between;
+}
+.menu-item {
+  color: #222;
+  padding: 3px;
+}*/
+.drawcard {
+  background: url("/assets/pibidesk/images/cards/smart_buoy.svg");
+  /* Full height */
+  height: 100%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.beacon{
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  top: 15%;
+  left: 55%;
+}
+.calefactor{
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  top: 72%;
+  left: 9%;
+}
+.bomba{
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  top: 45%;
+  left: 75%;
+}
+.element{
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  border: 3px solid #ccc;
+  border-radius: 6px;
+} 

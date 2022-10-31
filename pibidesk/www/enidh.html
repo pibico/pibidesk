@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="300" />
+    <link
+      rel="shortcut icon"
+      href="/assets/pibidesk/images/favicon.svg"
+      type="image/x-icon"
+    />
+    <title>pibiDesk</title>
+
+    <!-- ========== All CSS files linkup ========= -->
+    <link rel="stylesheet" href="/assets/pibidesk/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/pibidesk/css/lineicons.css" />
+    <link rel="stylesheet" href="/assets/pibidesk/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="/assets/pibidesk/css/weather-icons.min.css" />
+    <link rel="stylesheet" href="/assets/pibidesk/css/weather-icons-wind.min.css" />
+    <link rel="stylesheet" href="/assets/pibidesk/css/main.css" />
+    <!-- <link rel="stylesheet" href="/assets/pibidesk/css/style.css" /> -->
+    <link rel="stylesheet" href="./enidh.css" />
+    
+    <link rel="stylesheet" href="/assets/pibidesk/dist/leaflet/leaflet.css" />
+    
+    <!-- frappe resources -->
+    <link type="text/css" rel="stylesheet" href="/assets/css/desk.min.css?ver={{ build_version }}" />
+    <style>
+      #map1 { 
+			  width: 100%;
+			  min-height: 100%;
+			}
+    </style>
+    <script>
+		  window.frappe = {};
+		  frappe.ready_events = [];
+		  frappe.ready = function(fn) {
+			  frappe.ready_events.push(fn);
+		  }
+		  window.dev_server = 0;
+		  window.socketio_port = 9000;
+		  window.show_language_picker = 0;  
+	  </script>
+     
+  </head>
+  <body frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} frappe-content-type="markdown" {%- endif %} class="{{ body_class or ''}}">
+    <!-- ======== sidebar-nav start =========== -->
+    <aside class="sidebar-nav-wrapper">
+      <div class="navbar-logo">
+        <a href="{{frappe.utils.get_url()}}/index">
+          <img src="/assets/pibidesk/images/logo/logo.svg" alt="logo" />
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <!-- Autorizaciones -->
+          <li class="nav-item nav-item-has-children">
+            <a
+              href="#0"
+              data-bs-toggle="collapse"
+              data-bs-target="#ddmenu_0"
+              aria-controls="ddmenu_0"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="icon">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                d="M12.9067 14.2908L15.2808 11.9167H6.41667V10.0833H15.2808L12.9067 7.70917L14.2083 6.41667L18.7917 11L14.2083 15.5833L12.9067 14.2908ZM17.4167 2.75C17.9029 2.75 18.3692 2.94315 18.713 3.28697C19.0568 3.63079 19.25 4.0971 19.25 4.58333V8.86417L17.4167 7.03083V4.58333H4.58333V17.4167H17.4167V14.9692L19.25 13.1358V17.4167C19.25 17.9029 19.0568 18.3692 18.713 18.713C18.3692 19.0568 17.9029 19.25 17.4167 19.25H4.58333C3.56583 19.25 2.75 18.425 2.75 17.4167V4.58333C2.75 3.56583 3.56583 2.75 4.58333 2.75H17.4167Z"
+                  />
+                </svg>
+              </span>
+              <span class="text"></span>
+            </a>
+            <ul id="ddmenu_0" class="collapse show dropdown-nav">
+              {% if frappe.session.user == "Guest" %}
+              <li>
+                <a href="{{frappe.utils.get_url()}}/login?redirect-to=index" class="active"> Login </a>
+              </li>
+              {% else %}
+                <li>
+                  <a href="{{frappe.utils.get_url()}}/index?cmd=web_logout" class="active"> Logout </a>
+                </li>
+                <li>
+                  <a href="{{frappe.utils.get_url()}}/app"> Desk </a>
+                </li>
+              {% endif %}  
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <div class="promo-box">
+        <h3><strong>pibi</strong>Desk</h3>
+        <p>by pibiCo</p>
+      </div>
+    </aside>
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+      <!-- ========== header start ========== -->
+      <header class="header">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-5 col-md-5 col-6">
+              <div class="header-left d-flex align-items-center">
+                <div class="menu-toggle-btn mr-20">
+                  <button
+                    id="menu-toggle"
+                    class="main-btn primary-btn btn-hover"
+                  >
+                    <i class="lni lni-chevron-left me-2"></i> Menu
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-6">
+              <div class="header-right">
+                <!-- profile start -->
+                <div class="profile-box ml-15">
+                {% if frappe.session.user == 'Guest' %}
+                  <a class="nav-link" href="login?redirect-to=index">
+                    <img src="/assets/pibidesk/images/profile/pibiCo_circular.svg" alt="user" class="rounded-circle" width="40">
+                    <span class="ml-2 d-none d-lg-inline-block">
+                      <span class="text-dark">Login</span>
+                    </span>
+                  </a>
+                  {% else %}
+                  <button
+                    class="dropdown-toggle bg-transparent border-0"
+                    type="button"
+                    id="profile"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <div class="profile-info">
+                      <div class="info">
+                        <h6>{{ frappe.session.user }}</h6>
+                      </div>
+                    </div>
+                    <i class="lni lni-chevron-down"></i>
+                  </button>
+                  <ul
+                    class="dropdown-menu dropdown-menu-end"
+                    aria-labelledby="profile"
+                  >
+                    <li>
+                      <a href="{{frappe.utils.get_url()}}/app/user/{{ frappe.session.user }}">
+                        <i class="lni lni-user"></i> Settings</a>
+                    </li>
+                    <li>
+                      <a href="{{frappe.utils.get_url()}}/app/home"> <i class="lni lni-home"></i> Desk</a>
+                    </li>
+                    <li>
+                      <a href="{{frappe.utils.get_url()}}?cmd=web_logout"> <i class="lni lni-exit"></i> Logout</a>
+                    </li>
+                  </ul>
+                  {% endif %}
+                </div>
+                <!-- profile end -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- ========== header end ========== -->
+
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <!-- jinja -->
+                  <h2>ENIDH Training Dashboard</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper mb-30">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="index">Home</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        AT Virtual - ENIDH
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          
+          <div class="row">
+            <!-- start column 1 -->
+            <div class="col-md-8">
+              <div class="card mb-3" style="height:795px;">
+                <div class="card-header">
+		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
+                    <strong>Location Map</strong>
+                  </span>
+                  <span class="badge badge-danger badge-counter badge-pill ml-1">3</span>         
+ 		            </div>
+                <div class="card-body p-0 m-0">
+                  <div id="map1"></div>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>       
+              </div>
+            <!-- end column 1 -->
+            </div>
+            <!-- start column 3 -->
+            <div class="col-xl-4 col-lg-4 col-md-6">
+              <div class="card mb-3" style="height:180px;">
+                <div class="card-header">
+		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
+                    <strong>Dummy</strong>
+                  </span>
+ 		            </div>
+                <div class="card-body dummy">
+                  <p>Dummy Data</p>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>       
+              </div>
+              
+              <div class="card mb-3" style="height:180px;">
+                <div class="card-header">
+		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
+                    <strong>Life Boat</strong>
+                  </span>
+ 		            </div>
+                <div class="card-body boat">
+                  <p>Life Boat Data</p>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>       
+              </div>
+              
+              <div class="card mb-3" style="height:180px;">
+                <div class="card-header">
+		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
+                    <strong>Rescue Boat</strong>
+                  </span>
+ 		            </div>
+                <div class="card-body rescue">
+                  <p>Rescue Boat Data</p>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>       
+              </div>
+                            
+              <div class="card mb-3" style="height: 210px;">
+                <!-- Header -->
+                <div class="card-header">
+                  <span class="card-title"><i data-feather="share-2" class="svg-icon"></i> <strong>Sensors</strong>
+                    <span class="badge badge-danger badge-counter badge-pill ml-1">5</span>
+                  </span>
+                </div>
+                <!-- End Header -->
+                <!-- Body -->
+                <div class="card-body m-0 p-2">
+                  <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-1" role="tabpanel" aria-labelledby="pills-1-tab">
+                      <div class="row align-items-center">  
+                        <div class="col-8 text-left">
+                          <i class="fa fa-flag-o text-warning"></i>
+                          <a href="#" target="_blank">
+                            <small class="text-info">(12)</small>
+                          </a>
+                          <a href="#" target="_blank">
+                            <span class="text-primary">wind speed-device</span>
+                          </a>
+                          <br>
+                          <i class="lni lni-ruler text-danger"></i>
+                          <span class="text-black"> wind speed reading</span>
+                          <br>
+                          <!-- <i class="fa fa-thermometer-full text-primary"></i> -->
+                          <span class="fa-stack fa-1x">
+                            <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                            <i class="fa fa-flag-o fa-stack-1x" style="color: white;"></i>
+                          </span>
+                          <b class="text-black" style="font-size: 13pt;"> 12</b>mph</span>
+                          <br>
+                          <i class="fa fa-clock text-primary"></i><span class="ml-1"> 22/3/22 13:15 </span>
+                        </div>
+                        <div class="col-4 text-left">
+                          <p class="mr-3 text-right">
+                          <small>
+                          <!-- <i class="fa fa-thermometer-full text-primary"></i> -->
+                          </small> 
+                          </p>  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Body -->
+                <!-- Footer -->
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>
+                <!-- End Footer -->
+              </div>
+            </div>  
+          </div>
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- ========== section end ========== -->
+
+      <!-- ========== footer start =========== -->
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6 order-last order-md-first">
+              <div class="copyright text-center text-md-start">
+                <p class="text-sm">
+                  Developed by
+                  <a
+                    href="https://www.pibico.org"
+                    rel="nofollow"
+                    target="_blank"
+                  >
+                    pibiCo, 2022
+                  </a>
+                </p>
+              </div>
+            </div>
+            <!-- end col-->
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- end container -->
+      </footer>
+      <!-- ========== footer end =========== -->
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+    
+    <!-- ========= All Javascript files linkup ======== -->
+    
+    <script src="/assets/pibidesk/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/pibidesk/js/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script> 
+    
+    <!-- frappe resources -->
+    <script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+	  <script type="text/javascript" src="/assets/js/frappe-web.min.js?ver={{ build_version }}"></script>
+	  <script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script>
+    <script type="text/javascript" src="/assets/js/libs.min.js?ver={{ build_version }}"></script>
+    <script type="text/javascript" src="/assets/js/desk.min.js?ver={{ build_version }}"></script>
+    <script type="text/javascript" src="/assets/js/list.min.js?ver={{ build_version }}"></script>
+    <script type="text/javascript" src="/assets/js/form.min.js?ver={{ build_version }}"></script>
+    <script type="text/javascript" src="/assets/js/control.min.js?ver={{ build_version }}"></script>
+    <script type="text/javascript" src="/assets/js/report.min.js?ver={{ build_version }}">
+    <script type="text/javascript" src="/assets/js/messages.min.js?ver={{ build_version }}">
+    
+    <script src="/assets/pibidesk/dist/leaflet/leaflet.js"></script>
+    <script src="/assets/pibidesk/js/barcos1.js"></script>
+    
+	  <script>
+      frappe.boot = {
+			  sysdefaults: {
+				  float_precision: parseInt("{{ frappe.get_system_settings('float_precision') or 3 }}"),
+				  date_format: "{{ frappe.get_system_settings('date_format') or 'yyyy-mm-dd' }}",
+			  }
+		  };
+		  // for backward compatibility of some libs
+		  frappe.sys_defaults = frappe.boot.sysdefaults;
+	  </script>
+    <script src="/assets/pibidesk/js/main.js"></script>
+    <script src="./atvirtual.js"></script>
+    
+    <script>
+      function info() {
+        frappe.msgprint('Information');
+      }
+     
+	    //variables de capas sobrepuestas
+		  var cities = L.layerGroup();
+		  var boats = L.layerGroup();
+		  var boatRoute= L.layerGroup();
+      var mstc = L.layerGroup();
+      var iot = L.layerGroup();
+      
+      //new marker for buoy
+      var LeafIcon= L.Icon.extend({
+        options: {
+          iconSize:     [30, 30],
+          iconAnchor:   [10, 20]
+          }
+        });
+      
+      var dummyIcon = new LeafIcon({
+        iconUrl: '/assets/pibidesk/images/leaflet/buoy.svg'
+      }) 
+      
+		  //iot
+		  L.marker([38.68899, -9.29538], {icon: dummyIcon}).bindPopup('Dummy').addTo(iot),
+		  //mstc
+      L.marker([38.690664, -9.300033]).bindPopup("<b>Escola Superior Nautica Infante D. Henrique</b><br><a href='https://www.enautica.pt/' target='_blank'>ENIDH</a>").addTo(mstc),
+      L.marker([43.4901352, -5.7611543]).bindPopup("<b>Centro de Seguridad Maritima Integral</b><br><a href='https://www.centrojovellanos.es/' target='_blank'>Centro Jovellanos</a>").addTo(mstc),
+      L.marker([51.833855, -8.305259]).bindPopup("<b>National Maritime College of Ireland</b><br><a href='https://www.nmci.ie/' target='_blank'>NMCI</a>").addTo(mstc);
+
+      var overlays = {
+			  "Ciudades": cities, 
+			  "Barcos": boats,
+			  "Rutas": boatRoute,
+        "MSTC": mstc,
+        "IoT": iot
+			};
+		
+		  //variables de capas sobrepuestas
+		  var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' + 'Imagery <a href="https://www.mapbox.com/">Mapbox</a>, Data <a href="https://www.pibico.org">pibiCo</a>',
+		  mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
+		  mbAttr2 = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+		  mbUrl2 ='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		
+		  var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
+		  streets = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
+		  satellite = L.tileLayer(mbUrl, {id: 'mapbox/satellite-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
+		  normal  = L.tileLayer(mbUrl2, {tileSize: 512, zoomOffset: -1, attribution: mbAttr2});
+		  var baseLayers = {
+			  "Escala grises": grayscale,
+			  "Carreteras": streets,
+			  "Satelite": satellite,
+			  "Normal": normal };
+		
+		  //variables de coordenadas de centro
+		  var vlat = 38.6868; 
+		  var vlong = -9.29536;
+		  //variable de creacion de mapa y filtros a activar
+		  var map = L.map('map1', {
+			  center: [vlat, vlong],
+			  zoom: 16,
+			  layers: [satellite, boats, boatRoute, cities, mstc, iot ]
+			});
+		  
+		  //Barcos
+		  var barcoIconGreen = L.icon({ iconUrl: '/assets/pibidesk/images/leaflet/icon0g.png', iconSize: [40, 20], });
+		  var barcoIconRed = L.icon({ iconUrl: '/assets/pibidesk/images/leaflet/icon0g.png', iconSize: [40, 20], });
+	
+		  var barcos = barcos1.features;
+		  var vdescbarco = "";
+		  L.geoJSON(barcos, {
+			  pointToLayer: function (feature, latlng) {
+				  vdescbarco = '<b>' + feature.properties.vessel_name + '</b><br>'
+                       + feature.properties.vessel_type + '<br>'
+                       + feature.properties.flag_country;
+				  if (feature.properties.vessel_type === "Fishing") {
+						return L.marker(latlng, {icon: barcoIconGreen}).addTo(boats).bindPopup(vdescbarco);
+					} else {
+						return L.marker(latlng, {icon: barcoIconRed}).addTo(boats).bindPopup(vdescbarco);
+					}
+			  }
+		  });
+		
+	 	  //Supongamos que tenemos un calculo de trayectoria de los barcos
+		  //plasmariamos las lineas con esos datos, pero para el ejemplo solo hago una
+		  var boatRouteLines = [{
+			  "type": "LineString",
+			  "coordinates": [[ -9.29119, 38.68995], [-9.29053, 38.68906], [-9.29203, 38.68814], [-9.29422, 38.68811]]  
+		  }, {
+			  "type": "LineString",
+			  "coordinates": [[-5.265974, 43.51589], [-5.265874, 43.51589], [-5.265774, 43.51589]]
+		  }];
+
+		  var boatRouteStyle = { "color": "#ff7800", "weight": 5, "opacity": 0.65 };
+
+		  L.geoJSON(boatRouteLines, {
+			  style: boatRouteStyle
+		  }).addTo(boatRoute);
+				
+		  // anadir control de capas
+		  L.control.layers(baseLayers, overlays).addTo(map);
+		
+		  // anadir control de escala
+		  L.control.scale().addTo(map);
+		
+      // anadir funcion click en map para mostrar coordenadas
+      var popup = L.popup();
+	    function onMapClick(e) {
+		    popup
+          .setLatLng(e.latlng)
+          .setContent("<b>Clicked on</b><br><i>" + e.latlng.toString() + "</i>")
+          .openOn(map);
+	      }
+	    map.on('click', onMapClick);
+			
+	</script>
+    
+  </body>
+</html>
