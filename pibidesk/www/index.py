@@ -6,6 +6,6 @@ from frappe import _, msgprint
 def get_context(context):
   ## load some data and put it in context
   context.message = "Hello Portal!"
-  context.pibico = ["pibiCo", "pibiDesk"]
+  context.pibico = ["enidh", "pibiDesk"]
   
   return context
