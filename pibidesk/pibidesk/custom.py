@@ -128,29 +128,30 @@ CHART_FORMAT = "%H:%M"
 
 @frappe.whitelist()
 def get_chart(doc):
-  data = frappe.get_doc("Device Log", doc)
-  #print("data = {}".format(frappe.as_json(data)))
-  if len(data.log_item) > 0:
-    sensor_vars = []
-    for d in data.log_item:
-      if d.sensor_var not in sensor_vars:
-        sensor_vars.append(d.sensor_var)
-    for i in sensor_vars:
-      chart_data = []
+  if not 'new-' in doc:
+    data = frappe.get_doc("Device Log", doc)
+    #print("data = {}".format(frappe.as_json(data)))
+    if len(data.log_item) > 0:
+      sensor_vars = []
       for d in data.log_item:
-        if d.sensor_var == i:
-          chart_data.append(d)
+        if d.sensor_var not in sensor_vars:
+          sensor_vars.append(d.sensor_var)
+      for i in sensor_vars:
+        chart_data = []
+        for d in data.log_item:
+          if d.sensor_var == i:
+            chart_data.append(d)
       
-      locals()[f"var_{i}"] = i
-      locals()[f"uom_{i}"] = chart_data[0].uom
-      locals()[f"lbl_{i}"] = [n.data_date.strftime(CHART_FORMAT) for n in chart_data]
-      locals()[f"read_{i}"] = [n.value for n in chart_data]
+        locals()[f"var_{i}"] = i
+        locals()[f"uom_{i}"] = chart_data[0].uom
+        locals()[f"lbl_{i}"] = [n.data_date.strftime(CHART_FORMAT) for n in chart_data]
+        locals()[f"read_{i}"] = [n.value for n in chart_data]
       
-    result = {}
-    for i in sensor_vars:
-      result["var_"+ i] = locals()[f"var_{i}"]
-      result["uom_" + i] = locals()[f"uom_{i}"]
-      result["lbl_"+ i] = locals()[f"lbl_{i}"]
-      result["read_" + i] = locals()[f"read_{i}"]
+      result = {}
+      for i in sensor_vars:
+        result["var_"+ i] = locals()[f"var_{i}"]
+        result["uom_" + i] = locals()[f"uom_{i}"]
+        result["lbl_"+ i] = locals()[f"lbl_{i}"]
+        result["read_" + i] = locals()[f"read_{i}"]
       
-    return result
+      return result

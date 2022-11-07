@@ -210,6 +210,6 @@ fixtures = ['Role Profile', 'Role', 'Custom Field', 'Client Script', 'Property S
 
 default_mail_footer = """
     <div>
-        Sent via <a href="https://www.pibico.org" target="_blank">pibiCo</a>
+        Sent via <a href="https://iot-enidh.ddns.net" target="_blank">pibiCo</a>
     </div>
 """

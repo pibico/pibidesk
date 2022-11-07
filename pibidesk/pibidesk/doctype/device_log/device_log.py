@@ -38,24 +38,27 @@ class DeviceLog(Document):
         if device and not device.disabled:
           ## Split dictionaries for selected variable
           _data = []
+          ## Include items except those tuples like position
           for d in data:
-            if d['sensor_var'] == i:
+            if d['sensor_var'] == i and not ',' in d['value']:
               _data.append(d)
-          ## Select sensor_var and data_date from last recorded data
-          var_uom = _data[0]['uom']
-          last_recorded = _data[0]['data_date']
-          ## Extract all values from dictionary
-          seq = [float(x['value']) for x in _data]
-          ## Prepares data_item values for childtable
           data_item = {}
-          data_item['sensor_var'] = i
-          data_item['uom'] = var_uom
-          data_item['last_recorded'] = last_recorded
-          data_item['value'] = seq[0]
-          data_item['reading'] = len(seq)
-          data_item['average'] = sum(seq)/len(seq)
-          data_item['minimum'] = min(seq)
-          data_item['maximum'] = max(seq)
+          ## Calculates for float values
+          if len(_data) > 0:
+            ## Select sensor_var and data_date from last recorded data
+            var_uom = _data[0]['uom']
+            last_recorded = _data[0]['data_date']
+            ## Extract all values from dictionary
+            seq = [float(x['value']) for x in _data]
+            ## Prepares data_item values for childtable
+            data_item['sensor_var'] = i
+            data_item['uom'] = var_uom
+            data_item['last_recorded'] = last_recorded
+            data_item['value'] = seq[0]
+            data_item['reading'] = len(seq)
+            data_item['average'] = sum(seq)/len(seq)
+            data_item['minimum'] = min(seq)
+            data_item['maximum'] = max(seq)
           ## Check in thresholds if seq[0] is an alert (last recorded value)
           if len(device.alert_item) > 0:
             thresholds = device.alert_item
@@ -91,7 +94,8 @@ class DeviceLog(Document):
           if len(device.data_item) > 0:
             doCreate = True
             for row in device.data_item:
-              if row.sensor_var == i:
+              ## Update table with calculations if data_item has float values
+              if row.sensor_var == i and len(data_item)>0:
                 ## Update existing data in childtable
                 doCreate = False
                 row.last_recorded = data_item['last_recorded']

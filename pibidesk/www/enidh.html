@@ -86,17 +86,18 @@
               </li>
               {% else %}
                 <li>
-                  <a href="{{frappe.utils.get_url()}}/index?cmd=web_logout" class="active"> Logout </a>
-                </li>
-                <li>
-                  <a href="{{frappe.utils.get_url()}}/app"> Desk </a>
-                </li>
-                <li>
                   <a href="http://iot-rescue.ddns.net" target="_blank"> Rescue Boat App </a>
                 </li>
                 <li>
                   <a href="http://iot-life.ddns.net" target="_blank"> Lifeboat App </a>
                 </li>
+                <li>
+                  <a href="{{frappe.utils.get_url()}}/app"> Desk </a>
+                </li>
+                <li>
+                  <a href="{{frappe.utils.get_url()}}/index?cmd=web_logout" class="active"> Logout </a>
+                </li>
+                
               {% endif %}  
             </ul>
           </li>
@@ -422,18 +423,20 @@
 		
 		  //variables de capas sobrepuestas
 		  var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' + 'Imagery <a href="https://www.mapbox.com/">Mapbox</a>, Data <a href="https://www.pibico.org">pibiCo</a>',
-		  mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
+		  mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGliaWNvIiwiYSI6ImNsYTBxZ2oyaDAwNGg0Mm1zMmt2NGI5ZHIifQ.voqOKwsMRvNq-oVjB4wDeA',
 		  mbAttr2 = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
 		  mbUrl2 ='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 		
 		  var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
-		  streets = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
 		  satellite = L.tileLayer(mbUrl, {id: 'mapbox/satellite-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
-		  normal  = L.tileLayer(mbUrl2, {tileSize: 512, zoomOffset: -1, attribution: mbAttr2});
+		  chart = L.tileLayer(mbUrl, {id: 'mapbox/terrain-v2', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
+      
+      normal  = L.tileLayer(mbUrl2, {tileSize: 512, zoomOffset: -1, attribution: mbAttr2});
+      
 		  var baseLayers = {
 			  "Escala grises": grayscale,
-			  "Carreteras": streets,
 			  "Satelite": satellite,
+        "Chart": chart,
 			  "Normal": normal };
 		
 		  //variables de coordenadas de centro
