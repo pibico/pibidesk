@@ -1,0 +1,127 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:TS-{YY}{MM}{####}",
+ "creation": "2022-11-08 18:30:08.482227",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "session_type",
+  "cellebration_date",
+  "instructors",
+  "participants",
+  "is_active",
+  "recording",
+  "published",
+  "route",
+  "cb_01",
+  "description",
+  "sb_01",
+  "session_item"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title"
+  },
+  {
+   "fieldname": "cellebration_date",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Cellebration Start Date"
+  },
+  {
+   "fieldname": "instructors",
+   "fieldtype": "Data",
+   "label": "Instructors"
+  },
+  {
+   "fieldname": "participants",
+   "fieldtype": "Int",
+   "label": "Participants Number"
+  },
+  {
+   "fieldname": "cb_01",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Active"
+  },
+  {
+   "default": "1",
+   "fieldname": "recording",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Recording"
+  },
+  {
+   "fieldname": "sb_01",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "published",
+   "fieldtype": "Check",
+   "label": "Published"
+  },
+  {
+   "fieldname": "route",
+   "fieldtype": "Data",
+   "label": "Route"
+  },
+  {
+   "fieldname": "session_item",
+   "fieldtype": "Table",
+   "label": "Session Items",
+   "options": "Session Item"
+  },
+  {
+   "fieldname": "session_type",
+   "fieldtype": "Link",
+   "label": "Session Type",
+   "options": "Session Type"
+  }
+ ],
+ "has_web_view": 1,
+ "index_web_pages_for_search": 1,
+ "is_published_field": "published",
+ "links": [],
+ "modified": "2022-11-13 12:02:04.087683",
+ "modified_by": "Administrator",
+ "module": "Pibidesk",
+ "name": "Data Session",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "route": "training",
+ "search_fields": "title",
+ "show_name_in_global_search": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "title"
+}

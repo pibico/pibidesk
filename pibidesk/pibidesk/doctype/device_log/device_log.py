@@ -38,11 +38,15 @@ class DeviceLog(Document):
         if device and not device.disabled:
           ## Split dictionaries for selected variable
           _data = []
+          _pos = []
           ## Include items except those tuples like position
+          data_item = {}
           for d in data:
             if d['sensor_var'] == i and not ',' in d['value']:
               _data.append(d)
-          data_item = {}
+            if d['sensor_var'] == i and ',' in d['value']:
+              _pos.append(d)
+              
           ## Calculates for float values
           if len(_data) > 0:
             ## Select sensor_var and data_date from last recorded data
@@ -59,6 +63,22 @@ class DeviceLog(Document):
             data_item['average'] = sum(seq)/len(seq)
             data_item['minimum'] = min(seq)
             data_item['maximum'] = max(seq)
+          ## Calculates for
+          if len(_pos) > 0:
+            ## Select sensor_var and data_date from last recorded data
+            var_uom = _pos[0]['uom']
+            last_recorded = _pos[0]['data_date']
+            ## Extract all values from dictionary
+            loc = [(item['value']) for item in _pos]
+            ## Prepares data_item values for childtable
+            data_item['sensor_var'] = i
+            data_item['uom'] = var_uom
+            data_item['last_recorded'] = last_recorded
+            data_item['value'] = str(_pos[0]['value'])
+            data_item['reading'] = len(loc)
+            data_item['average'] = 0
+            data_item['minimum'] = 0
+            data_item['maximum'] = 0         
           ## Check in thresholds if seq[0] is an alert (last recorded value)
           if len(device.alert_item) > 0:
             thresholds = device.alert_item
@@ -95,7 +115,7 @@ class DeviceLog(Document):
             doCreate = True
             for row in device.data_item:
               ## Update table with calculations if data_item has float values
-              if row.sensor_var == i and len(data_item)>0:
+              if row.sensor_var == i:
                 ## Update existing data in childtable
                 doCreate = False
                 row.last_recorded = data_item['last_recorded']
@@ -199,7 +219,7 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
     alert_log.save()
     frappe.db.commit()
   
-  date_alert = datadate.strftime("%d/%m/%y %H:%M")
+  date_alert = datadate #datadate.strftime("%d/%m/%y %H:%M")
     
   ## Finally enqueu to send messages through channels
   if reason == 'start':

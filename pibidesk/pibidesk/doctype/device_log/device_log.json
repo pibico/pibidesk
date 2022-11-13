@@ -8,8 +8,10 @@
  "engine": "InnoDB",
  "field_order": [
   "device",
+  "data_session",
   "cb_01",
   "date",
+  "session_type",
   "sb_01",
   "main_chart",
   "main_pic",
@@ -80,11 +82,25 @@
    "fieldname": "second_pic",
    "fieldtype": "Attach Image",
    "label": "Chart2 to Pic"
+  },
+  {
+   "fieldname": "data_session",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Data Session",
+   "options": "Data Session"
+  },
+  {
+   "fetch_from": "data_session.session_type",
+   "fieldname": "session_type",
+   "fieldtype": "Data",
+   "label": "Session Type",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-15 11:14:24.019661",
+ "modified": "2022-11-13 12:04:35.048944",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device Log",

@@ -2,6 +2,13 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Device', {
+  disabled(frm) {
+	  // your code here
+	  if (frm.doc.disabled) {
+	     frm.set_value('connected', 0);
+	     frm.refresh_field('connected');
+	  }
+	},
 	refresh(frm) {
     if (frappe.session.user == 'Administrator') {
       frm.add_custom_button("ReStart Sensor", function() {

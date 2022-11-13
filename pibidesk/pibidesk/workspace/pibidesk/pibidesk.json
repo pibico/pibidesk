@@ -26,6 +26,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Data Session",
+   "link_to": "Data Session",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Devices",
    "link_to": "Device",
    "link_type": "DocType",
@@ -67,6 +76,15 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Session Type",
+   "link_to": "Session Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   },
   {
    "hidden": 0,
@@ -169,7 +187,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-03-10 21:18:42.424098",
+ "modified": "2022-11-13 12:00:33.784889",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Pibidesk",

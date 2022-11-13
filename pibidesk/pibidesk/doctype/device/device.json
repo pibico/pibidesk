@@ -48,6 +48,7 @@
    "default": "0",
    "fieldname": "disabled",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Disabled"
   },
   {
@@ -85,7 +86,6 @@
   {
    "fieldname": "alias",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Alias"
   },
   {
@@ -98,14 +98,12 @@
   {
    "fieldname": "serial",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Serial"
   },
   {
    "depends_on": "eval:doc.connected;",
    "fieldname": "ip",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Connection IP"
   },
   {
@@ -166,15 +164,13 @@
   {
    "fieldname": "assigned_to",
    "fieldtype": "Link",
-   "in_global_search": 1,
-   "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Assigned To",
    "options": "Client"
   },
   {
    "fieldname": "place",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Place",
    "options": "Place"
   },
@@ -200,7 +196,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-13 22:08:18.966821",
+ "modified": "2022-11-12 20:44:16.616461",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device",

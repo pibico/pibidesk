@@ -56,7 +56,11 @@ def check_status():
         WHERE
          parent=%s AND docstatus<2 AND sensor_var='last_seen'
       """, device.name, as_dict = True)
-      gap_minutes = threshold[0]['high_value']
+      if len(threshold) > 0:
+        gap_minutes = threshold[0]['high_value']
+      else:
+        gap_minutes = 12 #by default 12 minutes
+        
       if lastseen:
         time_minutes = (now - lastseen).total_seconds()/60
       else:
@@ -66,13 +70,14 @@ def check_status():
       doAlert = False
       ## manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc)
       if time_minutes < gap_minutes:
-        if threshold[0]['alert_high']:
-          for n in dev.alert_item:
-            if n.sensor_var == 'last_seen':
-              if n.alert_high:
-                n.alert_high = False
-                n.save() 
-                manage_alert(threshold[0]['sensor_var'], threshold[0]['uom'], time_minutes, 'high', 'finish', now.strftime("%Y-%m-%d %H:%M:%S"), dev)
+        if len(threshold) > 0:
+          if threshold[0]['alert_high']:
+            for n in dev.alert_item:
+              if n.sensor_var == 'last_seen':
+                if n.alert_high:
+                  n.alert_high = False
+                  n.save() 
+                  manage_alert(threshold[0]['sensor_var'], threshold[0]['uom'], time_minutes, 'high', 'finish', now.strftime("%Y-%m-%d %H:%M:%S"), dev)
       elif gap_minutes < time_minutes <= gap_minutes * 5/4:
         doAlert = True
         send_mqtt(hostname, cstr(cmd))
@@ -86,9 +91,12 @@ def check_status():
       if doAlert: 
         for n in dev.alert_item:
           if n.sensor_var == 'last_seen':
+            dev.connected = False
+            dev.save()
             n.alert_high = True
-            n.save() 
-            manage_alert(threshold[0]['sensor_var'], threshold[0]['uom'], time_minutes, 'high', 'start', now.strftime("%Y-%m-%d %H:%M:%S"), dev)  
+            n.save()
+            if len(threshold) > 0: 
+              manage_alert(threshold[0]['sensor_var'], threshold[0]['uom'], time_minutes, 'high', 'start', now.strftime("%Y-%m-%d %H:%M:%S"), dev)  
       
 def alerts_reschedule():
   ## Get list of all Alerts in last day to check if there are still open
