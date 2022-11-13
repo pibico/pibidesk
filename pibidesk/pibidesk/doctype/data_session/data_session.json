@@ -98,8 +98,13 @@
  "has_web_view": 1,
  "index_web_pages_for_search": 1,
  "is_published_field": "published",
- "links": [],
- "modified": "2022-11-13 12:02:04.087683",
+ "links": [
+  {
+   "link_doctype": "Device Log",
+   "link_fieldname": "data_session"
+  }
+ ],
+ "modified": "2022-11-13 16:52:22.201079",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Data Session",

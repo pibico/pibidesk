@@ -16,7 +16,7 @@ import json, datetime, requests
 @frappe.whitelist()
 def mqtt_command(host, action):
   topic = []
-  topic.append(host + "/pibico/cmd")
+  topic.append(host + "/command")
   send_mqtt(topic, cstr(action))
 
 @frappe.whitelist()
@@ -41,7 +41,7 @@ def check_status():
   if len(devices) > 0:
     for device in devices:
       hostname = []
-      hostname.append(device.hostname + "/pibico/cmd")
+      hostname.append(device.hostname + "/command")
       lastseen = device.last_seen
       now = datetime.datetime.now()
       pos = device.device_shortcut.find("-")

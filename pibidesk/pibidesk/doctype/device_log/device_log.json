@@ -18,6 +18,8 @@
   "column_break_7",
   "second_chart",
   "second_pic",
+  "cb_08",
+  "move",
   "sb_02",
   "log_item"
  ],
@@ -96,11 +98,20 @@
    "fieldtype": "Data",
    "label": "Session Type",
    "read_only": 1
+  },
+  {
+   "fieldname": "cb_08",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "move",
+   "fieldtype": "Geolocation",
+   "label": "Move"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-11-13 12:04:35.048944",
+ "modified": "2022-11-13 21:20:25.742168",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device Log",
