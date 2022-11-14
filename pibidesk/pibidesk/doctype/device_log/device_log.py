@@ -63,6 +63,8 @@ class DeviceLog(Document):
             data_item['average'] = sum(seq)/len(seq)
             data_item['minimum'] = min(seq)
             data_item['maximum'] = max(seq)
+          
+          doLoc = False
           ## Calculates for
           if len(_pos) > 0:
             ## Select sensor_var and data_date from last recorded data
@@ -75,6 +77,7 @@ class DeviceLog(Document):
             data_item['uom'] = var_uom
             data_item['last_recorded'] = last_recorded
             data_item['value'] = str(_pos[0]['value'])
+            doLoc = True
             data_item['reading'] = len(loc)
             data_item['average'] = 0
             data_item['minimum'] = 0
@@ -135,6 +138,36 @@ class DeviceLog(Document):
             ## Save and Commit Modifications
             device.save()
             frappe.db.commit()         
+          
+          ## Update route in map
+          if doLoc:
+            ## Update gps route on log
+            location = {}
+            location['type'] = "FeatureCollection"
+            
+            features = []
+              
+            feature = {}
+            feature['type'] = "Feature"
+            feature['properties'] = {}
+          
+            coords = []
+          
+            for row in device.data_item:
+              if row.sensor_var == 'Position':
+                latlng = row.value
+                latlng = latlng.split(',')
+                lat = float(latlng[0])
+                lon = float(latlng[1])
+                coords.append([lon, lat])
+            
+            feature['geometry'] = {"type": "LineString", "coordinates": coords}
+            
+            features.append(feature)
+            location['features'] = features    
+          
+            self.move = json.dumps(location)
+            self.reload()    
           ## End Code           
     else:
       frappe.msgprint(_("No data yet registered"))   

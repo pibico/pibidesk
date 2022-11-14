@@ -1,7 +1,392 @@
 {% extends "templates/web.html" %}
 
-{% block page_content %}
-<h1>{{ title }}</h1>
+{% block meta_block %}
+  <meta http-equiv="refresh" content="30" />
+  <link
+      rel="shortcut icon"
+      href="/assets/pibidesk/images/favicon.svg"
+      type="image/x-icon"
+  />
+  <title>pibiDesk</title>
 {% endblock %}
 
-<!-- this is a sample default web page template -->
+{% block header %}
+  <!-- ========== All CSS files linkup ========= -->
+  <link rel="stylesheet" href="/assets/pibidesk/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/assets/pibidesk/css/lineicons.css" />
+  <link rel="stylesheet" href="/assets/pibidesk/css/materialdesignicons.min.css" />
+  <link rel="stylesheet" href="/assets/pibidesk/css/weather-icons.min.css" />
+  <link rel="stylesheet" href="/assets/pibidesk/css/weather-icons-wind.min.css" />
+  <link rel="stylesheet" href="/assets/pibidesk/css/main.css" />
+    
+  <link rel="stylesheet" href="/assets/pibidesk/dist/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="/assets/pibidesk/dist/leaflet/leaflet.legend.css" crossorigin="">
+  <link rel="stylesheet" href="/assets/pibidesk/dist/leaflet/L.Control.MousePosition.css" />
+  <!-- frappe resources -->
+  <link type="text/css" rel="stylesheet" href="/assets/css/desk.min.css?ver={{ build_version }}" />
+{% endblock %}
+
+{% block style %}
+  <style>
+    [data-path*="data-session"] .my-5 {
+      margin-top: 0px !important;
+    }
+    #map { 
+		  width: 100%;
+      height: 680px;
+	  }
+    .wrapper {
+      display: grid;
+      grid-template-columns: 70% auto;
+      grid-template-rows: 720px;
+      grid-gap: 3px;
+      color: #444;
+      background-color: transparent;
+      margin: 0px;
+    }
+    .box {
+      background-color: transparent;
+      /*background-color: #eee;*/
+      color: #4682b4;
+      border-radius: 6px;
+      padding: 0px;
+      margin: 0px;
+      border: #fff 1px solid;
+    }
+    .box p {
+      color: dimgrey;
+      margin: 0;
+      padding: 0px;
+      text-align: center;
+    }
+    @media screen and (max-width: 767px) {
+      .wrapper {
+        grid-template-columns: 1fr;
+        grid-template-rows: 490px 490px;
+      }
+      #map { 
+		    width: 100%;
+        height: 445px;
+	    }
+      .box {
+        margin-top: 3px;
+      }   
+    }
+    /*.leaflet-tile { border: solid black .1px; }*/
+    /* Change cursor when mousing over clickable layer */
+    .leaflet-clickable {
+      cursor: crosshair !important;
+    }
+    /* Change cursor when over entire map */
+    .leaflet-container {
+      cursor: help !important;
+    }
+    .leaflet-tile-pane {
+      filter: sepia(81%);
+      -webkit-filter: grayscale(81%);
+      -moz-filter: grayscale(81%);
+    }
+  </style>
+{% endblock %}
+
+{% block page_content %}
+  <div class="container-fluid">
+    <h4>
+      <span style="float: right;">
+        <a href='/data-session' style="color:#4682b4;"> Back</a>
+        <i data-feather="corner-up-left" class="svg-icon" style="color:#4682b4;"></i>
+      </span>
+      <span>
+        <b>
+          <a href='/app/data-session/{{name}}' target="_blank" style="color:#4682b4;">{{ title }} </a>
+        </b>
+        <p>
+          {{ session_type  }}
+          <i data-feather="calendar" class="svg-icon" style="color:#4682b4;"></i>
+          <b>{{ frappe.utils.get_datetime(cellebration_date).strftime("%d/%m/%Y") }}</b>
+        </p>
+      </span>
+    </h4>
+    
+    <div class="row">
+      
+      <div class="wrapper">
+        <div class="box">
+          <span class="m-1 p-1">
+            <i data-feather="share-2" class="svg-icon"></i> <strong>IoT Devices</strong>
+            <span class="badge badge-danger badge-counter badge-pill">{{ session_item | list | count }}</span>
+          </span>
+          <div id="map"></div>
+        </div>
+
+        <div class="box">
+	        <p>Rescue Boat</p>
+          <span class="d-flex justify-content-center">
+            POS: [{{ values['gps-iot-rescue_Position'] }}]<br>
+            COG: {{ values.get('gps-iot-rescue_Cog') }} &deg;<br>
+            SOG: {{ values['gps-iot-rescue_Sog'] }} knots
+          </span>
+          <br>
+          <p>Life Boat</p>
+          <span class="d-flex justify-content-center">
+            POS: [{{ values['gps-iot-life_Position'] }}]<br>
+            COG: {{ values.get('gps-iot-life_Cog') }} &deg;<br>
+            SOG: {{ values['gps-iot-life_Sog'] }} knots
+          </span>
+          <br>
+          <p>Dummy</p>
+          <span class="d-flex justify-content-center">
+            POS: [{{ values['gps-iot-dummy_Position'] }}]<br>
+            COG: {{ values.get('gps-iot-dummy_Cog') }} &deg;<br>
+            SOG: {{ values['gps-iot-dummy_Sog'] }} knots
+          </span>
+          <span>
+		  
+          </span>
+        </div>   
+	    </div>
+    </div>
+
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="/assets/pibidesk/js/feather.min.js"></script>
+  <script>
+    feather.replace()
+  </script> 
+    
+  <script src="/assets/pibidesk/dist/leaflet/leaflet.js"></script>
+  <script src="/assets/pibidesk/dist/leaflet/leaflet.rotatedMarker.js" crossorigin=""></script>
+  <script src="/assets/pibidesk/dist/leaflet/leaflet.legend.js" crossorigin=""></script>
+  <script src="/assets/pibidesk/dist/leaflet/L.Control.MousePosition.js" crossorigin=""></script>
+  <script src="/assets/pibidesk/dist/leaflet/aisdata.js"></script>
+    
+	<script>
+    frappe.boot = {
+		  sysdefaults: {
+			  float_precision: parseInt("{{ frappe.get_system_settings('float_precision') or 3 }}"),
+				date_format: "{{ frappe.get_system_settings('date_format') or 'yyyy-mm-dd' }}",
+			}
+		};
+		// for backward compatibility of some libs
+		frappe.sys_defaults = frappe.boot.sysdefaults;
+	</script>
+  <script>
+
+      function info() {
+        frappe.msgprint('Information');
+      }
+     
+	    //overlay layers
+		  var ships = L.layerGroup();
+		  var dummy = L.layerGroup();
+		  var rescue= L.layerGroup();
+      var life = L.layerGroup();
+      var mstc = L.layerGroup();
+      //new marker
+      var LeafIcon= L.Icon.extend({
+        options: {
+          iconSize:     [30, 30],
+          iconAnchor:   [10, 20]
+          }
+        });
+      var dummyIcon = new LeafIcon({
+        iconUrl: '/assets/pibidesk/dist/leaflet/images/dummy.svg'
+      })
+      var rescueIcon = new LeafIcon({
+        iconUrl: '/assets/pibidesk/dist/leaflet/images/rescue.svg'
+      });
+      var lifeIcon = new LeafIcon({
+        iconUrl: '/assets/pibidesk/dist/leaflet/images/life.svg'
+      });
+		  var popupdev = `
+        <div class="row">
+          <h4 style="font-size:120%; color: #4682b4; font-weight: 600; margin: 0; padding: 0;">Distance Data</h4>
+          <hr>
+          <ul>
+            <li>Rescue-Dummy <b>??? mi</b>
+            <li>Life-Dummy <b>??? mi</b>
+            <li>Rescue-Life <b>??? mi</b>
+          </ul>
+        </div>
+      `
+      var rmc_rescue = '{{ values['gps-iot-rescue_Position'] }}'.split(',');
+      var rmc_dummy = '{{ values['gps-iot-dummy_Position'] }}'.split(',');
+      var rmc_life = '{{ values['gps-iot-life_Position'] }}'.split(',');
+      
+      var rmclat_rescue = rmc_rescue[0];
+      var rmclon_rescue = rmc_rescue[1];
+      var rmclat_dummy = rmc_dummy[0];
+      var rmclon_dummy = rmc_dummy[1];
+      var rmclat_life = rmc_life[0];
+      var rmclon_life = rmc_life[1];
+      
+      //Dummy
+		  L.marker([rmclat_dummy, rmclon_dummy], {icon: dummyIcon}).bindPopup(popupdev).addTo(dummy),
+		  //Rescue
+      L.marker([rmclat_rescue, rmclon_rescue], {icon: rescueIcon, rotationAngle: {{ values['imu-iot-rescue_Heading'] }} }).bindPopup(popupdev).addTo(rescue),
+      //Life
+      L.marker([rmclat_life, rmclon_life], {icon: lifeIcon, rotationAngle: {{ values['imu-iot-life_Heading'] }}}).bindPopup(popupdev).addTo(life),  
+      //mstc
+      L.marker([38.690664, -9.300033]).bindPopup("<b>Escola Superior Nautica Infante D. Henrique</b><br><a href='https://www.enautica.pt/' target='_blank'>ENIDH</a>").addTo(mstc);
+     
+      var overlays = {
+			  "<img src='/assets/pibidesk/dist/leaflet/images/unspecified.svg' width='9px' /> <span>AIS</span>": ships, 
+			  "<img src='/assets/pibidesk/dist/leaflet/images/rescue.svg' width='12px' /> <span>Rescue Boat</span>": rescue,
+        "<img src='/assets/pibidesk/dist/leaflet/images/life.svg' width='12px' /> <span>Lifeboat</span>": life,          
+			  "<img src='/assets/pibidesk/dist/leaflet/images/dummy.svg' width='12px' /> <span>Dummy</span>": dummy,
+        "MSTC": mstc,
+			};
+		
+		  //variables de capas sobrepuestas
+		  var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' + 'Imagery <a href="https://www.mapbox.com/">Mapbox</a>, Data <a href="https://www.pibico.org">pibiCo</a>',
+		  mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGliaWNvIiwiYSI6ImNsYTBxZ2oyaDAwNGg0Mm1zMmt2NGI5ZHIifQ.voqOKwsMRvNq-oVjB4wDeA',
+		  mbAttr2 = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Data <a href="https://www.pibico.org">pibiCo</a>',
+		  mbUrl2 ='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		
+		  var satellite = L.tileLayer(mbUrl, {id: 'mapbox/satellite-v9', attribution: mbAttr}),
+		  normal  = L.tileLayer(mbUrl2, {attribution: mbAttr2});
+      
+		  var baseLayers = {
+			  "Satelite": satellite,
+        "Normal": normal };
+		
+		  //center of map coordinates
+		  var vlat = rmclat_dummy; 
+		  var vlong = rmclon_dummy;
+		  //vars for creating map and filters
+      //Retrieve session Storage map Zoom Level and center
+      var mapzoom = sessionStorage.mapzoom;
+      var maplat = sessionStorage.maplat;
+      var maplon = sessionStorage.maplon;
+      if (isNaN(mapzoom)) {
+        mapzoom = 21; //default value
+        maplat = vlat;
+        maplon = vlong;
+      }  
+        
+		  var map = L.map('map', {
+			  center: [maplat, maplon],
+			  zoom: mapzoom,
+        maxZoom: 24,        
+			  layers: [normal, ships, rescue, life, dummy, mstc ]
+			});
+		  
+		  //Add AIS Ships
+		  var barcoIcon = L.icon({ iconUrl: '/assets/pibidesk/dist/leaflet/images/ship.svg', iconSize: [20, 20], iconAnchor: [10, 20], });
+		
+      var unspecified =  L.icon({ iconUrl: '/assets/pibidesk/dist/leaflet/images/unspecified.svg', iconSize: [20, 20], iconAnchor: [10, 20], });
+      var tug =  L.icon({ iconUrl: '/assets/pibidesk/dist/leaflet/images/tug.svg', iconSize: [20, 20], iconAnchor: [10, 20], });
+		  var tanker =  L.icon({ iconUrl: '/assets/pibidesk/dist/leaflet/images/tanker.svg', iconSize: [20, 20], iconAnchor: [10, 20], });
+      arrtanker = [80,81,82,83,84,85,86,87,88,89]
+      var pleasure =  L.icon({ iconUrl: '/assets/pibidesk/dist/leaflet/images/pleasure.svg', iconSize: [20, 20], iconAnchor: [10, 20], });
+      var passenger =  L.icon({ iconUrl: '/assets/pibidesk/dist/leaflet/images/passenger.svg', iconSize: [20, 20], iconAnchor: [10, 20], });
+      var arrpassenger = [60,61,62,63,64,65,66,67,68,69]
+      var highspeed =  L.icon({ iconUrl: '/assets/pibidesk/dist/leaflet/images/high_speed.svg', iconSize: [20, 20], iconAnchor: [10, 20], });
+      var arrhighspeed = [40,41,42,43,44,45,46,47,48,49]
+      var fishing =  L.icon({ iconUrl: '/assets/pibidesk/dist/leaflet/images/fishing.svg', iconSize: [20, 20], iconAnchor: [10, 20], });
+      var cargo =  L.icon({ iconUrl: '/assets/pibidesk/dist/leaflet/images/cargo.svg', iconSize: [20, 20], iconAnchor: [10, 20], });
+      var arrcargo = [70,71,72,73,74,75,76,77,78,79]
+	
+		  var barcos = aisdata.features;
+		  var vdescbarco = "";
+		  L.geoJSON(barcos, {
+			  pointToLayer: function (feature, latlng) {
+			  vdescbarco = '<b>MMSI ' + feature.properties.mmsi + '</b><br>Vessel Name: '+ feature.properties.vessel_name + '<br>Vessel Type: ' + feature.properties.vessel_type + '<br>Speed: ' + feature.properties.sog + ' knots<br>DTG: ' + feature.properties.dtg;
+				  if (feature.properties.vessel_type === 30) {
+				    return L.marker(latlng, {icon: fishing, rotationAngle: feature.properties.cog}).addTo(ships).bindPopup(vdescbarco);
+				  } else if (feature.properties.vessel_type === 37)  {
+				    return L.marker(latlng, {icon: pleasure, rotationAngle: feature.properties.cog}).addTo(ships).bindPopup(vdescbarco);
+          } else if (feature.properties.vessel_type === 36)  {
+				    return L.marker(latlng, {icon: pleasure, rotationAngle: feature.properties.cog}).addTo(ships).bindPopup(vdescbarco);           
+				  } else if (feature.properties.vessel_type === 52)  {
+            return L.marker(latlng, {icon: tug, rotationAngle: feature.properties.cog}).addTo(ships).bindPopup(vdescbarco);
+				  } else if (feature.properties.vessel_type === 51)  {
+            return L.marker(latlng, {icon: barcoIcon, rotationAngle: feature.properties.cog}).addTo(ships).bindPopup(vdescbarco);
+          } else if (feature.properties.vessel_type === 40)  {
+            return L.marker(latlng, {icon: highspeed, rotationAngle: feature.properties.cog}).addTo(ships).bindPopup(vdescbarco);
+          } else if (feature.properties.vessel_type === 70)  {
+            return L.marker(latlng, {icon: cargo, rotationAngle: feature.properties.cog}).addTo(ships).bindPopup(vdescbarco);
+          } else if (feature.properties.vessel_type === 80)   {
+            return L.marker(latlng, {icon: tanker, rotationAngle: feature.properties.cog}).addTo(ships).bindPopup(vdescbarco);
+          } else if (feature.properties.vessel_type === 60)   {
+            return L.marker(latlng, {icon: passenger, rotationAngle: feature.properties.cog}).addTo(ships).bindPopup(vdescbarco);
+          } else {
+				    return L.marker(latlng, {icon: unspecified, rotationAngle: feature.properties.cog}).addTo(ships).bindPopup(vdescbarco);
+				  }
+			  }
+		  });
+		  //Add dummy routes
+	 	  var dummyRoute = [{
+        "type": "LineString",
+        "coordinates":  {{ coords['gps-iot-dummy'] }}
+      }];
+      var dummyStyle = { "color": "#ff0f00", "weight": 1.8, "opacity": 0.90 };    
+      L.geoJSON(dummyRoute, {style: dummyStyle}).addTo(dummy);
+      //Add rescue boat routes     
+      var rescueRoute = [{
+			  "type": "LineString",
+			  "coordinates": {{ coords['gps-iot-rescue'] }} 
+		  }];
+		  var rescueStyle = { "color": "#001122", "weight": 1.8, "opacity": 0.81 };
+		  L.geoJSON(rescueRoute, {style: rescueStyle}).addTo(rescue);
+			//Add lifeboat routes     
+      var lifeRoute = [{
+			  "type": "LineString",
+			  "coordinates": {{ coords['gps-iot-life'] }} 
+		  }];
+		  var lifeStyle = { "color": "#000fff", "weight": 1.8, "opacity": 0.72 };
+		  L.geoJSON(lifeRoute, {style: lifeStyle}).addTo(life);
+      	
+		  // anadir control de capas
+		  L.control.layers(baseLayers, overlays).addTo(map);
+		
+		  // anadir control de escala
+		  L.control.scale().addTo(map);
+		
+      // anadir funcion click en map para mostrar coordenadas
+      var popup = L.popup();
+	    function onMapClick(e) {
+		    popup
+          .setLatLng(e.latlng)
+          .setContent("<b>Clicked on</b><br><i>" + e.latlng.toString() + "</i>")
+          .openOn(map);
+	      }
+	    map.on('click', onMapClick);
+         
+      //Legend
+      var legend = L.control({ position: "bottomright" });
+      legend.onAdd = function(map) {
+        var div = L.DomUtil.create("div", "legend");
+        div.innerHTML += `
+          <div class="row" style="background: white; border: solid 1px #4682b4; border-radius: 6px; padding: 1px; margin-right: 1px; margin-bottom: 1px; width: 120px;">
+            <h4 class="m-1 mb-0 p-0" style="font-size: 9pt;">AIS Vessel Types</h4>
+            <span class="ml-1 p-1" style="font-size: 96%">
+              <i class="fa fa-eercast" style="color: #ffa07a;"></i> 30 Fishing<br>
+              <i class="fa fa-eercast" style="color: #ff00ff;"></i> 36-37 Pleasure<br>
+              <i class="fa fa-eercast" style="color: #ffff00;"></i> 40 High Speed<br>
+              <i class="fa fa-eercast" style="color: #3e596e;"></i> 51 Rescue<br>
+              <i class="fa fa-eercast" style="color: #00ffff;"></i> 52 Tug<br>
+              <i class="fa fa-eercast" style="color: #0000ff;"></i> 60 Passenger<br>
+              <i class="fa fa-eercast" style="color: #90ee90;"></i> 70 Cargo<br>
+              <i class="fa fa-eercast" style="color: #ff0000;"></i> 80 Tanker<br>
+              <i class="fa fa-eercast" style="color: #4684b4;"></i> Unspecified<br>
+            </span>
+          </div>
+        `;
+        return div;
+      };
+
+      legend.addTo(map);
+      
+      //L.control.mousePosition().addTo(map);
+    
+      //Store zoom level and center on moving around
+      map.on('moveend', function(e) {
+        sessionStorage.mapzoom = map.getZoom();
+        sessionStorage.maplat = map.getCenter().lat;
+        sessionStorage.maplon = map.getCenter().lng;
+      });			
+	</script>
+{% endblock %}
