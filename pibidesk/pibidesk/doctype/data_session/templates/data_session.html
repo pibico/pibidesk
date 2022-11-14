@@ -31,27 +31,47 @@
     [data-path*="data-session"] .my-5 {
       margin-top: 0px !important;
     }
+    .card {
+      border: none !important;
+      border-radius: 3px !important;
+      background-color: transparent !important;
+    }
+    .card-header {
+      border-radius: 3px !important;
+    }
     #map { 
 		  width: 100%;
-      height: 680px;
+      height: 690px;
 	  }
+    {% if is_active %}
     .wrapper {
       display: grid;
       grid-template-columns: 70% auto;
-      grid-template-rows: 720px;
+      grid-template-rows: 730px;
       grid-gap: 3px;
       color: #444;
       background-color: transparent;
       margin: 0px;
     }
+    {% else %}
+    .wrapper {
+      display: grid;
+      grid-template-columns: 100% auto;
+      grid-template-rows: 730px;
+      grid-gap: 3px;
+      color: #444;
+      background-color: transparent;
+      margin: 0px;
+    }
+    {% endif %}
     .box {
       background-color: transparent;
       /*background-color: #eee;*/
       color: #4682b4;
       border-radius: 6px;
-      padding: 0px;
+      padding: 1px;
       margin: 0px;
-      border: #fff 1px solid;
+      border: #eee 1px solid;
     }
     .box p {
       color: dimgrey;
@@ -62,7 +82,7 @@
     @media screen and (max-width: 767px) {
       .wrapper {
         grid-template-columns: 1fr;
-        grid-template-rows: 490px 490px;
+        grid-template-rows: 490px 730px;
       }
       #map { 
 		    width: 100%;
@@ -85,6 +105,29 @@
       filter: sepia(81%);
       -webkit-filter: grayscale(81%);
       -moz-filter: grayscale(81%);
+    }
+    .grmn {
+      display: flex;
+      justify-content: center;
+      margin-top: -10px;
+      font-size: 150%;
+    }
+    .box .data {
+      /*font-size: 99%;*/
+      font-weight: 540;
+      color: navy;
+      padding: 0;
+      padding-top: 3px;
+    }
+    .box .units {
+      writing-mode: vertical-lr;
+      text-orientation: mixed;
+      transform-origin: center;
+      transform: rotate(180deg);
+      align-self: center;
+      letter-spacing: 1px;
+      font-size: 45%;
+      padding-top: -3px;
     }
   </style>
 {% endblock %}
@@ -112,38 +155,269 @@
       
       <div class="wrapper">
         <div class="box">
-          <span class="m-1 p-1">
-            <i data-feather="share-2" class="svg-icon"></i> <strong>IoT Devices</strong>
-            <span class="badge badge-danger badge-counter badge-pill">{{ session_item | list | count }}</span>
-          </span>
+          <div class="d-flex justify-content-between m-1 p-1"
+            <p><span>
+              <i data-feather="share-2" class="svg-icon"></i> <strong>IoT Devices</strong>
+              <span class="badge badge-danger badge-counter badge-pill">{{ session_item | list | count }}</span>
+            </span></p>
+            <span>
+              
+              {% if recording %}
+                <i data-feather="eye" class="svg-icon"></i> <b>Record Mode </b>ON
+              {% else %}
+                <i data-feather="eye-off" class="svg-icon"></i> <b>Record Mode </b>OFF
+              {% endif %}
+            </span>
+          </div>  
           <div id="map"></div>
         </div>
-
+        
+        {% if is_active %}
         <div class="box">
-	        <p>Rescue Boat</p>
-          <span class="d-flex justify-content-center">
-            POS: [{{ values['gps-iot-rescue_Position'] }}]<br>
-            COG: {{ values.get('gps-iot-rescue_Cog') }} &deg;<br>
-            SOG: {{ values['gps-iot-rescue_Sog'] }} knots
-          </span>
-          <br>
-          <p>Life Boat</p>
-          <span class="d-flex justify-content-center">
-            POS: [{{ values['gps-iot-life_Position'] }}]<br>
-            COG: {{ values.get('gps-iot-life_Cog') }} &deg;<br>
-            SOG: {{ values['gps-iot-life_Sog'] }} knots
-          </span>
-          <br>
-          <p>Dummy</p>
-          <span class="d-flex justify-content-center">
-            POS: [{{ values['gps-iot-dummy_Position'] }}]<br>
-            COG: {{ values.get('gps-iot-dummy_Cog') }} &deg;<br>
-            SOG: {{ values['gps-iot-dummy_Sog'] }} knots
-          </span>
-          <span>
-		  
-          </span>
-        </div>   
+          <!-- rescue boat -->
+          <div class="card m-0 p-1">
+            <div class="card-header m-0 p-1">
+              <a href="/app/place/Rescue Boat-rescue" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/rescue.svg' width='18px' /></a>
+              <span>
+                <b>Rescue Boat</b> IoT Data
+              </span>
+            </div>
+            <div class="card-body m-0 p-1">
+              <ul class="list-group m-0 p-0" style="font-size: 120%;">
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/gps-iot-rescue" target="_blank"><i data-feather="map-pin" class="svg-icon"></i></a> COG</span>
+                  <span class="grmn">
+                    <div class="data">  {{ values.get('gps-iot-rescue_Cog') | int }}</div>
+                    <div class="units">&deg;</div>
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/gps-iot-rescue" target="_blank"><i data-feather="navigation" class="svg-icon"></i></a> SOG</span>
+                  <span class="grmn">
+                    <div class="data">  {{ '%3d' % values.get('gps-iot-rescue_Sog') | float  }}</div>
+                    <div class="units">kts</div>
+                  </span
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/gps-iot-rescue" target="_blank"><i data-feather="copy" class="svg-icon"></i></a> Distance to Dummy</span>
+                  <span class="grmn">
+                    <div class="data">
+                    
+                    </div>
+                    <div class="units">mi</div>
+                  </span
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/imu-iot-rescue" target="_blank"><i data-feather="compass" class="svg-icon"></i></a> Pitch</span>
+                  <span class="grmn">
+                    {% set pitch_rescue = values.get('imu-iot-rescue_Pitch') | int %}
+                    <div class="data">
+                      {% if pitch_rescue < 0 %}
+                        {{ '%04d' % pitch_rescue }}
+                      {% else %}
+                        {{ '%03d' % pitch_rescue }}
+                      {% endif %}
+                    </div>
+                    <div class="units">&deg;</div>
+                  </span
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/imu-iot-rescue" target="_blank"><i data-feather="menu" class="svg-icon"></i></a> Roll</span>
+                  <span class="grmn">
+                    {% set roll_rescue = values.get('imu-iot-rescue_Roll') | int %}
+                    <div class="data">
+                      {% if roll_rescue < 0 %}
+                        {{ '%04d' % roll_rescue }}
+                      {% else %}
+                        {{ '%03d' % roll_rescue }}
+                      {% endif %}
+                    </div>
+                    <div class="units">&deg;</div>
+                  </span
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/imu-iot-rescue" target="_blank"><i data-feather="navigation-2" class="svg-icon"></i></a> Mag.Heading</span>
+                  <span class="grmn">
+                    {% set heading_rescue = values.get('imu-iot-rescue_Heading') | int %}
+                    <div class="data">
+                      {% if heading_rescue < 0 %}
+                        {% set theading_rescue = heading_rescue + 360 %}
+                        {{ '%03d' % theading_rescue }}
+                      {% else %}
+                        {{ '%03d' % heading_rescue }}
+                      {% endif %}
+                    </div>
+                    <div class="units">&deg;</div>
+                  </span
+                </li>
+                
+              </ul>
+            </div>
+          </div>
+          <!-- Life Boat -->
+	        <div class="card m-0 p-1">
+            <div class="card-header m-0 p-1">
+              <a href="/app/place/Lifeboat-life" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/life.svg' width='18px' /></a>
+              <span>
+                <b>Lifeboat</b> IoT Data
+              </span>
+            </div>
+            <div class="card-body m-0 p-1">
+              <ul class="list-group m-0 p-0" style="font-size: 120%;">
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/gps-iot-life" target="_blank"><i data-feather="map-pin" class="svg-icon"></i></a> COG</span>
+                  <span class="grmn">
+                    <div class="data">  {{ values.get('gps-iot-life_Cog') | int }}</div>
+                    <div class="units">&deg;</div>
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/gps-iot-life" target="_blank"><i data-feather="navigation" class="svg-icon"></i></a> SOG</span>
+                  <span class="grmn">
+                    <div class="data">  {{ '%3d' % values.get('gps-iot-life_Sog') | float  }}</div>
+                    <div class="units">kts</div>
+                  </span
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/gps-iot-life" target="_blank"><i data-feather="copy" class="svg-icon"></i></a> Distance to Dummy</span>
+                  <span class="grmn">
+                    <div class="data">
+                    
+                    </div>
+                    <div class="units">mi</div>
+                  </span
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/imu-iot-life" target="_blank"><i data-feather="compass" class="svg-icon"></i></a> Pitch</span>
+                  <span class="grmn">
+                    {% set pitch_life = values.get('imu-iot-life_Pitch') | int %}
+                    <div class="data">
+                      {% if pitch_life < 0 %}
+                        {{ '%04d' % pitch_life }}
+                      {% else %}
+                        {{ '%03d' % pitch_life }}
+                      {% endif %}
+                    </div>
+                    <div class="units">&deg;</div>
+                  </span
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/imu-iot-life" target="_blank"><i data-feather="menu" class="svg-icon"></i></a> Roll</span>
+                  <span class="grmn">
+                    {% set roll_life = values.get('imu-iot-life_Roll') | int %}
+                    <div class="data">
+                      {% if roll_life < 0 %}
+                        {{ '%04d' % roll_life }}
+                      {% else %}
+                        {{ '%03d' % roll_life }}
+                      {% endif %}
+                    </div>
+                    <div class="units">&deg;</div>
+                  </span
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/imu-iot-life" target="_blank"><i data-feather="navigation-2" class="svg-icon"></i></a> Mag.Heading</span>
+                  <span class="grmn">
+                    {% set heading_life = values.get('imu-iot-life_Heading') | int %}
+                    <div class="data">
+                      {% if heading_life < 0 %}
+                        {% set theading_life = heading_life + 360 %}
+                        {{ '%03d' % theading_life }}
+                      {% else %}
+                        {{ '%03d' % heading_life }}
+                      {% endif %}
+                    </div>
+                    <div class="units">&deg;</div>
+                  </span
+                </li>
+                
+              </ul>
+            </div>
+          </div>
+          <!-- Dummy -->
+          <div class="card m-0 p-1">
+            <div class="card-header m-0 p-1">
+              <a href="/app/place/Dummy-dummy" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/dummy.svg' width='18px' /></a>
+              <span>
+                <b>Dummy</b> IoT Data
+              </span>
+            </div>
+            <div class="card-body m-0 p-1">
+              <ul class="list-group m-0 p-0" style="font-size: 120%;">
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/gps-iot-dummy" target="_blank"><i data-feather="map-pin" class="svg-icon"></i></a> COG</span>
+                  <span class="grmn">
+                    <div class="data">  {{ values.get('gps-iot-dummy_Cog') | int }}</div>
+                    <div class="units">&deg;</div>
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/gps-iot-dummy" target="_blank"><i data-feather="navigation" class="svg-icon"></i></a> SOG</span>
+                  <span class="grmn">
+                    <div class="data">  {{ '%3d' % values.get('gps-iot-dummy_Sog') | float  }}</div>
+                    <div class="units">kts</div>
+                  </span
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/gps-iot-dummy" target="_blank"><i data-feather="navigation" class="svg-icon"></i></a> Rescue Boat Rel.Bearing</span>
+                  <span class="grmn">
+                    <div class="data">
+                    
+                    </div>
+                    <div class="units">&deg;</div>
+                  </span
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/gps-iot-dummy" target="_blank"><i data-feather="compass" class="svg-icon"></i></a> Lifeboat Rel.Bearing</span>
+                  <span class="grmn">
+                    <div class="data">
+                      
+                    </div>
+                    <div class="units">&deg;</div>
+                  </span
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!--  Windguru -->
+          <div class="card m-0 p-1">
+            <div class="card-header m-0 p-1">
+              <a href="/app/place/Wind Station-windguru" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/buoy.svg' width='18px' /></a>
+              <span>
+                <b>Windguru</b> IoT Data
+              </span>
+            </div>
+            <div class="card-body m-0 p-1">
+              <ul class="list-group m-0 p-0" style="font-size: 120%;">
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/api-windguru" target="_blank"><i data-feather="compass" class="svg-icon"></i></a> Direction</span>
+                  <span class="grmn">
+                    <div class="data">  </div>
+                    <div class="units">&deg;</div>
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/api-windguru" target="_blank"><i data-feather="wind" class="svg-icon"></i></a> Speed</span>
+                  <span class="grmn">
+                    <div class="data">  </div>
+                    <div class="units">kts</div>
+                  </span
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span><a href="/app/device/api-windguru" target="_blank"><i data-feather="thermometer" class="svg-icon"></i></a> Temperature</span>
+                  <span class="grmn">
+                    <div class="data">
+                      
+                    </div>
+                    <div class="units">&deg;C</div>
+                  </span
+                  
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        {% endif %}   
 	    </div>
     </div>
 
@@ -210,7 +484,7 @@
             <li>Rescue-Life <b>??? mi</b>
           </ul>
         </div>
-      `
+      ` 
       var rmc_rescue = '{{ values['gps-iot-rescue_Position'] }}'.split(',');
       var rmc_dummy = '{{ values['gps-iot-dummy_Position'] }}'.split(',');
       var rmc_life = '{{ values['gps-iot-life_Position'] }}'.split(',');

@@ -23,13 +23,14 @@ class DataSession(WebsiteGenerator):
     for log in device_logs:
       if log.device not in devices:
         devices.append(log.device)  
+    context.devices = devices
     ## get all gps in logs
     for device in devices:
       if 'gps' in device:
         locals()[f"coord_{device}"] = []
         for log in reversed(device_logs):
           if log['device'] == device:
-            device_log = frappe.get_doc("Device Log", {'device': device})
+            device_log = frappe.get_doc("Device Log", {'device': device, 'data_session': self.name})
             for row in device_log.log_item:
               if row.sensor_var == 'Position':
                 latlng = row.value.split(',')
