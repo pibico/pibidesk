@@ -41,13 +41,13 @@
     }
     #map { 
 		  width: 100%;
-      height: 690px;
+      height: 700px;
 	  }
     {% if is_active %}
     .wrapper {
       display: grid;
-      grid-template-columns: 70% auto;
-      grid-template-rows: 730px;
+      grid-template-columns: 65% auto;
+      grid-template-rows: 740px;
       grid-gap: 3px;
       color: #444;
       background-color: transparent;
@@ -82,7 +82,7 @@
     @media screen and (max-width: 767px) {
       .wrapper {
         grid-template-columns: 1fr;
-        grid-template-rows: 490px 730px;
+        grid-template-rows: 490px 740px;
       }
       #map { 
 		    width: 100%;
@@ -177,10 +177,15 @@
           <!-- rescue boat -->
           <div class="card m-0 p-1">
             <div class="card-header m-0 p-1">
-              <a href="/app/place/Rescue Boat-rescue" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/rescue.svg' width='18px' /></a>
+              <div class="d-flex justify-content-between m-0 p-0"
               <span>
-                <b>Rescue Boat</b> IoT Data
+                <p>
+                  <a href="/app/place/Rescue Boat-rescue" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/rescue.svg' width='18px' /></a>  
+                  <b style="color: #4682b4;">Rescue Boat</b> IoT Data
+                </p>
+                <a href="https://iot-rescue.ddns.net" target="_blank"><i data-feather="globe" class="svg-icon"></i></a>
               </span>
+              </div>
             </div>
             <div class="card-body m-0 p-1">
               <ul class="list-group m-0 p-0" style="font-size: 120%;">
@@ -199,7 +204,7 @@
                   </span
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
-                  <span><a href="/app/device/gps-iot-rescue" target="_blank"><i data-feather="copy" class="svg-icon"></i></a> Distance to Dummy</span>
+                  <span><a href="/app/device/gps-iot-rescue" target="_blank"><i data-feather="copy" class="svg-icon"></i></a> To Dummy</span>
                   <span class="grmn">
                     <div class="data">
                     
@@ -257,10 +262,15 @@
           <!-- Life Boat -->
 	        <div class="card m-0 p-1">
             <div class="card-header m-0 p-1">
-              <a href="/app/place/Lifeboat-life" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/life.svg' width='18px' /></a>
+              <div class="d-flex justify-content-between m-0 p-0"
               <span>
-                <b>Lifeboat</b> IoT Data
+                <p>
+                  <a href="/app/place/Lifeboat-life" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/life.svg' width='18px' /></a>  
+                  <b style="color: #4682b4;">Lifeboat</b> IoT Data
+                </p>
+                <a href="https://iot-life.ddns.net" target="_blank"><i data-feather="globe" class="svg-icon"></i></a>
               </span>
+              </div>
             </div>
             <div class="card-body m-0 p-1">
               <ul class="list-group m-0 p-0" style="font-size: 120%;">
@@ -279,7 +289,7 @@
                   </span
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
-                  <span><a href="/app/device/gps-iot-life" target="_blank"><i data-feather="copy" class="svg-icon"></i></a> Distance to Dummy</span>
+                  <span><a href="/app/device/gps-iot-life" target="_blank"><i data-feather="copy" class="svg-icon"></i></a> To Dummy</span>
                   <span class="grmn">
                     <div class="data">
                     
@@ -359,7 +369,7 @@
                   </span
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
-                  <span><a href="/app/device/gps-iot-dummy" target="_blank"><i data-feather="navigation" class="svg-icon"></i></a> Rescue Boat Rel.Bearing</span>
+                  <span><a href="/app/device/gps-iot-dummy" target="_blank"><i data-feather="navigation" class="svg-icon"></i></a> Resc.R.Bearing</span>
                   <span class="grmn">
                     <div class="data">
                     
@@ -368,7 +378,7 @@
                   </span
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
-                  <span><a href="/app/device/gps-iot-dummy" target="_blank"><i data-feather="compass" class="svg-icon"></i></a> Lifeboat Rel.Bearing</span>
+                  <span><a href="/app/device/gps-iot-dummy" target="_blank"><i data-feather="compass" class="svg-icon"></i></a> Life.R.Bearing</span>
                   <span class="grmn">
                     <div class="data">
                       
