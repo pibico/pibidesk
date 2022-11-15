@@ -593,13 +593,20 @@
       //mstc
       L.marker([38.690664, -9.300033]).bindPopup("<b>Escola Superior Nautica Infante D. Henrique</b><br><a href='https://www.enautica.pt/' target='_blank'>ENIDH</a>").addTo(mstc);
      
+      //var overlays = {
+			//  "<img src='/assets/pibidesk/dist/leaflet/images/unspecified.svg' width='9px' /> <span>AIS</span>": ships, 
+			//  "<img src='/assets/pibidesk/dist/leaflet/images/rescue.svg' width='12px' /> <span>Rescue Boat</span>": rescue,
+      //  "<img src='/assets/pibidesk/dist/leaflet/images/life.svg' width='12px' /> <span>Lifeboat</span>": life,          
+			//  "<img src='/assets/pibidesk/dist/leaflet/images/dummy.svg' width='12px' /> <span>Dummy</span>": dummy,
+      //  "MSTC": mstc,
+			//};
       var overlays = {
-			  "<img src='/assets/pibidesk/dist/leaflet/images/unspecified.svg' width='9px' /> <span>AIS</span>": ships, 
-			  "<img src='/assets/pibidesk/dist/leaflet/images/rescue.svg' width='12px' /> <span>Rescue Boat</span>": rescue,
-        "<img src='/assets/pibidesk/dist/leaflet/images/life.svg' width='12px' /> <span>Lifeboat</span>": life,          
-			  "<img src='/assets/pibidesk/dist/leaflet/images/dummy.svg' width='12px' /> <span>Dummy</span>": dummy,
-        "MSTC": mstc,
-			};
+        "AIS": ships,
+        "Rescue Boat": rescue,
+        "Lifeboat": life,
+        "Dummy": dummy,
+        "MSTC": mstc
+      };
 		
 		  //variables de capas sobrepuestas
 		  var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' + 'Imagery <a href="https://www.mapbox.com/">Mapbox</a>, Data <a href="https://www.pibico.org">pibiCo</a>',
@@ -622,18 +629,54 @@
       var mapzoom = sessionStorage.mapzoom;
       var maplat = sessionStorage.maplat;
       var maplon = sessionStorage.maplon;
+      // Retrieve overlay layer status
+      var oships = sessionStorage.oships;
+      var orescue = sessionStorage.orescue;
+      var olife = sessionStorage.olife;
+      var odummy = sessionStorage.odummy;
+      var omstc = sessionStorage.omstc;
+      
       if (isNaN(mapzoom)) {
         mapzoom = 21; //default value
         maplat = vlat;
         maplon = vlong;
-      }  
-        
-		  var map = L.map('map', {
+        oships = sessionStorage.oships = 'on';
+        orescue = sessionStorage.orescue = 'on';
+        olife = sessionStorage.olife = 'on';
+        odummy = sessionStorage.odummy = 'on';
+        omstc = sessionStorage.omstc = 'on';
+      }
+      var map = L.map('map', {
 			  center: [maplat, maplon],
 			  zoom: mapzoom,      
-			  layers: [normal, ships, rescue, life, dummy, mstc ]
+			  layers: [ normal, ships, rescue, life, dummy, mstc ]
 			});
 		  
+      if (oships == 'on') {
+        map.addLayer(ships);
+      } else {  
+        map.removeLayer(ships);
+      }
+      if (orescue == 'on') {
+        map.addLayer(rescue);
+      } else {
+        map.removeLayer(rescue);      
+      }
+      if (olife == 'on') {
+        map.addLayer(life);
+      } else {
+        map.removeLayer(life);  
+      }
+      if (odummy == 'on') {
+        map.addLayer(dummy);  
+      } else {
+        map.removeLayer(dummy);
+      }
+      if (omstc == 'on') {
+        map.addLayer(mstc);
+      } else {
+        map.removeLayer(mstc);
+      }      
 		  //Add AIS Ships
 		  var barcoIcon = L.icon({ iconUrl: '/assets/pibidesk/dist/leaflet/images/ship.svg', iconSize: [20, 20], iconAnchor: [10, 20], });
 		
@@ -754,6 +797,36 @@
         sessionStorage.mapzoom = map.getZoom();
         sessionStorage.maplat = map.getCenter().lat;
         sessionStorage.maplon = map.getCenter().lng;
+      });
+      
+      var oships, orescue, olife, odummy, omstc;
+      map.on('overlayadd', function(e) {
+        console.log('Added: ' + e.name);
+        if (e.name === 'AIS') {
+          sessionStorage.oships = 'on';
+        } else if (e.name === 'Rescue Boat') {
+          sessionStorage.orescue = 'on';
+        } else if (e.name === 'Lifeboat') {
+          sessionStorage.olife = 'on';
+        } else if (e.name === 'Dummy') {
+          sessionStorage.odummy = 'on';
+        } else if (e.name === 'MSTC') {
+          sessionStorage.omstc = 'on';        
+        }
+      });
+      map.on('overlayremove', function(e) {
+        console.log('Removed: '+ e.name);
+        if (e.name === 'AIS') {
+          sessionStorage.oships = 'off';
+        } else if (e.name === 'Rescue Boat') {
+          sessionStorage.orescue = 'off';
+        } else if (e.name === 'Lifeboat') {
+          sessionStorage.olife = 'off';
+        } else if (e.name === 'Dummy') {
+          sessionStorage.odummy = 'off';
+        } else if (e.name === 'MSTC') {
+          sessionStorage.omstc = 'off';        
+        }
       });
       
       //:::  Passed to function:                                                    :::
