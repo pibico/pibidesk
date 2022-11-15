@@ -1,4 +1,37 @@
-<div>
-	<a href="{{ doc.route }}">{{ doc.title or doc.name }}</a>
-</div>
-<!-- this is a sample default list template -->
+{% block header %}
+  <!-- ========== All CSS files linkup ========= -->
+  <link rel="stylesheet" href="/assets/pibidesk/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/assets/pibidesk/css/lineicons.css" />
+  <link rel="stylesheet" href="/assets/pibidesk/css/materialdesignicons.min.css" />
+  <link rel="stylesheet" href="/assets/pibidesk/css/weather-icons.min.css" />
+  <link rel="stylesheet" href="/assets/pibidesk/css/weather-icons-wind.min.css" />
+  <link rel="stylesheet" href="/assets/pibidesk/css/main.css" />
+  <!-- frappe resources -->
+  <link type="text/css" rel="stylesheet" href="/assets/css/desk.min.css?ver={{ build_version }}" />
+{% endblock %}
+
+{% block style %}
+  <style>
+    .container .my-4 {
+      margin: 0 !important;
+      pagging: 0 !important;
+    }
+    .page-breadcrumbs {
+      display: none;
+    }
+    h1 {
+      font-size: 180%;
+    }
+  </style>
+{% endblock %}
+
+{% block page_content %}
+  <div class="p-0 m-0" id="sessions">
+    <span class="d-flex" style="font-size: 120%;">
+      <h5><a href={{ route }}>{{ title }}</a></h5>
+      <span>
+        <b class="ml-2" style="color:#4682b4; font-size: 69%;">({{ frappe.utils.get_datetime(cellebration_date).strftime("%d/%m/%Y %H:%M") }})</b>
+      </span>
+    </span>
+  </div>
+{% endblock %}

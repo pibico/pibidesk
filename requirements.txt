@@ -3,3 +3,5 @@ frappe
 qrcode
 svglib
 paho-mqtt
+geopy
+pyais
