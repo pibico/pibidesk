@@ -422,10 +422,10 @@
                   </span>
                   <span class="grmn">
                     <div class="data">
-                      {% if values.get('rescue_bearing') | float < 0 %}
-                      {{ '%4d' % values.get('rescue_bearing') | int }}
+                      {% if values['rescue_bearing'] | int < 0 %}
+                        {{ '%04d' % values.get('rescue_bearing') | int }}
                       {% else %}
-                      {{ '%3d' % values.get('rescue_bearing') | int }}
+                        {{ '%03d' % values.get('rescue_bearing') | int }}
                       {% endif %}
                     </div>
                     <div class="units">&deg;</div>
@@ -441,9 +441,9 @@
                   <span class="grmn">
                     <div class="data">
                       {% if values.get('life_bearing') | float < 0 %}
-                      {{ '%4d' % values.get('life_bearing') | int }}
+                        {{ '%04d' % values.get('life_bearing') | int }}
                       {% else %}
-                      {{ '%3d' % values.get('life_bearing') | int }}
+                        {{ '%03d' % values.get('life_bearing') | int }}
                       {% endif %}  
                     </div>
                     <div class="units">&deg;</div>
@@ -799,7 +799,6 @@
         sessionStorage.maplon = map.getCenter().lng;
       });
       
-      var oships, orescue, olife, odummy, omstc;
       map.on('overlayadd', function(e) {
         console.log('Added: ' + e.name);
         if (e.name === 'AIS') {
