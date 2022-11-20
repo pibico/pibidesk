@@ -215,7 +215,7 @@
           
           <div class="row">
             <!-- start column 1 -->
-            <div class="col-md-8">
+            <div class="col-md-12">
               <div class="card mb-3" style="height:780px;">
                 <div class="card-header">
 		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
@@ -237,7 +237,7 @@
             <!-- end column 1 -->
             </div>
             <!-- start column 2 -->
-            <div class="col-xl-4 col-lg-4 col-md-6">
+            <!--<div class="col-xl-4 col-lg-4 col-md-6">
               {% if 'current' in weather %}
               <div class="card mb-4" style="height:780px;">
                 <div class="card-header">
@@ -263,12 +263,12 @@
 					          <i class="info-user fa fa-shield"></i>
                     P<small>sl</small>  {{ weather.current.pressure }}hPa
 					          <br>
-				            <!-- <i class="info-user fa fa-sun-o"></i>
+				            <i class="info-user fa fa-sun-o"></i>
                     <small>Alba/Sunrise</small> {{ timestamp_to_date(weather.current.sunrise) }}
                     <br> 				  
 				            <i class="info-user fa fa-moon-o"></i>
                     <small>Ocaso/Sunset</small> {{ timestamp_to_date(weather.current.sunset) }}
-                    <br> -->
+                    <br> 
 				            <i class="info-user wi wi-wind towards-{{ weather.current.wind_deg }}-deg"></i>
 					          <small>Wind</small> {{ weather.current.wind_speed }}m/s
 					          <br>
@@ -304,7 +304,7 @@
                 </div>       
               </div>
               {% endif %}
-            </div>
+            </div> -->
             <!-- end column 2 -->
             <!-- start column 3 -->
             <div class="col-xl-4 col-lg-4 col-md-6">
