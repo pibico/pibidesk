@@ -17,7 +17,7 @@ def get_context(context):
   device_list = frappe.get_list(
     doctype = "Device",
     fields = ["*"],
-    filters = [['assigned_to', '=', 'atvirtual.pibico@gmail.com']]
+    filters = [['assigned_to', '=', 'pibidesk@gmail.com']]
   )
   context.device_list = device_list
  
@@ -49,7 +49,7 @@ def get_context(context):
   
   ## Get Location and Weather for Client Logged In
   weather_set = frappe.get_doc("Weather Settings", "Weather Settings")
-  client = frappe.get_doc("Client", "atvirtual.pibico@gmail.com")
+  client = frappe.get_doc("Client", "pibidesk@gmail.com")
   ## json.loads(customer[0].location).features[0].geometry.coordinates
   strloc = json.loads(client.location)
   if weather_set:

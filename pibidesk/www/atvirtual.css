@@ -70,26 +70,39 @@ html, body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+.dummy {
+  background: url("/assets/pibidesk/images/cards/dummy.jpg");
+  /* Full height */
+  height: 100%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.boat {
+  background: url("/assets/pibidesk/images/cards/lifeboat.png");
+  /* Full height */
+  height: 100%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.rescue {
+  background: url("/assets/pibidesk/images/cards/rescue.png");
+  /* Full height */
+  height: 100%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .beacon{
   position: absolute;
   padding: 0px;
   margin: 0px;
   top: 15%;
   left: 55%;
-}
-.calefactor{
-  position: absolute;
-  padding: 0px;
-  margin: 0px;
-  top: 72%;
-  left: 9%;
-}
-.bomba{
-  position: absolute;
-  padding: 0px;
-  margin: 0px;
-  top: 45%;
-  left: 75%;
 }
 .element{
   position: absolute;

@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="/assets/pibidesk/css/weather-icons-wind.min.css" />
     <link rel="stylesheet" href="/assets/pibidesk/css/main.css" />
     <!-- <link rel="stylesheet" href="/assets/pibidesk/css/style.css" /> -->
-    <link rel="stylesheet" href="./enidh.css" />
+    <link rel="stylesheet" href="./atvirtual.css" />
     
     <link rel="stylesheet" href="/assets/pibidesk/dist/leaflet/leaflet.css" />
     
@@ -49,7 +49,7 @@
     <aside class="sidebar-nav-wrapper">
       <div class="navbar-logo">
         <a href="{{frappe.utils.get_url()}}/index">
-          <img src="/assets/pibidesk/images/logo/logo.svg" alt="logo" width="36%"/>
+          <img src="/assets/pibidesk/images/logo/logo.svg" alt="logo" />
         </a>
       </div>
       <nav class="sidebar-nav">
@@ -86,18 +86,11 @@
               </li>
               {% else %}
                 <li>
-                  <a href="http://iot-rescue.ddns.net" target="_blank"> Rescue Boat App </a>
-                </li>
-                <li>
-                  <a href="http://iot-life.ddns.net" target="_blank"> Lifeboat App </a>
-                </li>
-                <li>
-                  <a href="{{frappe.utils.get_url()}}/app"> Desk </a>
-                </li>
-                <li>
                   <a href="{{frappe.utils.get_url()}}/index?cmd=web_logout" class="active"> Logout </a>
                 </li>
-                
+                <li>
+                  <a href="{{frappe.utils.get_url()}}/app"> Controles/Desk </a>
+                </li>
               {% endif %}  
             </ul>
           </li>
@@ -106,6 +99,14 @@
       <div class="promo-box">
         <h3><strong>pibi</strong>Desk</h3>
         <p>by pibiCo</p>
+        <a
+          href="https://www.pibico.org#contact"
+          target="_blank"
+          rel="nofollow"
+          class="main-btn primary-btn btn-hover"
+        >
+          Cont&aacute;ctanos<br>Contact Us
+        </a>
       </div>
     </aside>
     <div class="overlay"></div>
@@ -161,13 +162,13 @@
                   >
                     <li>
                       <a href="{{frappe.utils.get_url()}}/app/user/{{ frappe.session.user }}">
-                        <i class="lni lni-user"></i> Settings</a>
+                        <i class="lni lni-user"></i> Ajustes/Settings</a>
                     </li>
                     <li>
-                      <a href="{{frappe.utils.get_url()}}/app/home"> <i class="lni lni-home"></i> Desk</a>
+                      <a href="{{frappe.utils.get_url()}}/app/home"> <i class="lni lni-home"></i> Escritorio/Desk</a>
                     </li>
                     <li>
-                      <a href="{{frappe.utils.get_url()}}?cmd=web_logout"> <i class="lni lni-exit"></i> Logout</a>
+                      <a href="{{frappe.utils.get_url()}}?cmd=web_logout"> <i class="lni lni-exit"></i> Salida/Logout</a>
                     </li>
                   </ul>
                   {% endif %}
@@ -189,7 +190,7 @@
               <div class="col-md-6">
                 <div class="title mb-30">
                   <!-- jinja -->
-                  <h2>ENIDH Training Dashboard</h2>
+                  <h2>MTU</h2>
                 </div>
               </div>
               <!-- end col -->
@@ -201,7 +202,7 @@
                         <a href="index">Home</a>
                       </li>
                       <li class="breadcrumb-item active" aria-current="page">
-                        AT Virtual - ENIDH
+                        AT Virtual - NMCI
                       </li>
                     </ol>
                   </nav>
@@ -215,12 +216,12 @@
           <div class="row">
             <!-- start column 1 -->
             <div class="col-md-8">
-              <div class="card mb-3" style="height:795px;">
+              <div class="card mb-3" style="height:780px;">
                 <div class="card-header">
 		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
                     <strong>Location Map</strong>
                   </span>
-                  <span class="badge badge-danger badge-counter badge-pill ml-1">3</span>         
+                  <span class="badge badge-danger badge-counter badge-pill ml-1">1</span>         
  		            </div>
                 <div class="card-body p-0 m-0">
                   <div id="map1"></div>
@@ -235,16 +236,64 @@
               </div>
             <!-- end column 1 -->
             </div>
-            <!-- start column 3 -->
+            <!-- start column 2 -->
             <div class="col-xl-4 col-lg-4 col-md-6">
-              <div class="card mb-3" style="height:540px;">
+              {% if 'current' in weather %}
+              <div class="card mb-4" style="height:780px;">
                 <div class="card-header">
 		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
-                    <strong>IoT Devices</strong>
+                    <strong>Weather</strong>
                   </span>
  		            </div>
-                <div class="card-body dummy">
-                  <p>Devices Data</p>
+                <div class="card-body m-0 p-2">
+	                <i class="info-user fa fa-clock"></i> {{ ts_to_date(weather.current.dt) }}
+                  <br>
+                  <i class="wi wi-owm-{{weather.current.weather.0.id}} pull-right info-user mr-3" style="font-size: 54px;"></i>
+				          <b class="text-warning">{{ weather.current.weather.0.description }}</b><br><small> feels like {{ weather.current.feels_like }}&deg;C </small>
+                  <hr>
+                  <p>
+                    <i class="info-user fa fa-map-marker"></i> {{ weather.lat }}<sub>lat</sub> {{ weather.lon }}<sub>lon</sub>
+                    <br>                        
+				            <i class="info-user fa fa-thermometer"></i>
+				            <small>Temp</small> {{ weather.current.temp }}&deg;C
+					          <br>
+				            <i class="info-user fa fa-tint"></i>
+                    <small>Humd</small> {{ weather.current.humidity }}%
+				            <br>
+					          <i class="info-user fa fa-shield"></i>
+                    P<small>sl</small>  {{ weather.current.pressure }}hPa
+					          <br>
+				            <!-- <i class="info-user fa fa-sun-o"></i>
+                    <small>Alba/Sunrise</small> {{ timestamp_to_date(weather.current.sunrise) }}
+                    <br> 				  
+				            <i class="info-user fa fa-moon-o"></i>
+                    <small>Ocaso/Sunset</small> {{ timestamp_to_date(weather.current.sunset) }}
+                    <br> -->
+				            <i class="info-user wi wi-wind towards-{{ weather.current.wind_deg }}-deg"></i>
+					          <small>Wind</small> {{ weather.current.wind_speed }}m/s
+					          <br>
+					          <i class="info-user wi wi-owm-{{weather.current.weather.0.id}}"></i>
+                    <small>Clouds</small> {{ weather.current.clouds }}%
+                    <br>
+					          {% if weather.current.rain %}
+					          <i class="info-user fa fa-bath"></i>
+                    <small>Rain</small> {{ weather.current.rain['1h'] }}mm/h
+					          {% endif %}
+                    <p></p>        
+                    <ul class="card-style m-0 p-3">             
+                    {% for forecast in weather.daily %}
+                      <li class="mb-1">
+                        <small><i class="info-user fa fa-sun-o"></i> {{ timestamp_to_date(forecast.sunrise) }}&nbsp;<i class="info-user fa fa-moon-o"></i> {{ timestamp_to_date(forecast.sunset) }}&nbsp; <i class="info-user wi wi-owm-{{forecast.weather.0.id}}"></i> <strong class="text-warning">{{forecast.weather.0.description}}</small></strong>
+                        <br>&nbsp;&nbsp;<small>
+                          <i class="info-user fa fa-thermometer-half"></i>min {{ forecast.temp.min }}&deg;C
+                          &nbsp;<i class="info-user fa fa-thermometer"></i>Max {{ forecast.temp.max }}&deg;C
+                          &nbsp;<i class="info-user fa fa-tint"></i>humid {{ forecast.humidity }}%
+                          &nbsp;<i class="info-user fa fa-lightbulb-o"></i>uvi {{ forecast.uvi }}
+                        </small>
+                      </li>
+                    {% endfor %}
+                    </ul> 
+				          </p>
                 </div>
                 <div class="card-footer m-0 p-0">
                   <ul class="nav nav-pills">
@@ -254,8 +303,41 @@
                   </ul>
                 </div>       
               </div>
-              
-              <div class="card mb-3" style="height: 240px;">
+              {% endif %}
+            </div>
+            <!-- end column 2 -->
+            <!-- start column 3 -->
+            <div class="col-xl-4 col-lg-4 col-md-6">
+              <div class="card mb-3" style="height:540px;">
+                <div class="card-header">
+		              <span class="card-title"><i data-feather="map" class="svg-icon"></i>
+                    <strong>Drawing</strong>
+                  </span>
+ 		            </div>
+                <div class="card-body drawcard">
+                  <span>
+                    <button onclick="switch_on('light-rpb3b-nmci','Beacon')" class="beacon btn btn-md btn-success" style="font-size: 24px; border-radius: 50%; margin-left: 3px; vertical-align: bottom; margin-bottom: 0px; margin-top: 3px; height: 42px; width: 42px; padding: 3px;"><i class="fa fa-power-off"></i></button> 
+                    <a href="javascript:info()" title="message" class="element bg-danger text-white m-1 p-1" style="top: 35%; left: 3%; min-width: 90px;"><i class="info-user wi wi-wind-beaufort-12 text-white" style="font-size: 21pt;"></i> mph
+                    </a>
+                    <a href="javascript:info()" title="info_device" class="element bg-success text-white m-1 p-1" style="top: 43%; left: 3%; min-width: 90px;"><i class="info-user wi wi-wind towards-240-deg text-white" style="font-size: 24pt;"></i> &nbsp; SW 
+                    </a>
+                    <a href="javascript:info()" title="info_device" class="element bg-primary text-white m-1 p-1" style="top: 60%; left: 3%; min-width: 90px;"><i class="fa fa-ship" style="font-size: 21pt;"></i> 5 knot
+                    </a>
+                    <a href="javascript:info()" title="info_device" class="element bg-secondary text-white m-1 p-1" style="top: 68%; left: 3%; min-width: 90px;"><i data-feather="anchor" class="svg-icon font-30" ></i> 21 feet
+                    </a>
+                  </span>
+                </div>
+                <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>
+                </div>       
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6">
+              <div class="card mb-3" style="height: 540px;">
                 <!-- Header -->
                 <div class="card-header">
                   <span class="card-title"><i data-feather="share-2" class="svg-icon"></i> <strong>Sensors</strong>
@@ -267,6 +349,73 @@
                 <div class="card-body m-0 p-2">
                   <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-1" role="tabpanel" aria-labelledby="pills-1-tab">
+                      <div class="row align-items-center">  
+                        <div class="col-8 text-left">
+                          <i class="fa fa-anchor text-warning"></i>
+                          <a href="#" target="_blank">
+                            <small class="text-info">(34)</small>
+                          </a>
+                          <a href="#" target="_blank">
+                            <span class="text-primary">depth-device</span>
+                          </a>
+                          <br>
+                          <i class="lni lni-ruler text-danger"></i>
+                          <span class="text-black"> depth reading</span>
+                          <br>
+                          <!-- <i class="fa fa-thermometer-full text-primary"></i> -->
+                          <span class="fa-stack fa-1x">
+                            <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                            <i class="fa fa-anchor fa-stack-1x" style="color: white;"></i>
+                          </span>
+                          <b class="text-black" style="font-size: 13pt;"> 21</b>feet</span>
+                          <br>
+                          <i class="fa fa-clock text-primary"></i><span class="ml-1"> 22/3/22 13:15 </span>
+                        </div>
+                        <div class="col-4 text-left">
+                          <p class="mr-3 text-right">
+                          <small>
+                          <!-- <i class="fa fa-thermometer-full text-primary"></i> -->
+                          <span class="fa-stack fa-2x">
+                            <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                            <i class="fa fa-anchor fa-stack-1x" style="color: white;"></i>
+                          </span>
+                          <b class="text-warning">Alert</b></span>
+                          </small> 
+                          </p>  
+                        </div>
+                      </div>
+                      <hr class="m-0 mt-1 mb-1">
+                      <div class="row align-items-center">  
+                        <div class="col-8 text-left">
+                          <i class="fa fa-anchor text-warning"></i>
+                          <a href="#" target="_blank">
+                            <small class="text-info">(23)</small>
+                          </a>
+                          <a href="#" target="_blank">
+                            <span class="text-primary">water speed-device</span>
+                          </a>
+                          <br>
+                          <i class="lni lni-ruler text-danger"></i>
+                          <span class="text-black"> water speed reading</span>
+                          <br>
+                          <!-- <i class="fa fa-thermometer-full text-primary"></i> -->
+                          <span class="fa-stack fa-1x">
+                            <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                            <i class="fa fa-ship fa-stack-1x" style="color: white;"></i>
+                          </span>
+                          <b class="text-black" style="font-size: 13pt;"> 5</b>knot</span>
+                          <br>
+                          <i class="fa fa-clock text-primary"></i><span class="ml-1"> 22/3/22 13:15 </span>
+                        </div>
+                        <div class="col-4 text-left">
+                          <p class="mr-3 text-right">
+                          <small>
+                          <!-- <i class="fa fa-thermometer-full text-primary"></i> -->
+                          </small> 
+                          </p>  
+                        </div>
+                      </div>
+                      <hr class="m-0 mt-1 mb-1">
                       <div class="row align-items-center">  
                         <div class="col-8 text-left">
                           <i class="fa fa-flag-o text-warning"></i>
@@ -297,6 +446,38 @@
                           </p>  
                         </div>
                       </div>
+                      <hr class="m-0 mt-1 mb-1">
+                      <div class="row align-items-center">  
+                        <div class="col-8 text-left">
+                          <i class="fa fa-flag-o text-warning"></i>
+                          <a href="#" target="_blank">
+                            <small class="text-info">(15)</small>
+                          </a>
+                          <a href="#" target="_blank">
+                            <span class="text-primary">wind direction-device</span>
+                          </a>
+                          <br>
+                          <i class="lni lni-ruler text-danger"></i>
+                          <span class="text-black"> wind direction reading</span>
+                          <br>
+                          <!-- <i class="fa fa-thermometer-full text-primary"></i> -->
+                          <span class="fa-stack fa-1x">
+                            <i class="fa fa-circle fa-stack-2x" style="color: SteelBlue;"></i>
+                            <i class="fa fa-flag-o fa-stack-1x" style="color: white;"></i>
+                          </span>
+                          <b class="text-black" style="font-size: 13pt;"> SW</b>240&deg;</span>
+                          <br>
+                          <i class="fa fa-clock text-primary"></i><span class="ml-1"> 22/3/22 13:15 </span>
+                        </div>
+                        <div class="col-4 text-left">
+                          <p class="mr-3 text-right">
+                          <small>
+                          <!-- <i class="fa fa-thermometer-full text-primary"></i> -->
+                          </small> 
+                          </p>  
+                        </div>
+                      </div>
+                      <hr class="m-0 mt-1 mb-1">
                     </div>
                   </div>
                 </div>
@@ -311,6 +492,37 @@
                 </div>
                 <!-- End Footer -->
               </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6">
+              <div class="card mb-3" style="height: 540px;">
+		            <div class="card-header">
+			            <span class="card-title"><i data-feather="home" class="svg-icon"></i> <strong>Control</strong></span>
+                  <span class="badge badge-danger badge-counter badge-pill ml-1">1</span>                 
+			          </div>				
+			          <div class="card-body p-1 m-1">
+                  <div class="card-style">
+                    <div class="form-check form-switch toggle-switch mb-1">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="beacon"
+                        id="beacon"
+                        checked
+                      />
+                      <label class="form-check-label" for="beacon">
+                        beacon
+                      </label>
+                    </div>
+                  </div>             
+				        </div>
+			          <div class="card-footer m-0 p-0">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"><i data-feather="activity" class="svg-icon"></i></a>
+                    </li>
+                  </ul>  
+                </div>
+	            </div>
             </div>  
           </div>
         </div>
@@ -331,12 +543,24 @@
                     rel="nofollow"
                     target="_blank"
                   >
-                    pibiCo, 2022
+                    pibiCo
                   </a>
                 </p>
               </div>
             </div>
             <!-- end col-->
+            <div class="col-md-6">
+              <div
+                class="
+                  terms
+                  d-flex
+                  justify-content-center justify-content-md-end
+                "
+              >
+                <a href="https://www.pibico.org/terminos_es" target="_blank" class="text-sm">Ts&Cs</a>
+                <a href="https://www.pibico.org/privacidad_es" target="_blank" class="text-sm ml-15">Privacy</a>
+              </div>
+            </div>
           </div>
           <!-- end row -->
         </div>
@@ -402,12 +626,12 @@
           }
         });
       
-      var dummyIcon = new LeafIcon({
-        iconUrl: '/assets/pibidesk/images/leaflet/buoy.svg'
+      var buoyIcon = new LeafIcon({
+        iconUrl: '/assets/pibidesk/images//leaflet/buoy.svg'
       }) 
       
 		  //iot
-		  L.marker([38.68899, -9.29538], {icon: dummyIcon}).bindPopup('Dummy').addTo(iot),
+		  L.marker([51.83623, -8.30718], {icon: buoyIcon}).bindPopup('Buoy').addTo(iot),
 		  //mstc
       L.marker([38.690664, -9.300033]).bindPopup("<b>Escola Superior Nautica Infante D. Henrique</b><br><a href='https://www.enautica.pt/' target='_blank'>ENIDH</a>").addTo(mstc),
       L.marker([43.4901352, -5.7611543]).bindPopup("<b>Centro de Seguridad Maritima Integral</b><br><a href='https://www.centrojovellanos.es/' target='_blank'>Centro Jovellanos</a>").addTo(mstc),
@@ -423,29 +647,27 @@
 		
 		  //variables de capas sobrepuestas
 		  var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' + 'Imagery <a href="https://www.mapbox.com/">Mapbox</a>, Data <a href="https://www.pibico.org">pibiCo</a>',
-		  mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGliaWNvIiwiYSI6ImNsYTBxZ2oyaDAwNGg0Mm1zMmt2NGI5ZHIifQ.voqOKwsMRvNq-oVjB4wDeA',
+		  mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
 		  mbAttr2 = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
 		  mbUrl2 ='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 		
 		  var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
+		  streets = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
 		  satellite = L.tileLayer(mbUrl, {id: 'mapbox/satellite-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
-		  chart = L.tileLayer(mbUrl, {id: 'mapbox/terrain-v2', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
-      
-      normal  = L.tileLayer(mbUrl2, {tileSize: 512, zoomOffset: -1, attribution: mbAttr2});
-      
+		  normal  = L.tileLayer(mbUrl2, {tileSize: 512, zoomOffset: -1, attribution: mbAttr2});
 		  var baseLayers = {
 			  "Escala grises": grayscale,
+			  "Carreteras": streets,
 			  "Satelite": satellite,
-        "Chart": chart,
 			  "Normal": normal };
 		
 		  //variables de coordenadas de centro
-		  var vlat = 38.6868; 
-		  var vlong = -9.29536;
+		  var vlat = 51.83587;
+		  var vlong = -8.31067;
 		  //variable de creacion de mapa y filtros a activar
 		  var map = L.map('map1', {
 			  center: [vlat, vlong],
-			  zoom: 16,
+			  zoom: 15,
 			  layers: [satellite, boats, boatRoute, cities, mstc, iot ]
 			});
 		  
@@ -472,7 +694,7 @@
 		  //plasmariamos las lineas con esos datos, pero para el ejemplo solo hago una
 		  var boatRouteLines = [{
 			  "type": "LineString",
-			  "coordinates": [[ -9.29119, 38.68995], [-9.29053, 38.68906], [-9.29203, 38.68814], [-9.29422, 38.68811]]  
+			  "coordinates": [[-5.56681, 43.58661], [-3.8025687, 43.6570279], [ -3.744675889342295, 43.4678933015832], [-3.8395188, 43.4328088]]  
 		  }, {
 			  "type": "LineString",
 			  "coordinates": [[-5.265974, 43.51589], [-5.265874, 43.51589], [-5.265774, 43.51589]]
