@@ -19,6 +19,7 @@ class DataSession(WebsiteGenerator):
       order_by="creation desc"
     )
     context.logs = device_logs
+    
     ## Retrieve last recorded value for devices
     devices = []
     result = {}
@@ -28,6 +29,7 @@ class DataSession(WebsiteGenerator):
       if log.device not in devices:
         devices.append(log.device)  
     context.devices = devices
+    
     ## get all gps in logs
     for device in devices:
       if 'gps' in device:
@@ -43,8 +45,7 @@ class DataSession(WebsiteGenerator):
                 coord = [lon, lat]
                 locals()[f"coord_{device}"].append(coord)
       
-        coords[device] = locals()[f"coord_{device}"]        
-    
+        coords[device] = locals()[f"coord_{device}"]           
     context.coords = coords
     
     ## calculate all distances
@@ -67,14 +68,7 @@ class DataSession(WebsiteGenerator):
             lat = float(location[0])
             lon = float(location[1])
             result[device + '_lat'] = lat
-            result[device + '_lon'] = lon  
-    
-    try:    
-      result['rescue_bearing'] = rel_bearing(int(result['imu-iot-rescue_Heading']), float(result['gps-iot-rescue_lat']), float(result['gps-iot-rescue_lon']), float(result['gps-iot-dummy_lat']), float(result['gps-iot-dummy_lon']))
-      result['life_bearing'] = rel_bearing(int(result['imu-iot-life_Heading']), float(result['gps-iot-life_lat']), float(result['gps-iot-life_lon']), float(result['gps-iot-dummy_lat']), float(result['gps-iot-dummy_lon']))
-    except:
-      pass  
-        
+            result[device + '_lon'] = lon    
     context.values = result
     
 def rel_bearing(hdg1, lat1, lon1, lat2, lon2):
@@ -90,4 +84,3 @@ def rel_bearing(hdg1, lat1, lon1, lat2, lon2):
     diff -= 360
   
   return diff
-                  
