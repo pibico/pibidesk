@@ -183,10 +183,10 @@
               <div class="d-flex justify-content-between m-0 p-0"
               <span>
                 <p>
-                  <a href="/app/place/Smart Buoy-buoy" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/buoy.svg' width='18px' /></a>  
-                  <b style="color: #4682b4;">Smart Buoy</b> IoT Data
+                  <a href="/app/place/AT-Virtual-AT-Virtual" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/buoy.svg' width='18px' /></a>  
+                  <b style="color: #4682b4;">AT-Virtual</b> IoT Data
                 </p>
-                <a href="https://buoy00.ddns.net" target="_blank"><i data-feather="globe" class="svg-icon"></i></a>
+                <a href="http://iot-atvirtual.ddns.net" target="_blank"><i data-feather="globe" class="svg-icon"></i></a>
               </span>
               </div>
             </div>
@@ -194,59 +194,95 @@
               <ul class="list-group m-0 p-0" style="font-size: 120%;">
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
                   <span>
-                    <a href="/app/device/gps-iot-buoy" target="_blank">
+                    <a href="/app/device/gps-iot-atvirtual" target="_blank">
                       <i class="fa fa-map-marker"></i>
                     </a>
                     &nbsp;Position
                   </span>
                   <span class="grmn">
-                    <div class="data">  {{ values.get('gps-iot-buoy_Position') }}</div>
+                    <div class="data">  {{ values.get('gps-iot-atvirtual_Position') }}</div>
                     <div class="units"></div>
                   </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
                   <span>
-                    <a href="/app/device/gps-iot-buoy" target="_blank">
-                      <i class="fa fa-long-arrow-up" style="transform: rotate({{ values.get('gps-iot-buoy_Cog') | int }}deg);"></i>
+                    <a href="/app/device/gps-iot-atvirtual" target="_blank">
+                      <i class="fa fa-long-arrow-up" style="transform: rotate({{ values.get('gps-iot-atvirtual_Cog') | int }}deg);"></i>
                     </a>
                     &nbsp;COG
                   </span>
                   <span class="grmn">
-                    <div class="data">  {{ '%03d' % values.get('gps-iot-buoy_Cog') | int }}</div>
+                    <div class="data">  {{ '%03d' % values.get('gps-iot-atvirtual_Cog') | int }}</div>
                     <div class="units">&deg;</div>
                   </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
                   <span>
-                    <a href="/app/device/gps-iot-buoy" target="_blank">
+                    <a href="/app/device/gps-iot-atvirtual" target="_blank">
                       <i class="fa fa-ship"></i>
                     </a>
                     &nbsp;SOG
                   </span>
                   <span class="grmn">
-                    <div class="data">  {{ '%0.3f' % values.get('gps-iot-buoy_Sog') | float  }}</div>
+                    <div class="data">  {{ '%0.3f' % values.get('gps-iot-atvirtual_Sog') | float  }}</div>
                     <div class="units">kts</div>
                   </span
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
-                  {% set heading_buoy = -1* values.get('imu-iot-buoy_Heading') | int %}
+                  {% set heading_atvirtual = values.get('imu-iot-atvirtual_Heading') | int %}
                   <span>
-                    <a href="/app/device/imu-iot-buoy" target="_blank">
-                      <i data-feather="navigation-2" class="svg-icon" style="transform: rotate({{ heading_buoy }}deg);"></i>
+                    <a href="/app/device/imu-iot-atvirtual" target="_blank">
+                      <i data-feather="navigation-2" class="svg-icon" style="transform: rotate({{ heading_atvirtual }}deg);"></i>
                     </a>
                     &nbsp;Mag.Heading
                   </span>
                   <span class="grmn">
                     <div class="data">
-                      {% if heading_buoy < 0 %}
-                        {% set theading_buoy = heading_buoy + 360 %}
-                        {{ '%03d' % theading_buoy }}
+                      {% if heading_atvirtual < 0 %}
+                        {% set theading_atvirtual = heading_atvirtual + 360 %}
+                        {{ '%03d' % theading_atvirtual }}
                       {% else %}
-                        {{ '%03d' % heading_buoy }}
+                        {% set theading_atvirtual = heading_atvirtual %}
+                        {{ '%03d' % heading_atvirtual }}
                       {% endif %}
                     </div>
                     <div class="units">&deg;</div>
                   </span
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span>
+                    <a href="/app/device/imu-iot-atvirtual" target="_blank">
+                      <i class="fa fa-long-arrow-up" style="transform: rotate({{ values.get('imu-iot-atvirtual_Pitch') | int }}deg);"></i>
+                    </a>
+                    &nbsp;Pitch
+                  </span>
+                  <span class="grmn">
+                    <div class="data">
+                    {% if values.get('imu-iot-atvirtual_Pitch') | int < 0 %}
+                      {{ '%04d' % values.get('imu-iot-atvirtual_Pitch') | int }}
+                    {% else %}
+                      {{ '%03d' % values.get('imu-iot-atvirtual_Pitch') | int }}
+                    {% endif %}
+                    </div>
+                    <div class="units">&deg;</div>
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
+                  <span>
+                    <a href="/app/device/imu-iot-atvirtual" target="_blank">
+                      <i class="fa fa-long-arrow-up" style="transform: rotate({{ values.get('imu-iot-atvirtual_Roll') | int }}deg);"></i>
+                    </a>
+                    &nbsp;Roll
+                  </span>
+                  <span class="grmn">
+                    <div class="data">{% if values.get('imu-iot-atvirtual_Roll') | int < 0 %}
+                      {{ '%04d' % values.get('imu-iot-atvirtual_Roll') | int }}
+                    {% else %}
+                      {{ '%03d' % values.get('imu-iot-atvirtual_Roll') | int }}
+                    {% endif %}
+                    </div>
+                    <div class="units">&deg;</div>
+                  </span>
                 </li>
                 
               </ul>
@@ -255,7 +291,7 @@
           <!--  Wind -->
           <div class="card m-0 p-1">
             <div class="card-header m-0 p-1">
-              <a href="/app/place/Smart Buoy-buoy" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/nav2.svg' width='18px' /></a>
+              <a href="/app/place/AT-Virtual-AT-Virtual" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/dummy.svg' width='18px' /></a>
               <span>
                 <b>Wind</b> IoT Data
               </span>
@@ -264,28 +300,28 @@
               <ul class="list-group m-0 p-0" style="font-size: 120%;">
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
                   <span>
-                    <a href="/app/device/wind-iot-buoy" target="_blank">
-                      <i class="fa fa-long-arrow-up" style="transform: rotate({{values.get('wind-iot-buoy_Direction') | int}}deg);"></i>
+                    <a href="/app/device/wind-iot-atvirtual" target="_blank">
+                      <i class="fa fa-long-arrow-up" style="transform: rotate({{values.get('wind-iot-atvirtual_Direction') | int}}deg);"></i>
                     </a>
                     &nbsp;Direction
                   </span>
                   <span class="grmn">
                     <div class="data">
-                      {{ '%3d' % values.get('wind-iot-buoy_Direction') | int  }}
+                      {{ '%3d' % values.get('wind-iot-atvirtual_Direction') | int  }}
                     </div>
                     <div class="units">&deg;</div>
                   </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
                   <span>
-                    <a href="/app/device/wind-iot-buoy" target="_blank">
+                    <a href="/app/device/wind-iot-atvirtual" target="_blank">
                       <i class="fa fa-life-ring"></i>
                     </a>
                     &nbsp;Speed
                   </span>
                   <span class="grmn">
                     <div class="data">
-                      {{ '%.3f' % values.get('wind-iot-buoy_Speed') | float  }}
+                      {{ '%.3f' % values.get('wind-iot-atvirtual_Speed') | float  }}
                     </div>
                     <div class="units">kts</div>
                   </span
@@ -296,7 +332,7 @@
           <!--  Water -->
           <div class="card m-0 p-1">
             <div class="card-header m-0 p-1">
-              <a href="/app/place/Smart Buoy-buoy" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/buoy.svg' width='18px' /></a>
+              <a href="/app/place/Smart Buoy-buoy" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/ship.svg' width='18px' /></a>
               <span>
                 <b>Water</b> IoT Data
               </span>
@@ -305,15 +341,15 @@
               <ul class="list-group m-0 p-0" style="font-size: 120%;">
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
                   <span>
-                    <a href="/app/device/dt-iot-buoy" target="_blank">
+                    <a href="/app/device/dt-iot-atvirtual" target="_blank">
                       <i class="fa fa-bookmark"></i>
                     </a>
                     &nbsp;Depth
                   </span>
                   <span class="grmn">
                     <div class="data">
-                      {% if values.get('dt-iot-buoy_Depth') != None %}
-                        {{ '%.2f' % values.get('dt-iot-buoy_Depth') }}
+                      {% if values.get('dt-iot-atvirtual_Depth') != None %}
+                        {{ '%.2f' % values.get('dt-iot-atvirtual_Depth') }}
                       {% endif %}  
                     </div>
                     <div class="units">ft</div>
@@ -321,15 +357,15 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
                   <span>
-                    <a href="/app/device/flow-iot-buoy" target="_blank">
+                    <a href="/app/device/flow-iot-atvirtual" target="_blank">
                       <i class="fa fa-tachometer"></i>
                     </a>
                     &nbsp;Speed
                   </span>
                   <span class="grmn">
                     <div class="data">
-                      {% if values.get('flow-iot-buoy_Speed') != None %}
-                        {{ '%.2f' % values.get('flow-iot-buoy_Speed') | float  }}
+                      {% if values.get('flow-iot-atvirtual_Speed') != None %}
+                        {{ '%.2f' % values.get('flow-iot-atvirtual_Speed') | float  }}
                       {% endif %}
                     </div>
                     <div class="units">kts</div>
@@ -337,15 +373,15 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
                   <span>
-                    <a href="/app/device/dt-iot-buoy" target="_blank">
+                    <a href="/app/device/dt-iot-atvirtual" target="_blank">
                       <i class="fa fa-thermometer"></i>
                     </a>
                     &nbsp;Temperature
                   </span>
                   <span class="grmn">
                     <div class="data">
-                      {% if values.get('dt-iot-buoy_Temperature') != None %}
-                        {{ '%.1f' % values.get('dt-iot-buoy_Temperature') | float  }}
+                      {% if values.get('dt-iot-atvirtual_Temperature') != None %}
+                        {{ '%.1f' % values.get('dt-iot-atvirtual_Temperature') | float  }}
                       {% endif %}  
                     </div>
                     <div class="units">&deg;C</div>
@@ -389,6 +425,13 @@
       function info() {
         frappe.msgprint('Information');
       };
+      
+      {% set heading_atvirtual = values.get('imu-iot-atvirtual_Heading') | int %}
+      {% if heading_atvirtual < 0 %}
+      {% set theading_atvirtual = heading_atvirtual + 360 %}
+      {% else %}
+      {% set theading_atvirtual = heading_atvirtual %}
+      {% endif %}
      
 	    //overlay layers
 		  var buoy = L.layerGroup();
@@ -406,20 +449,20 @@
       
       var sensor_var;
       
-		  var popupdev = '<div class="row"><h4 style="font-size:120%; color: #4682b4; font-weight: 600; margin: 0; padding: 0;">Buoy Data</h4><hr><ul><li>... <b>' + sensor_var + 'var</b></ul></div>';
+		  var popupdev = '<div class="row"><h4 style="font-size:120%; color: #4682b4; font-weight: 600; margin: 0; padding: 0;">AT-Virtual Data</h4><hr><ul><li>... <b>' + sensor_var + 'var</b></ul></div>';
        
-      var rmc_buoy = '{{ values['gps-iot-buoy_Position'] }}'.split(',');
+      var rmc_buoy = '{{ values['gps-iot-atvirtual_Position'] }}'.split(',');
       
       var rmclat_buoy = rmc_buoy[0];
       var rmclon_buoy = rmc_buoy[1];
       
       //Buoy
-		  L.marker([rmclat_buoy, rmclon_buoy], {icon: buoyIcon, rotationAngle: {{ values['wind-iot-buoy_Direction'] }}}).bindPopup(popupdev).addTo(buoy),
+		  L.marker([rmclat_buoy, rmclon_buoy], {icon: buoyIcon, rotationAngle: {{ theading_atvirtual }} }).bindPopup(popupdev).addTo(buoy),
       //mstc
-      L.marker([51.833855, -8.305259]).bindPopup("<b>National Maritime College of Ireland</b><br><a href='https://www.nmci.ie/' target='_blank'>MTU - NMCI</a>").addTo(mstc);
+      L.marker([51.833855, -8.305259]).bindPopup("<b>National Maritime College of Ireland</b><br><a href='https://www.pibico.es/' target='_blank'>PibiCo</a>").addTo(mstc);
      
       var overlays = {
-        "Buoy": buoy,
+        "AT-Virtual": buoy,
         "MSTC": mstc
       };
 		
@@ -473,7 +516,7 @@
 		  //Add buoy routes
 	 	  var buoyRoute = [{
         "type": "LineString",
-        "coordinates":  {{ coords['gps-iot-buoy'] }}
+        "coordinates":  {{ coords['gps-iot-atvirtual'] }}
       }];
       var buoyStyle = { "color": "#000fff", "weight": 1.8, "opacity": 0.90 };    
       L.geoJSON(buoyRoute, {style: buoyStyle}).addTo(buoy);
@@ -502,7 +545,7 @@
           <div class="row" style="background: white; border: solid 1px #4682b4; border-radius: 6px; padding: 1px; margin-right: 1px; margin-bottom: 1px; width: 120px;">
             <h4 class="m-1 mb-0 p-0" style="font-size: 9pt;">Devices Routes</h4>
             <span class="ml-1 p-1" style="font-size: 96%">
-              <i class="fa fa-minus" style="color: #000fff;"></i> Buoy<br>
+              <i class="fa fa-minus" style="color: #000fff;"></i> AT-Virtual<br>
             </span>
           </div>
         `;
@@ -522,7 +565,7 @@
       
       map.on('overlayadd', function(e) {
         console.log('Added: ' + e.name);
-        if (e.name === 'Buoy') {
+        if (e.name === 'AT-Virtual') {
           sessionStorage.obuoy = 'on';
         } else if (e.name === 'MSTC') {
           sessionStorage.omstc = 'on';        
@@ -530,7 +573,7 @@
       });
       map.on('overlayremove', function(e) {
         console.log('Removed: '+ e.name);
-        if (e.name === 'Buoy') {
+        if (e.name === 'AT-Virtual') {
           sessionStorage.buoy = 'off';
         } else if (e.name === 'MSTC') {
           sessionStorage.omstc = 'off';        
