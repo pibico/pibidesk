@@ -252,13 +252,15 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
     alert_log.save()
     frappe.db.commit()
   
-  date_alert = datadate #datadate.strftime("%d/%m/%y %H:%M")
+  date_alert = datadate.strftime("%d/%m/%y %H:%M")
     
   ## Finally enqueu to send messages through channels
   if reason == 'start':
     if cmd == 'high':
-      strAlert = sensor_var + " high by " + str(value) + uom + ' at ' + date_alert + ". Please check"
+      strAlert = "{} high by {}{} at {}.Please check".format(sensor_var, str(value), str(uom), date_alert)
+      #strAlert = sensor_var + " high by " + str(value) + uom + ' at ' + date_alert + ". Please check"
     if cmd == 'low':
+      strAlert = "{} low by {}{} at {}.Please check".format(sensor_var, str(value), str(uom), date_alert)
       strAlert = sensor_var + " low by " + str(value) + uom + ' at ' + date_alert + ". Please check"
   if reason == 'finish':
     if cmd == 'high':

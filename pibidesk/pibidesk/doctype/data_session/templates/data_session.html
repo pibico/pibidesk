@@ -155,7 +155,8 @@
     </h4>
     
     <div class="row">
-      
+      <!-- Start Data Session AT-Virtual -->
+      {% if name == 'development' %}
       <div class="wrapper">
         <div class="box">
           <div class="d-flex justify-content-between m-1 p-1"
@@ -285,19 +286,6 @@
                   </span>
                 </li>
                 
-              </ul>
-            </div>
-          </div>
-          <!--  Wind -->
-          <div class="card m-0 p-1">
-            <div class="card-header m-0 p-1">
-              <a href="/app/place/AT-Virtual-AT-Virtual" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/dummy.svg' width='18px' /></a>
-              <span>
-                <b>Wind</b> IoT Data
-              </span>
-            </div>
-            <div class="card-body m-0 p-1">
-              <ul class="list-group m-0 p-0" style="font-size: 120%;">
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
                   <span>
                     <a href="/app/device/wind-iot-atvirtual" target="_blank">
@@ -326,19 +314,7 @@
                     <div class="units">kts</div>
                   </span
                 </li>
-              </ul>
-            </div>
-          </div>
-          <!--  Water -->
-          <div class="card m-0 p-1">
-            <div class="card-header m-0 p-1">
-              <a href="/app/place/Smart Buoy-buoy" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/ship.svg' width='18px' /></a>
-              <span>
-                <b>Water</b> IoT Data
-              </span>
-            </div>
-            <div class="card-body m-0 p-1">
-              <ul class="list-group m-0 p-0" style="font-size: 120%;">
+          
                 <li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0" style="border: none; background: none;">
                   <span>
                     <a href="/app/device/dt-iot-atvirtual" target="_blank">
@@ -394,7 +370,384 @@
         {% endif %}   
 	    </div>
     </div>
+    {% endif %}
+    <!-- End Data Session AT-Virtual -->
+    <!-- Start Data Session Coyanza --> 
+    {% if name == 'coyanza' %}
+      <style>
 
+      .coyanza {
+        display: grid;
+        grid-template-columns: repeat(3, 33.3333%);
+        column-gap: 3px;
+        row-gap: 3px;
+        margin-left: -1px;
+        margin-right: -1px;
+        padding-left: 1%;
+        padding-right: 5%;
+      }
+      .coyanza .cell {
+        grid-column: 1/span 1;
+        grid-row: 3/span 1;
+        align-self: center;
+      }
+      .coyanza .box {
+        grid-column: 2/span 1;
+        grid-row: 3/span 1;
+        margin-top: 3px;
+        margin-bottom: 6px;
+        padding-left: 15px;
+        padding-right: 15px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        border: none;  
+      }
+      .coyanza .box .block {
+        background: linear-gradient(#fff, #4682b421);
+      }
+      .coyanza .garden {
+        grid-column: 3/span 1;
+        grid-row: 1/span 1;
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+      .coyanza .boiler {
+        grid-column: 2/span 1;
+        grid-row: 2/span 1;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      .coyanza .saloon {
+        grid-column: 3/span 1;
+        grid-row: 3/span 1;
+        align-self: center;
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+      @media (max-width: 768px) {
+        .coyanza .saloon,
+        .coyanza .garden {
+          padding-left: 0px;
+          padding-right: 0px;
+        }
+        .coyanza .boiler {
+          padding-left: 0px;
+          padding-right: 0px;
+        } 
+      }
+      .coyanza .block {
+        position: relative;
+        z-index: 4;
+        width: 100%;
+        background-color: #fff;
+        background-size: auto 65%;
+        background-repeat: no-repeat;
+        box-shadow: inset 0 0 0 1px #dcdbd7;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+      .coyanza .block .content {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 100%;
+        overflow: hidden;
+      }
+      .coyanza .block .content .block-icon__pibico {
+        color: #4682b4;
+      }
+      .coyanza .block .content .block-icon {
+        display: inline-block;
+        margin: 10px 10px 10px 12px;
+        margin-bottom: 0;
+        font-size: 16px;
+        float: left;
+      }
+      .coyanza .block .content .header-summary {
+        display: inline-block;
+        margin-top: 14px;
+        -webkit-box-flex: 1;
+        flex: 1 0 0;
+        z-index: 1;
+      }
+      .coyanza .block .content .header-block.has-subtitle {
+        display: flex;
+        flex-wrap: wrap;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+      }
+      .coyanza .block .content .header {
+        position: relative;
+        word-break: break-word;
+        hyphens: auto;
+        font-size: 9px;
+      }
+      .coyanza .block .content .header.has-subtitle .title {
+        margin-right: 1rem;
+      }
+      .coyanza .block .content .summary {
+        position: relative;
+        font-size: 24px;
+        line-height: 30px;
+        margin-top: 6px;
+        margin-bottom: 9px;
+        font-family: Helvetica;
+        clear: both;
+      }
+      .load {
+        color: #4682b4;
+        float: right;
+        margin: 0;
+        padding: 0;
+        margin-right: 9px;
+        font-size: 54%;
+        text-align: right;
+      }
+      .load-min {
+        color: #4682b4;
+        font-size: 45%;
+        line-height: 12px;
+        float: right;
+        margin: 0;
+        padding: 0;
+        margin-right: 6px;
+        margin-bottom: 6px;
+        text-align: right;
+      }
+      .coyanza .block .image-container {
+        width: 58px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 6px;
+        text-align: center;
+      }
+      .coyanza .block .leds {
+        text-align: center;
+        margin: 9px auto auto;
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 60px;
+      }
+      .coyanza .multi-title {
+        top: calc(100% + 18px);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .coyanza .action-label {
+        position: relative;
+        text-align: center;
+        font-size: 12px;
+        margin-bottom: 6px;
+      }
+      .coyanza .action-label > span {
+        background-color: rgba(71,144,208,.08);
+        border: 1px solid rgba(56,125,197,.5);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        color: #387dc5;
+        padding: 1.5px 1.5px 1.5px 1.5px;
+        line-height: 2.1;
+        white-space: nowrap;
+      }
+      .btn-circle {
+        width: 20px;
+        height: 20px;
+        padding: 3px 0px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 9px;
+        line-height: 1.42857; 
+      }
+      .coyanza .lines {
+        position: relative;
+      }
+      .coyanza .lines .line.line-fuel_tank {
+        margin-top: -18px;
+        left: 99%;
+        width: 21px;
+        height: 5px;
+      }
+      .coyanza .lines .line.line-living_room {
+        margin-top: -108px;
+        left: -50px;
+        width: 51px;
+        height: 5px;
+      }
+      @media (max-width: 768px) {
+        .coyanza .lines .line.line-living_room {
+          left: -20px;
+          width: 21px;
+        }
+      }
+      .coyanza .lines .line {
+        position: absolute;
+        overflow: hidden;
+      }
+      {% if values.get('relay-picaldera_Status') | int == 0 %}
+        .coyanza .lines .line {
+          border: .1px solid #4682b4;
+          background:#4682b445;
+        }
+      {% else %}
+        .coyanza .lines .line {
+          border: .1px solid crimson;
+        }
+      {% endif %}
+      @keyframes move-x {
+        0% {
+          -webkit-transform:translateX(-1px);
+          transform:translateX(-1px)
+        }
+        to {
+          -webkit-transform:translateX(51px);
+          transform:translateX(51px)
+        }
+      }
+      </style>
+      
+      <div class="col-xs-12 col-md-9">
+        <div class="coyanza">
+          
+          <div class="cell">
+            <div class="block">
+              <div class="content">
+                <div class="block-icon block-icon__pibico">
+                  <span class="fa fa-dashboard"></span>
+                </div>
+                <div class="header-summary">
+                  <div class="header-block has-subtitle">
+                    <span class="title">Fuel Tank</span>
+                  </div>
+                  <div class="summary">
+                    <span class="load">{{ values.get('ut-picaldera_Volume') }} l <i class="fa fa-sort-amount-desc"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="lines">
+              <div class="line line-fuel_tank">
+                {% if values.get('relay-picaldera_Status') | int == 1 %}
+                  <span class="fa fa-square m-0 p-0" style="color: #4682b4; position: inherit; font-size: 30%; animation: move-x 3s infinite"></span>
+                {% endif %}  
+              </div>
+            </div>
+          </div>    
+        
+          <div class="box">
+            <div class="block">
+              <div class="image-container">
+                <span>
+                  <img src="/assets/pibidesk/images/logo/logo_pibico.svg" alt="">
+                  Heater
+                </span>
+              </div>
+              <hr>
+              <div class="leds"></div>
+              <div class="multi-title action-label">
+                <span>
+                  {% if values.get('relay-picaldera_Status') | int == 1 %} 
+                    <button class="btn btn-circle btn-danger" onclick="boiler();"><i class="fa fa-power-off"></i></button>
+                  {% else %}
+                    <button class="btn btn-circle btn-success" onclick="boiler();"><i class="fa fa-power-off"></i></button>  
+                  {% endif %}
+                </span>
+              </div>
+              <div class="content">
+                <div class="header-summary">
+                  <div class="summary">
+                    <span class="load">{{ '%.2f' % values.get('temp-picaldera_Temperature') | float }}&deg;C <i class="fa fa-thermometer"></i></span>
+                  </div>
+                </div>  
+              </div>
+            </div>
+          </div>
+          
+          <div class="garden">
+            <div class="block">
+              <div class="content">
+                <div class="block-icon block-icon__pibico">
+                  <span class="fa fa-pagelines"></span>
+                </div>
+                <div class="header-summary">
+                  <div class="header-block has-subtitle">
+                    <span class="title">Garden</span>
+                  </div>
+                  <div class="summary">
+                    <span class="load">
+                      {{ values.get('temp-rpb3agardencut_Temperature') }}&deg;C <i class="fa fa-thermometer"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>  
+          
+          <div class="boiler" style="margin-top: -60px;">
+            <div class="block">
+              <div class="content">
+                <div class="block-icon block-icon__pibico">
+                  <span class="fa fa-cog"></span>
+                </div>
+                <div class="header-summary">
+                  <div class="header-block has-subtitle">
+                    <span class="title">Boiler</span>
+                  </div>
+                  <div class="summary">
+                    <span class="load-min">
+                      {{ values.get('tphg-picaldera_Temperature') }} &deg;C <i class="fa fa-thermometer"></i><br>
+                      {{ values.get('tphg-picaldera_Pressure') }} hPa <i class="fa fa-spinner"></i><br>
+                      {{ values.get('tphg-picaldera_Humidity') }} % <i class="fa fa-eyedropper"></i><br>
+                      {{ values.get('tphg-picaldera_Iaq') }} IAQ <i class="fa fa-heartbeat"></i><br>
+                      <br>
+                      {{ values.get('cpu-picaldera_Temperature') }}&deg;C <i class="fa fa-microchip"></i><br>
+                      {{ values.get('cpu-picaldera_Memory') }}% <i class="fa fa-desktop"></i><br>
+                      {{ values.get('cpu-picaldera_Disk') }}% <i class="fa fa-database"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+          
+          <div class="saloon">
+            <div class="block">
+              <div class="content">
+                <div class="block-icon block-icon__pibico">
+                  <span class="fa fa-cutlery"></span>
+                </div>
+                <div class="header-summary">
+                  <div class="header-block has-subtitle">
+                    <span class="title">Living</span>
+                  </div>
+                  <div class="summary">
+                    <span class="load-min">
+                      {{ values.get('temp-rpb4balztech_Temperature') }}&deg;C <i class="fa fa-thermometer"></i><br>
+                      {{ values.get('power-rpb4balztech_Voltage') }}V <i class="fa fa-battery-half"></i><br>
+                      <br>
+                      {{ values.get('cpu-rpb4balztech_Temperature') }}&deg;C <i class="fa fa-microchip"></i><br>
+                      {{ values.get('cpu-rpb4balztech_Memory') }}% <i class="fa fa-desktop"></i><br>
+                      {{ values.get('cpu-rpb4balztech_Disk') }}% <i class="fa fa-database"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="lines">
+              <div class="line line-living_room">
+                {% if values.get('relay-picaldera_Status') | int == 1 %}
+                  <span class="fa fa-square m-0 p-0" style="color: crimson; position: inherit; font-size: 30%; animation: move-x 1.5s infinite"></span>
+                {% endif %} 
+              </div>
+            </div>
+  
+          </div> 
+        
+        </div>
+      </div>   
+    {% endif %}
+    <!-- End Data Session Coyanza -->
   </div>
 {% endblock %}
 
@@ -403,14 +756,7 @@
   <script>
     feather.replace()
   </script> 
-    
-  <script src="/assets/pibidesk/dist/leaflet/leaflet.js"></script>
-  <script src="/assets/pibidesk/dist/leaflet/leaflet.rotatedMarker.js" crossorigin=""></script>
-  <script src="/assets/pibidesk/dist/leaflet/leaflet.legend.js" crossorigin=""></script>
-  <script src="/assets/pibidesk/dist/leaflet/L.Control.MousePosition.js" crossorigin=""></script>
-  <script src="/assets/pibidesk/dist/leaflet/aisdata.js"></script>
-    
-	<script>
+  <script>
     frappe.boot = {
 		  sysdefaults: {
 			  float_precision: parseInt("{{ frappe.get_system_settings('float_precision') or 3 }}"),
@@ -420,12 +766,30 @@
 		// for backward compatibility of some libs
 		frappe.sys_defaults = frappe.boot.sysdefaults;
 	</script>
-  <script>
-      
-      function info() {
-        frappe.msgprint('Information');
+  {% if name == 'coyanza' %}
+    <script>
+      function boiler() {
+        frappe.msgprint({
+		      title: __('Enviando comando de caldera'),
+          message: __('Est&aacute;s seguro de proceder?'),
+		      primary_action: {
+            'label': __('Proceder'),
+		        'server_action': 'pibidesk.pibidesk.custom.boiler',
+			      'args': {}
+		      }
+	      });
+       
+        setTimeout(function(){ location.reload(); }, 1500);
       };
-      
+    </script>
+  {% endif %}
+  {% if name == 'development' %}
+    <script src="/assets/pibidesk/dist/leaflet/leaflet.js"></script>
+    <script src="/assets/pibidesk/dist/leaflet/leaflet.rotatedMarker.js" crossorigin=""></script>
+    <script src="/assets/pibidesk/dist/leaflet/leaflet.legend.js" crossorigin=""></script>
+    <script src="/assets/pibidesk/dist/leaflet/L.Control.MousePosition.js" crossorigin=""></script>
+    <script src="/assets/pibidesk/dist/leaflet/aisdata.js"></script>
+    <script>
       {% set heading_atvirtual = values.get('imu-iot-atvirtual_Heading') | int %}
       {% if heading_atvirtual < 0 %}
       {% set theading_atvirtual = heading_atvirtual + 360 %}
@@ -580,5 +944,8 @@
         }
       });
       		
-	</script>
+	  </script>
+  {% endif %}  
+  
+   
 {% endblock %}

@@ -1,1 +1,18 @@
-[]
+[
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "es",
+  "modified": "2022-11-28 20:56:45.753220",
+  "name": "253f993d56",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "source_text": "Heading",
+  "translated_text": "Yaw"
+ }
+]

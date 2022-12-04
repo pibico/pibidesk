@@ -10,14 +10,38 @@ from frappe.utils import nowdate, now_datetime, cstr, time_diff_in_seconds, get_
 from pibidesk.pibidesk.doctype.mqtt_settings.mqtt_settings import send_mqtt
 from pibidesk.pibidesk.doctype.device_log.device_log import manage_alert
 
-import json, datetime, requests
+import json, datetime, requests, os
 #import urllib.request as urllib2
+import paho.mqtt.client as mqtt
 
 @frappe.whitelist()
 def mqtt_command(host, action):
   topic = []
   topic.append(host + "/command")
   send_mqtt(topic, cstr(action))
+
+@frappe.whitelist()
+def boiler():
+  server = 'pidev.net-freaks.com'
+  port = 1883
+  #user = 'user'
+  #secret = 'secret'
+  #do_ssl = False
+  # connect to MQTT Broker to Publish Message
+  pid = os.getpid()
+  client_id = '{}:{}'.format('client', str(pid))
+  try:
+    backend = mqtt.Client(client_id=client_id, clean_session=True)
+    #backend.username_pw_set(user, password=secret)
+    backend.connect(server, port)
+
+    payload = cstr('boiler')
+    mqtt_topic = 'picaldera/mqttdevices'
+    backend.publish(mqtt_topic, payload)
+    backend.disconnect()
+  except:
+    frappe.msgprint(_("Error in MQTT Broker sending to " + str(mqtt_topic)))
+    pass
 
 @frappe.whitelist()
 def call_api(url, action):
