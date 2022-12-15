@@ -8,7 +8,8 @@ from frappe import _
 ## if not installed pip3 install geopy 
 ## calculate distance https://en.wikipedia.org/wiki/Vincenty's_formulae
 from geopy.distance import distance
-import math
+import math,os
+from datetime import datetime
 
 class DataSession(WebsiteGenerator):
   def get_context(self, context):
@@ -19,6 +20,13 @@ class DataSession(WebsiteGenerator):
       order_by="creation desc"
     )
     context.logs = device_logs
+    
+    ## Ais recording time
+    ais = "/home/erpnext/erpnext-dev/apps/pibidesk/pibidesk/public/dist/leaflet/aisdata.js"
+    now = datetime.now().timestamp()
+    ais_ago = int((now - os.path.getmtime(ais))/60)
+    context.ais_ago = ais_ago
+    
     ## Retrieve last recorded value for devices
     devices = []
     result = {}

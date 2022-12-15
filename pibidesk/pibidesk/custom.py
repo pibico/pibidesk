@@ -10,7 +10,7 @@ from frappe.utils import nowdate, now_datetime, cstr, time_diff_in_seconds, get_
 from pibidesk.pibidesk.doctype.mqtt_settings.mqtt_settings import send_mqtt
 from pibidesk.pibidesk.doctype.device_log.device_log import manage_alert
 
-import json, datetime, requests
+import json, datetime, requests, subprocess
 #import urllib.request as urllib2
 
 @frappe.whitelist()

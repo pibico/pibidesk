@@ -111,7 +111,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-11-13 22:14:30.174474",
+ "modified": "2022-11-18 08:30:22.209244",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device Log",
@@ -126,6 +126,18 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "pibiDesk",
    "share": 1,
    "write": 1
   }

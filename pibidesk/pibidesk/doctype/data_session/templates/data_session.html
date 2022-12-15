@@ -164,11 +164,13 @@
               <span class="badge badge-danger badge-counter badge-pill">{{ session_item | list | count }}</span>
             </span></p>
             <span>
-              
+              <b>AIS</b> <i data-feather="watch" class="svg-icon"></i> {{ ais_ago }}'
+            </span>
+            <span>
               {% if recording %}
-                <i data-feather="eye" class="svg-icon"></i> <b>Record Mode </b>ON
+                <i data-feather="eye" class="svg-icon"></i> <b>Record </b>ON
               {% else %}
-                <i data-feather="eye-off" class="svg-icon"></i> <b>Record Mode </b>OFF
+                <i data-feather="eye-off" class="svg-icon"></i> <b>Record </b>OFF
               {% endif %}
             </span>
           </div>  

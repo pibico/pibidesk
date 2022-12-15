@@ -54,7 +54,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-03-09 21:42:46.680114",
+ "modified": "2022-11-18 08:35:15.851175",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Telegram Settings",
@@ -68,6 +68,16 @@
    "print": 1,
    "read": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "pibiDesk",
    "share": 1,
    "write": 1
   }
