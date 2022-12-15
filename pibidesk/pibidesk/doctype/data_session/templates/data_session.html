@@ -163,9 +163,11 @@
               <i data-feather="share-2" class="svg-icon"></i> <strong>IoT Devices</strong>
               <span class="badge badge-danger badge-counter badge-pill">{{ session_item | list | count }}</span>
             </span></p>
+            {% if is_active %}
             <span>
               <b>AIS</b> <i data-feather="watch" class="svg-icon"></i> {{ ais_ago }}'
             </span>
+            {% endif %}
             <span>
               {% if recording %}
                 <i data-feather="eye" class="svg-icon"></i> <b>Record </b>ON
@@ -586,6 +588,7 @@
       var rmclat_life = rmc_life[0];
       var rmclon_life = rmc_life[1];
       
+      {% if is_active %}
       //Dummy
 		  L.marker([rmclat_dummy, rmclon_dummy], {icon: dummyIcon}).bindPopup(popupdev).addTo(dummy),
 		  //Rescue
@@ -594,7 +597,7 @@
       L.marker([rmclat_life, rmclon_life], {icon: lifeIcon, rotationAngle: {{ values['imu-iot-life_Heading'] }}}).bindPopup(popupdev).addTo(life),  
       //mstc
       L.marker([38.690664, -9.300033]).bindPopup("<b>Escola Superior Nautica Infante D. Henrique</b><br><a href='https://www.enautica.pt/' target='_blank'>ENIDH</a>").addTo(mstc);
-     
+      {% endif %}
       //var overlays = {
 			//  "<img src='/assets/pibidesk/dist/leaflet/images/unspecified.svg' width='9px' /> <span>AIS</span>": ships, 
 			//  "<img src='/assets/pibidesk/dist/leaflet/images/rescue.svg' width='12px' /> <span>Rescue Boat</span>": rescue,
@@ -642,6 +645,7 @@
         mapzoom = 21; //default value
         maplat = vlat;
         maplon = vlong;
+        
         oships = sessionStorage.oships = 'on';
         orescue = sessionStorage.orescue = 'on';
         olife = sessionStorage.olife = 'on';
@@ -654,6 +658,10 @@
 			  layers: [ normal, ships, rescue, life, dummy, mstc ]
 			});
 		  
+      {% if not is_active %}
+        oships = 'off';
+      {% endif %}
+        
       if (oships == 'on') {
         map.addLayer(ships);
       } else {  

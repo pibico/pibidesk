@@ -5,12 +5,54 @@ var aisdata={
       {
          "type": "Feature",
          "properties": {
+            "mmsi": 311001000,
+            "longitude": -9.297577,
+            "latitude": 38.573562,
+            "sog": 1.1,
+            "cog": 61.2,
+            "dtg": "22-12-15 17:52:50",
+            "message_type": 1,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.297577,
+               38.573562
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 204709000,
+            "longitude": -9.186555,
+            "latitude": 38.679168,
+            "sog": 0.0,
+            "cog": 104.6,
+            "dtg": "22-12-15 17:52:54",
+            "message_type": 1,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.186555,
+               38.679168
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
             "mmsi": 263601890,
-            "longitude": -9.182932,
-            "latitude": 38.681912,
-            "sog": 5.0,
-            "cog": 219.2,
-            "dtg": "22-12-15 16:17:11",
+            "longitude": -9.127513,
+            "latitude": 38.696455,
+            "sog": 3.2,
+            "cog": 82.5,
+            "dtg": "22-12-15 17:51:44",
             "message_type": 1,
             "vessel_name": "",
             "vessel_type": ""
@@ -18,276 +60,8 @@ var aisdata={
          "geometry": {
             "type": "Point",
             "coordinates": [
-               -9.182932,
-               38.681912
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 263619000,
-            "longitude": -9.160613,
-            "latitude": 38.702568,
-            "sog": 0.0,
-            "cog": 13.5,
-            "dtg": "22-12-15 16:17:04",
-            "message_type": 1,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.160613,
-               38.702568
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 263671860,
-            "longitude": -9.234767,
-            "latitude": 38.694813,
-            "sog": 0.3,
-            "cog": 291.4,
-            "dtg": "22-12-15 16:17:13",
-            "message_type": 1,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.234767,
-               38.694813
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 263602568,
-            "longitude": -9.175067,
-            "latitude": 38.687717,
-            "sog": 6.6,
-            "cog": 235.3,
-            "dtg": "22-12-15 16:17:17",
-            "message_type": 3,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.175067,
-               38.687717
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 263701460,
-            "longitude": -9.118283,
-            "latitude": 38.666917,
-            "sog": 23.4,
-            "cog": 124.0,
-            "dtg": "22-12-15 16:10:57",
-            "message_type": 1,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.118283,
-               38.666917
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 477722300,
-            "longitude": -9.413513,
-            "latitude": 38.665583,
-            "sog": 0.3,
-            "cog": 303.4,
-            "dtg": "22-12-15 16:12:34",
-            "message_type": 3,
-            "vessel_name": "",
-            "vessel_type": 70,
-            "dim_to_bow": 197,
-            "dim_to_stern": 33,
-            "dim_to_port": 13,
-            "dim_to_starboard": 23
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.413513,
-               38.665583
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 477631300,
-            "longitude": -9.237533,
-            "latitude": 38.676187,
-            "sog": 0.0,
-            "cog": 190.5,
-            "dtg": "22-12-15 16:15:56",
-            "message_type": 3,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.237533,
-               38.676187
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 263752850,
-            "longitude": -9.17456,
-            "latitude": 38.697308,
-            "sog": 8.9,
-            "cog": 71.1,
-            "dtg": "22-12-15 16:15:40",
-            "message_type": 18,
-            "vessel_name": "MH AURORA",
-            "vessel_type": 37,
-            "dim_to_bow": 0,
-            "dim_to_stern": 0,
-            "dim_to_port": 0,
-            "dim_to_starboard": 0
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.17456,
-               38.697308
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 563077100,
-            "longitude": -9.18375,
-            "latitude": 38.679692,
-            "sog": 0.0,
-            "cog": 67.4,
-            "dtg": "22-12-15 16:16:38",
-            "message_type": 3,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.18375,
-               38.679692
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 263700008,
-            "longitude": -9.145288,
-            "latitude": 38.689128,
-            "sog": 14.3,
-            "cog": 87.9,
-            "dtg": "22-12-15 16:05:25",
-            "message_type": 1,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.145288,
-               38.689128
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 232040346,
-            "longitude": -9.318052,
-            "latitude": 38.676145,
-            "sog": 0.1,
-            "cog": 360.0,
-            "dtg": "22-12-15 16:14:44",
-            "message_type": 18,
-            "vessel_name": "ESTELA",
-            "vessel_type": 36,
-            "dim_to_bow": 5,
-            "dim_to_stern": 5,
-            "dim_to_port": 2,
-            "dim_to_starboard": 2
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.318052,
-               38.676145
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 263875960,
-            "longitude": -9.317782,
-            "latitude": 38.675885,
-            "sog": 0.2,
-            "cog": 201.4,
-            "dtg": "22-12-15 16:17:17",
-            "message_type": 3,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.317782,
-               38.675885
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 230165260,
-            "longitude": -9.317377,
-            "latitude": 38.677075,
-            "sog": 0.6,
-            "cog": 360.0,
-            "dtg": "22-12-15 16:12:04",
-            "message_type": 18,
-            "vessel_name": "KODA",
-            "vessel_type": 37,
-            "dim_to_bow": 7,
-            "dim_to_stern": 6,
-            "dim_to_port": 3,
-            "dim_to_starboard": 1
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.317377,
-               38.677075
+               -9.127513,
+               38.696455
             ]
          }
       },
@@ -295,11 +69,11 @@ var aisdata={
          "type": "Feature",
          "properties": {
             "mmsi": 263702270,
-            "longitude": -9.198518,
-            "latitude": 38.694383,
-            "sog": 0.1,
-            "cog": 11.1,
-            "dtg": "22-12-15 16:16:18",
+            "longitude": -9.231145,
+            "latitude": 38.674907,
+            "sog": 3.6,
+            "cog": 102.5,
+            "dtg": "22-12-15 17:49:24",
             "message_type": 18,
             "vessel_name": "ALMADENSE",
             "vessel_type": 60,
@@ -311,8 +85,306 @@ var aisdata={
          "geometry": {
             "type": "Point",
             "coordinates": [
-               -9.198518,
-               38.694383
+               -9.231145,
+               38.674907
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 477631300,
+            "longitude": -9.237545,
+            "latitude": 38.676202,
+            "sog": 0.0,
+            "cog": 338.9,
+            "dtg": "22-12-15 17:51:50",
+            "message_type": 3,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.237545,
+               38.676202
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 263671860,
+            "longitude": -9.23476,
+            "latitude": 38.694818,
+            "sog": 0.2,
+            "cog": 306.3,
+            "dtg": "22-12-15 17:52:47",
+            "message_type": 1,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.23476,
+               38.694818
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 563077100,
+            "longitude": -9.127663,
+            "latitude": 38.696393,
+            "sog": 3.5,
+            "cog": 81.6,
+            "dtg": "22-12-15 17:50:48",
+            "message_type": 1,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.127663,
+               38.696393
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 263701440,
+            "longitude": -9.126335,
+            "latitude": 38.673175,
+            "sog": 102.3,
+            "cog": 360.0,
+            "dtg": "22-12-15 17:50:09",
+            "message_type": 1,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.126335,
+               38.673175
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 263875960,
+            "longitude": -9.317782,
+            "latitude": 38.675903,
+            "sog": 0.1,
+            "cog": 191.7,
+            "dtg": "22-12-15 17:50:11",
+            "message_type": 3,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.317782,
+               38.675903
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 232040346,
+            "longitude": -9.318057,
+            "latitude": 38.676133,
+            "sog": 0.2,
+            "cog": 360.0,
+            "dtg": "22-12-15 17:50:37",
+            "message_type": 18,
+            "vessel_name": "ESTELA",
+            "vessel_type": 36,
+            "dim_to_bow": 5,
+            "dim_to_stern": 5,
+            "dim_to_port": 2,
+            "dim_to_starboard": 2
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.318057,
+               38.676133
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 263619000,
+            "longitude": -9.160657,
+            "latitude": 38.702545,
+            "sog": 0.0,
+            "cog": 24.1,
+            "dtg": "22-12-15 17:52:18",
+            "message_type": 1,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.160657,
+               38.702545
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 263701390,
+            "longitude": -9.124855,
+            "latitude": 38.670252,
+            "sog": 23.7,
+            "cog": 152.3,
+            "dtg": "22-12-15 17:38:59",
+            "message_type": 3,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.124855,
+               38.670252
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 263701370,
+            "longitude": -9.129905,
+            "latitude": 38.696383,
+            "sog": 16.6,
+            "cog": 6.9,
+            "dtg": "22-12-15 17:52:56",
+            "message_type": 3,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.129905,
+               38.696383
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 477722300,
+            "longitude": -9.413187,
+            "latitude": 38.665263,
+            "sog": 0.2,
+            "cog": 339.0,
+            "dtg": "22-12-15 17:48:29",
+            "message_type": 3,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.413187,
+               38.665263
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 212372000,
+            "longitude": -9.409315,
+            "latitude": 38.673917,
+            "sog": 0.4,
+            "cog": 100.4,
+            "dtg": "22-12-15 17:48:17",
+            "message_type": 3,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.409315,
+               38.673917
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 263701780,
+            "longitude": -9.148642,
+            "latitude": 38.695663,
+            "sog": 10.9,
+            "cog": 17.6,
+            "dtg": "22-12-15 17:39:39",
+            "message_type": 18,
+            "vessel_name": "SINTRENSE",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.148642,
+               38.695663
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 211537360,
+            "longitude": -9.144308,
+            "latitude": 38.696827,
+            "sog": 10.0,
+            "cog": 46.0,
+            "dtg": "22-12-15 17:41:46",
+            "message_type": 1,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.144308,
+               38.696827
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 263700008,
+            "longitude": -9.140168,
+            "latitude": 38.702905,
+            "sog": 12.8,
+            "cog": 311.7,
+            "dtg": "22-12-15 17:49:22",
+            "message_type": 1,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.140168,
+               38.702905
             ]
          }
       },
@@ -320,13 +392,13 @@ var aisdata={
          "type": "Feature",
          "properties": {
             "mmsi": 263701550,
-            "longitude": -9.146418,
-            "latitude": 38.68946,
-            "sog": 10.4,
-            "cog": 22.8,
-            "dtg": "22-12-15 16:17:00",
+            "longitude": -9.148115,
+            "latitude": 38.688405,
+            "sog": 0.2,
+            "cog": 360.0,
+            "dtg": "22-12-15 17:49:05",
             "message_type": 18,
-            "vessel_name": "CAMPOLIDE",
+            "vessel_name": "",
             "vessel_type": 60,
             "dim_to_bow": 5,
             "dim_to_stern": 26,
@@ -336,8 +408,71 @@ var aisdata={
          "geometry": {
             "type": "Point",
             "coordinates": [
-               -9.146418,
-               38.68946
+               -9.148115,
+               38.688405
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 263701360,
+            "longitude": -9.132767,
+            "latitude": 38.706417,
+            "sog": 0.8,
+            "cog": 245.0,
+            "dtg": "22-12-15 17:50:05",
+            "message_type": 1,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.132767,
+               38.706417
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 230165260,
+            "longitude": -9.317457,
+            "latitude": 38.677122,
+            "sog": 0.3,
+            "cog": 360.0,
+            "dtg": "22-12-15 17:42:44",
+            "message_type": 18,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.317457,
+               38.677122
+            ]
+         }
+      },
+      {
+         "type": "Feature",
+         "properties": {
+            "mmsi": 263047004,
+            "longitude": -9.133702,
+            "latitude": 38.694685,
+            "sog": 8.3,
+            "cog": 191.2,
+            "dtg": "22-12-15 17:52:10",
+            "message_type": 1,
+            "vessel_name": "",
+            "vessel_type": ""
+         },
+         "geometry": {
+            "type": "Point",
+            "coordinates": [
+               -9.133702,
+               38.694685
             ]
          }
       },
@@ -345,32 +480,11 @@ var aisdata={
          "type": "Feature",
          "properties": {
             "mmsi": 263701380,
-            "longitude": -9.132802,
-            "latitude": 38.706288,
-            "sog": 2.4,
-            "cog": 306.7,
-            "dtg": "22-12-15 16:16:57",
-            "message_type": 1,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.132802,
-               38.706288
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 212372000,
-            "longitude": -9.409327,
-            "latitude": 38.673935,
-            "sog": 0.2,
-            "cog": 288.6,
-            "dtg": "22-12-15 16:09:16",
+            "longitude": -9.129095,
+            "latitude": 38.704707,
+            "sog": 2.1,
+            "cog": 316.2,
+            "dtg": "22-12-15 17:46:05",
             "message_type": 3,
             "vessel_name": "",
             "vessel_type": ""
@@ -378,92 +492,8 @@ var aisdata={
          "geometry": {
             "type": "Point",
             "coordinates": [
-               -9.409327,
-               38.673935
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 204709000,
-            "longitude": -9.18652,
-            "latitude": 38.679172,
-            "sog": 0.0,
-            "cog": 116.4,
-            "dtg": "22-12-15 16:17:20",
-            "message_type": 1,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.18652,
-               38.679172
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 566984000,
-            "longitude": -9.087272,
-            "latitude": 38.22517,
-            "sog": 1.1,
-            "cog": 61.3,
-            "dtg": "22-12-15 16:12:21",
-            "message_type": 1,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.087272,
-               38.22517
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 311001000,
-            "longitude": -9.33124,
-            "latitude": 38.565617,
-            "sog": 1.1,
-            "cog": 85.1,
-            "dtg": "22-12-15 16:17:15",
-            "message_type": 1,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.33124,
-               38.565617
-            ]
-         }
-      },
-      {
-         "type": "Feature",
-         "properties": {
-            "mmsi": 247376400,
-            "longitude": -9.414837,
-            "latitude": 38.383095,
-            "sog": 12.3,
-            "cog": 307.4,
-            "dtg": "22-12-15 16:17:21",
-            "message_type": 1,
-            "vessel_name": "",
-            "vessel_type": ""
-         },
-         "geometry": {
-            "type": "Point",
-            "coordinates": [
-               -9.414837,
-               38.383095
+               -9.129095,
+               38.704707
             ]
          }
       }
