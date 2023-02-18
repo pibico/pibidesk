@@ -156,7 +156,7 @@
     
     <div class="row">
       <!-- Start Data Session AT-Virtual -->
-      {% if name == 'development' %}
+      {% if name in ['development-gps', 'development-lisboa'] %}
       <div class="wrapper">
         <div class="box">
           <div class="d-flex justify-content-between m-1 p-1"
@@ -372,8 +372,298 @@
     </div>
     {% endif %}
     <!-- End Data Session AT-Virtual -->
+    <!-- Start Data Session Cuyences --> 
+    {% if name == 'cuyences-domotic' %}
+      <style>
+
+      .cuyences {
+        display: grid;
+        grid-template-columns: repeat(3, 33.3333%);
+        column-gap: 3px;
+        row-gap: 3px;
+        margin-left: -1px;
+        margin-right: -1px;
+        padding-left: 1%;
+        padding-right: 5%;
+      }
+      .cuyences .cell {
+        grid-column: 1/span 1;
+        grid-row: 3/span 1;
+        align-self: center;
+      }
+      .cuyences .box {
+        grid-column: 2/span 1;
+        grid-row: 3/span 1;
+        margin-top: 3px;
+        margin-bottom: 6px;
+        padding-left: 15px;
+        padding-right: 15px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        border: none;  
+      }
+      .cuyences .box .block {
+        background: linear-gradient(#fff, #4682b421);
+      }
+      .cuyences .garden {
+        grid-column: 3/span 1;
+        grid-row: 1/span 1;
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+      .cuyences .boiler {
+        grid-column: 2/span 1;
+        grid-row: 2/span 1;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      .cuyences .saloon {
+        grid-column: 3/span 1;
+        grid-row: 3/span 1;
+        align-self: center;
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+      @media (max-width: 768px) {
+        .cuyences .saloon,
+        .cuyences .garden {
+          padding-left: 0px;
+          padding-right: 0px;
+        }
+        .cuyences .boiler {
+          padding-left: 0px;
+          padding-right: 0px;
+        } 
+      }
+      .cuyences .block {
+        position: relative;
+        z-index: 4;
+        width: 100%;
+        background-color: #fff;
+        background-size: auto 65%;
+        background-repeat: no-repeat;
+        box-shadow: inset 0 0 0 1px #dcdbd7;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+      .cuyences .block .content {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 100%;
+        overflow: hidden;
+      }
+      .cuyences .block .content .block-icon__pibico {
+        color: #4682b4;
+      }
+      .cuyences .block .content .block-icon {
+        display: inline-block;
+        margin: 10px 10px 10px 12px;
+        margin-bottom: 0;
+        font-size: 16px;
+        float: left;
+      }
+      .cuyences .block .content .header-summary {
+        display: inline-block;
+        margin-top: 14px;
+        -webkit-box-flex: 1;
+        flex: 1 0 0;
+        z-index: 1;
+      }
+      .cuyences .block .content .header-block.has-subtitle {
+        display: flex;
+        flex-wrap: wrap;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+      }
+      .cuyences .block .content .header {
+        position: relative;
+        word-break: break-word;
+        hyphens: auto;
+        font-size: 9px;
+      }
+      .cuyences .block .content .header.has-subtitle .title {
+        margin-right: 1rem;
+      }
+      .cuyences .block .content .summary {
+        position: relative;
+        font-size: 24px;
+        line-height: 30px;
+        margin-top: 6px;
+        margin-bottom: 9px;
+        font-family: Helvetica;
+        clear: both;
+      }
+      .load {
+        color: #4682b4;
+        float: right;
+        margin: 0;
+        padding: 0;
+        margin-right: 9px;
+        font-size: 80%;
+        text-align: right;
+      }
+      .load-min {
+        color: #4682b4;
+        font-size: 70%;
+        line-height: 12px;
+        float: right;
+        margin: 0;
+        padding: 0;
+        margin-right: 6px;
+        margin-bottom: 6px;
+        text-align: right;
+      }
+      .cuyences .block .image-container {
+        width: 58px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 6px;
+        text-align: center;
+      }
+      .cuyences .block .leds {
+        text-align: center;
+        margin: 9px auto auto;
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 60px;
+      }
+      .cuyences .multi-title {
+        top: calc(100% + 18px);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .cuyences .action-label {
+        position: relative;
+        text-align: center;
+        font-size: 12px;
+        margin-bottom: 6px;
+      }
+      .cuyences .action-label > span {
+        background-color: rgba(71,144,208,.08);
+        border: 1px solid rgba(56,125,197,.5);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        color: #387dc5;
+        padding: 1.5px 1.5px 1.5px 1.5px;
+        line-height: 2.1;
+        white-space: nowrap;
+      }
+      .btn-circle {
+        width: 20px;
+        height: 20px;
+        padding: 3px 0px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 9px;
+        line-height: 1.42857; 
+      }
+      .cuyences .lines {
+        position: relative;
+      }
+      .cuyences .lines .line.line-fuel_tank {
+        margin-top: -18px;
+        left: 99%;
+        width: 21px;
+        height: 5px;
+      }
+      .cuyences .lines .line.line-living_room {
+        margin-top: -108px;
+        left: -45px;
+        width: 46px;
+        height: 5px;
+      }
+      @media (max-width: 768px) {
+        .cuyences .lines .line.line-living_room {
+          left: -20px;
+          width: 21px;
+        }
+        .load {
+          font-size: 54%;
+        }
+        .load-min {
+          font-size: 45%;
+        }
+      }
+      .cuyences .lines .line {
+        position: absolute;
+        overflow: hidden;
+      }
+      </style>
+      
+      <div class="col-xs-12 col-md-9">
+        <div class="cuyences">
+          
+          <div class="cell">
+            <div class="block">
+              <div class="content">
+                <div class="block-icon block-icon__pibico">
+                  <a href="/app/device/batt-bc572900d0b1" target="_blank">
+                  {% if values.get('batt-bc572900d0b1_Charge') | int >= 100 %}
+                    <span class="fa fa-battery-full">
+                  {% elif 100 > values.get('batt-bc572900d0b1_Charge') | int >= 75 %}  
+                    <span class="fa fa-battery-three-quarters">
+                  {% elif 75 > values.get('batt-bc572900d0b1_Charge') | int >= 50 %}  
+                    <span class="fa fa-battery-half">
+                  {% elif 50 > values.get('batt-bc572900d0b1_Charge') | int >= 25 %}  
+                    <span class="fa fa-battery-quarter">    
+                  {% else %}
+                    <span class="fa fa-battery-empty">
+                  {% endif %}  
+                  </span></a>
+                </div>
+                <div class="header-summary">
+                  <div class="header-block has-subtitle">
+                    <span class="title">pibiSun</span>
+                  </div>
+                  <div class="summary">
+                    <span class="load-min">
+                      {{ values.get('batt-bc572900d0b1_Voltage') }} V<br>
+                      {{ values.get('batt-bc572900d0b1_Current') }} mA <i class="fa fa-plug"></i><br>
+                      {{ values.get('batt-bc572900d0b1_Charge') }} % <i class="fa fa-battery-full"></i>
+                    </span>
+                    <span style="font-size:45%;">
+                      {{ frappe.utils.get_datetime(values.get('batt-bc572900d0b1_last')).strftime("%d/%m %H:%M") }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>    
+          
+          <div class="garden">
+            <div class="block">
+              <div class="content">
+                <div class="block-icon block-icon__pibico">
+                  <a href="/app/device/th-bc572900d0b1" target="_blank"><span class="fa fa-pagelines"></span></a>
+                </div>
+                <div class="header-summary">
+                  <div class="header-block has-subtitle">
+                    <span class="title">Garden</span>
+                  </div>
+                  <div class="summary">
+                    <span class="load-min">
+                      {{ '%.2f' % values.get('th-bc572900d0b1_Temperature') | float }}&deg;C <i class="fa fa-thermometer"></i><br>
+                      {{ values.get('th-bc572900d0b1_Humidity') }}% <i class="fa fa-eyedropper"></i><br>
+                    </span>
+                    <span style="font-size:45%;">
+                      {{ frappe.utils.get_datetime(values.get('th-bc572900d0b1_last')).strftime("%d/%m %H:%M") }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>  
+          
+        </div>
+      </div>   
+    {% endif %}
+    <!-- End Data Session Cuyences -->
+    
     <!-- Start Data Session Coyanza --> 
-    {% if name == 'coyanza' %}
+    {% if name == 'coyanza-domotic' %}
       <style>
 
       .coyanza {
@@ -409,8 +699,8 @@
       .coyanza .garden {
         grid-column: 3/span 1;
         grid-row: 1/span 1;
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-left: 25px;
+        padding-right: 25px;
       }
       .coyanza .boiler {
         grid-column: 2/span 1;
@@ -422,8 +712,8 @@
         grid-column: 3/span 1;
         grid-row: 3/span 1;
         align-self: center;
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-left: 25px;
+        padding-right: 25px;
       }
       @media (max-width: 768px) {
         .coyanza .saloon,
@@ -501,12 +791,12 @@
         margin: 0;
         padding: 0;
         margin-right: 9px;
-        font-size: 54%;
+        font-size: 80%;
         text-align: right;
       }
       .load-min {
         color: #4682b4;
-        font-size: 45%;
+        font-size: 70%;
         line-height: 12px;
         float: right;
         margin: 0;
@@ -571,14 +861,20 @@
       }
       .coyanza .lines .line.line-living_room {
         margin-top: -108px;
-        left: -50px;
-        width: 51px;
+        left: -45px;
+        width: 46px;
         height: 5px;
       }
       @media (max-width: 768px) {
         .coyanza .lines .line.line-living_room {
           left: -20px;
           width: 21px;
+        }
+        .load {
+          font-size: 54%;
+        }
+        .load-min {
+          font-size: 45%;
         }
       }
       .coyanza .lines .line {
@@ -614,7 +910,7 @@
             <div class="block">
               <div class="content">
                 <div class="block-icon block-icon__pibico">
-                  <span class="fa fa-dashboard"></span>
+                  <a href="/app/device/ut-picaldera" target="_blank"><span class="fa fa-dashboard"></span></a>
                 </div>
                 <div class="header-summary">
                   <div class="header-block has-subtitle">
@@ -622,6 +918,9 @@
                   </div>
                   <div class="summary">
                     <span class="load">{{ values.get('ut-picaldera_Volume') }} l <i class="fa fa-sort-amount-desc"></i></span>
+                    <span style="font-size:45%;">
+                      {{ frappe.utils.get_datetime(values.get('ut-picaldera_last')).strftime("%d/%m %H:%M") }}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -658,6 +957,9 @@
                 <div class="header-summary">
                   <div class="summary">
                     <span class="load">{{ '%.2f' % values.get('temp-picaldera_Temperature') | float }}&deg;C <i class="fa fa-thermometer"></i></span>
+                    <span style="font-size:45%;">&nbsp;
+                      {{ frappe.utils.get_datetime(values.get('tempt-picaldera_last')).strftime("%d/%m %H:%M") }}
+                    </span>
                   </div>
                 </div>  
               </div>
@@ -668,7 +970,7 @@
             <div class="block">
               <div class="content">
                 <div class="block-icon block-icon__pibico">
-                  <span class="fa fa-pagelines"></span>
+                  <a href="/app/device/temp-rpb3agardencut" target="_blank"><span class="fa fa-pagelines"></span></a>
                 </div>
                 <div class="header-summary">
                   <div class="header-block has-subtitle">
@@ -676,7 +978,10 @@
                   </div>
                   <div class="summary">
                     <span class="load">
-                      {{ values.get('temp-rpb3agardencut_Temperature') }}&deg;C <i class="fa fa-thermometer"></i>
+                      {{ '%.2f' % values.get('temp-rpb3agardencut_Temperature') | float }}&deg;C <i class="fa fa-thermometer"></i>
+                    </span>
+                    <span style="font-size:45%;">
+                      {{ frappe.utils.get_datetime(values.get('temp-rpb3agardencut_last')).strftime("%d/%m %H:%M") }}
                     </span>
                   </div>
                 </div>
@@ -688,11 +993,14 @@
             <div class="block">
               <div class="content">
                 <div class="block-icon block-icon__pibico">
-                  <span class="fa fa-cog"></span>
+                  <a href="/app/place/Coyanza-caldera" target="_blank"><span class="fa fa-cog"></span></a>
                 </div>
                 <div class="header-summary">
                   <div class="header-block has-subtitle">
                     <span class="title">Boiler</span>
+                    <span style="font-size:75%;">
+                      {{ frappe.utils.get_datetime(values.get('tphg-picaldera_last')).strftime("%d/%m %H:%M") }}&nbsp;
+                    </span>
                   </div>
                   <div class="summary">
                     <span class="load-min">
@@ -701,9 +1009,34 @@
                       {{ values.get('tphg-picaldera_Humidity') }} % <i class="fa fa-eyedropper"></i><br>
                       {{ values.get('tphg-picaldera_Iaq') }} IAQ <i class="fa fa-heartbeat"></i><br>
                       <br>
-                      {{ values.get('cpu-picaldera_Temperature') }}&deg;C <i class="fa fa-microchip"></i><br>
+                      {{ '%.2f' % values.get('cpu-picaldera_Temperature') | float }}&deg;C <i class="fa fa-microchip"></i><br>
                       {{ values.get('cpu-picaldera_Memory') }}% <i class="fa fa-desktop"></i><br>
                       {{ values.get('cpu-picaldera_Disk') }}% <i class="fa fa-database"></i>
+                    </span>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+          
+          <div class="rooms">
+            <div class="block">
+              <div class="content">
+                <div class="block-icon block-icon__pibico">
+                  <a href="/app/device/th-bc572900d09a" target="_blank"><span class="fa fa-bed"></span></a>
+                </div>
+                <div class="header-summary">
+                  <div class="header-block has-subtitle">
+                    <span class="title">Rooms</span>
+                  </div>
+                  <div class="summary">
+                    <span class="load-min">
+                      {{ '%.2f' % values.get('th-bc572900d09a_Temperature') | float }}&deg;C <i class="fa fa-thermometer"></i><br>
+                      {{ values.get('th-bc572900d09a_Humidity') }}% <i class="fa fa-eyedropper"></i><br>
+                    </span>
+                    <span style="font-size:45%;">
+                      {{ frappe.utils.get_datetime(values.get('th-bc572900d09a_last')).strftime("%d/%m %H:%M") }}
                     </span>
                   </div>
                 </div>
@@ -715,18 +1048,24 @@
             <div class="block">
               <div class="content">
                 <div class="block-icon block-icon__pibico">
-                  <span class="fa fa-cutlery"></span>
+                  <a href="/app/place/Coyanza-salon" target="_blank"><span class="fa fa-cutlery"></span></a>
                 </div>
                 <div class="header-summary">
                   <div class="header-block has-subtitle">
                     <span class="title">Living</span>
+                    <span style="font-size:75%;">
+                      {{ frappe.utils.get_datetime(values.get('th-bc572900d0c1_last')).strftime("%d/%m %H:%M") }}&nbsp;
+                    </span>
                   </div>
                   <div class="summary">
+                    
                     <span class="load-min">
                       {{ values.get('temp-rpb4balztech_Temperature') }}&deg;C <i class="fa fa-thermometer"></i><br>
+                      {{ values.get('th-bc572900d0c1_Temperature') }}&deg;C <i class="fa fa-thermometer"></i><br>
+                      {{ values.get('th-bc572900d0c1_Humidity') }}% <i class="fa fa-eyedropper"></i><br>
                       {{ values.get('power-rpb4balztech_Voltage') }}V <i class="fa fa-battery-half"></i><br>
                       <br>
-                      {{ values.get('cpu-rpb4balztech_Temperature') }}&deg;C <i class="fa fa-microchip"></i><br>
+                      {{ '%.2f' %  values.get('cpu-rpb4balztech_Temperature') | float }}&deg;C <i class="fa fa-microchip"></i><br>
                       {{ values.get('cpu-rpb4balztech_Memory') }}% <i class="fa fa-desktop"></i><br>
                       {{ values.get('cpu-rpb4balztech_Disk') }}% <i class="fa fa-database"></i>
                     </span>
@@ -748,14 +1087,145 @@
       </div>   
     {% endif %}
     <!-- End Data Session Coyanza -->
+    
+    {% if name in ['clientes-pc', 'sede-servers', 'clientes-rpi', 'gijon-servers'] %}
+      <style>
+      .wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto;
+        grid-gap: 3px;
+        background-color: #fff;
+        color: #444;
+        margin: 3px;
+      }
+      .box {
+        background-color: #eee;
+        color: #4682b4;
+        border-radius: 6px;
+        padding: 0px;
+        border: #fff 1px solid;
+      }
+      .box p {
+        font-size: 40%;
+        color: dimgrey;
+        margin: 0;
+        padding: 0px;
+        text-align: center;
+      }
+      .box .data {
+        /*font-size: 99%;*/
+        font-weight: 540;
+        color: navy;
+        padding: 0;
+        padding-top: 3px;
+      }
+      .box .data-small {
+        font-size: 67%;
+        font-weight: 540;
+        color: navy;
+        padding: 0;
+        padding-top: 9px;
+        letter-spacing: -1px;
+      }
+      .box .data-min {
+        font-size: 54%;
+        font-weight: 540;
+        color: navy;
+        padding: 0;
+        padding-top: 6px;
+        letter-spacing: -1px;
+      }
+      .box .units {
+        writing-mode: vertical-lr;
+        text-orientation: mixed;
+        transform-origin: center;
+        transform: rotate(180deg);
+        align-self: center;
+        letter-spacing: 1px;
+        font-size: 45%;
+        padding-top: -3px;
+      }
+      .box .units-min {
+        writing-mode: vertical-lr;
+        text-orientation: mixed;
+        transform-origin: center;
+        transform: rotate(180deg);
+        align-self: center;
+        letter-spacing: 1px;
+        font-size: 30%;
+        padding-top: -3px;
+      }
+      .grmn {
+        display: flex;
+        justify-content: center;
+        margin-top: -10px;
+      }
+      </style>
+      <div class="col-xs-12 col-md-9">
+        <div class="wrapper">
+          {% for device in devices %}
+          <div class="box">
+            <div>
+              <div>
+                <a href="/app/device/{{ device }}" target="_blank"><span class="fa fa-desktop"></span></a>
+                <span>{{ device }}</span><br>
+                {% set doc = frappe.get_doc('Device', device) %}
+                <span>Memory {{ values.get(device + '_Memory') }}% <i class="fa fa-microchip"></i></span><br>
+                <span>Disk {{ values.get(device + '_Disk') }}% <i class="fa fa-database"></i></span><br>
+                <span>Temperature {{ values.get(device + '_Temperature') }}&deg;C <i class="fa fa-thermometer"></i></span><br>
+                <span>Last Update {{ frappe.utils.get_datetime(doc.last_seen).strftime("%d/%m %H:%M") }} <i class="fa fa-clock-o"></i></span><br>
+              </div>
+            </div>
+          </div>
+          {% endfor %}      
+        </div>
+      </div>  
+    {% endif %}
+    
+    {% if name in ['sede-domotic', 'pibifarma-clientes'] %}
+      <style>
+        .card {
+          border: .1px solid #4682b4 !important;
+          border-radius: 6px;
+        }
+      </style>
+      {% for device in devices %}
+      {% set doc = frappe.get_doc('Device', device) %}
+      <div class="col-xs-6 col-md-4">
+        <div class="card m-0 p-0 mt-3">
+          <div class="card-header">
+            <p>{{ device }}</p>
+          </div>
+          <div class="card-body">
+            <span>
+              {% if 'th-' in device %}
+                {{ values.get(device + '_Temperature') }}&deg;C<br>
+                {{ values.get(device + '_Humidity') }}%
+              {% elif 'temp' in device %}
+                {{ values.get(device + '_Temperature') }}&deg;C<br>
+              {% elif 'flow' in device %}
+                {{ values.get(device + '_Flow') }} l/min
+              {% endif %}  
+            </span>
+          </div>
+          <div class="card-footer">
+            <span>{{ frappe.utils.get_datetime(doc.last_seen).strftime("%d/%m %H:%M") }} <i class="fa fa-clock-o"></i></span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
   </div>
 {% endblock %}
 
 {% block script %}
   <script src="/assets/pibidesk/js/feather.min.js"></script>
+
   <script>
     feather.replace()
   </script> 
+
   <script>
     frappe.boot = {
 		  sysdefaults: {
@@ -766,7 +1236,9 @@
 		// for backward compatibility of some libs
 		frappe.sys_defaults = frappe.boot.sysdefaults;
 	</script>
-  {% if name == 'coyanza' %}
+
+
+  {% if name == 'coyanza-domotic' %}
     <script>
       function boiler() {
         frappe.msgprint({
@@ -783,7 +1255,9 @@
       };
     </script>
   {% endif %}
-  {% if name == 'development' %}
+
+
+  {% if name in ['development-gps','development-lisboa'] %}
     <script src="/assets/pibidesk/dist/leaflet/leaflet.js"></script>
     <script src="/assets/pibidesk/dist/leaflet/leaflet.rotatedMarker.js" crossorigin=""></script>
     <script src="/assets/pibidesk/dist/leaflet/leaflet.legend.js" crossorigin=""></script>

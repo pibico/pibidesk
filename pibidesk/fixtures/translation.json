@@ -14,5 +14,21 @@
   "parenttype": null,
   "source_text": "Heading",
   "translated_text": "Yaw"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "es",
+  "modified": "2022-12-04 22:07:42.604444",
+  "name": "264718b051",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "source_text": "Sensor Var",
+  "translated_text": "Variable"
  }
 ]

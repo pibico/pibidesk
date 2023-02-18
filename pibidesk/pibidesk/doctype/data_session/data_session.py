@@ -12,6 +12,10 @@ import math
 
 class DataSession(WebsiteGenerator):
   def get_context(self, context):
+    if frappe.session.user == 'Guest':
+      context._login_required = True
+      frappe.throw(_("You need to be logged in to access this page"), frappe.PermissionError)
+  
     ## Retrieve every log in session
     device_logs = frappe.get_all("Device Log",
       fields=["*"],
@@ -51,6 +55,7 @@ class DataSession(WebsiteGenerator):
     ## calculate all distances
     for device in devices:
       dev = frappe.get_doc("Device", device)
+      result[device + '_last'] = dev.last_seen
       if len(dev.data_item) > 0:
         sensor_vars = []
         for d in dev.data_item:
