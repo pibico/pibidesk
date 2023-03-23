@@ -6,11 +6,13 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _, msgprint, throw
 from frappe.utils import nowdate, now_datetime, cstr, time_diff_in_seconds, get_files_path
+from frappe.utils.background_jobs import enqueue
+from frappe.utils.password import get_decrypted_password
 
 from pibidesk.pibidesk.doctype.mqtt_settings.mqtt_settings import send_mqtt
 from pibidesk.pibidesk.doctype.device_log.device_log import manage_alert
 
-import json, datetime, requests, os
+import json, datetime, requests, os, sys
 #import urllib.request as urllib2
 import paho.mqtt.client as mqtt
 
@@ -187,3 +189,203 @@ def get_chart(doc):
         result["read_" + i] = locals()[f"read_{i}"]
       
       return result
+
+import paho.mqtt.client as mqtt
+logger = frappe.logger("mqtt_msg", allow_site=True, file_count=3)
+
+def on_message(client, userdata, message):
+  """
+    {
+      "hostname": "iot-atvirtual",
+      "deviceID": "sim868-gps",
+      "location": "GPS Buoy",
+      "type": "gps",
+      "model": "WVSIM868",
+      "class": "sensor",
+      "reading": {
+        "lat": "43.537595",
+        "lon": "-5.659457",
+        "alt": 21.081,
+        "sats": 8,
+        "time": "20:43:22UTC",
+        "cog": "338",
+        "sog": "0",
+        "decmag": "-0.499",
+        "record": "true",
+        "data_date": "2023-03-21 20:44:04.581347"
+      }
+    }
+  """
+  #message = '{"hostname": "bc572900d0be", "deviceid": "b827eb904c41", "type": "th", "model": "K6P", "class": "sensor", "reading": {"temperature": 26.29, "humidity": 36.3, "record": "true", "data_date": "2023-03-21 22:16:04.581347"}}'
+  strvalue = str(message.payload.decode("utf-8"))
+  #logger.info(f"Processing: {strvalue}")
+  if message.retain == True:
+    logger.warning(f"Retained message: {strvalue} on topic {str(message.topic)}")  
+  # Converts message to dict
+  strjson = json.loads(strvalue)
+  ## Defines alias for device
+  device = '-'.join([strjson['type'], strjson['hostname']])
+  device_log = '_'.join([datetime.datetime.now().strftime("%y%m%d"), device + '-%']) 
+  logger.info("{} --- {} ---".format(datetime.datetime.now().strftime("%H:%M:%S"),device))
+  try:
+    ## Update connection on device
+    device_doc = frappe.get_doc("Device", device)
+    if device_doc:
+      if not device_doc.disabled:
+        device_doc.connected = True
+        device_doc.last_seen = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        device_doc.save()
+  
+        ddate = datetime.datetime.now().strftime("%Y-%m-%d")
+        
+        ## Get variable names from device type
+        svars = []
+        sensor_var = frappe.get_doc("Sensor Type", strjson['type'])
+        if sensor_var:
+          for var in sensor_var.var_item:
+            if not var.sensor_var in svars:
+              svars.append(var.sensor_var)
+        ## Check if message has record key     
+        if len(svars) > 0 and 'record' in strjson['reading']:
+          ## Check if record mode is on
+          if strjson['reading']['record'] == 'true':
+            ## Get data session from device
+            course = frappe.db.sql("""
+            SELECT
+              parent
+            FROM `tabSession Item`
+            WHERE
+              device=%s AND docstatus<2
+            """, device, as_dict = True)
+            session = frappe.get_doc('Data Session', course[0]['parent'])
+            ## If session is active and allow recording then records
+            if session.is_active and session.recording:
+              ## Get last device log item for each var
+              for var in svars:
+                last = frappe.db.sql("""
+                SELECT
+                  *
+                FROM `tabLog Item`
+                WHERE
+                  parent LIKE %s AND docstatus < 2 AND sensor_var=%s
+                ORDER BY data_date DESC
+                LIMIT 1
+                """, (device_log, var), as_dict = True)
+                if last:
+                  if var == 'Position':
+                    value = ','.join([ strjson['reading']['lat'], strjson['reading']['lon'] ])
+                  else:
+                    value = strjson['reading'][var.lower()]
+                
+                  if str(last[0]['value']) != str(value):
+                    log = frappe.get_doc('Device Log', last[0]['parent'])
+                    if var == 'Position':
+                      location = {}
+                      location['type'] = "FeatureCollection"
+                
+                      features = []
+                
+                      feature = {}
+                      feature['type'] = "Feature"
+                      feature['properties'] = {}
+                
+                      coords = []
+                      for row in log.log_item:
+                        if row.sensor_var == 'Position':
+                          latlng = row.value.split(',')
+                          lat = latlng[0]
+                          lon = latlng[1]
+                          coords.append([ lon, lat ])
+                
+                      feature['geometry'] = {"type": "LineString", "coordinates": coords}
+                
+                      features.append(feature)
+                      location['features'] = features
+                
+                      log.move = str(json.dumps(location))
+                    
+                    log_item = {
+                      "sensor_var": var,
+                      "value": value,
+                      "data_date": strjson['reading']['data_date']
+                    }
+                    log.append("log_item", log_item)
+                    log.save()
+                    frappe.db.commit()
+                    #print(f"Updating {log.name} with {log_item}")
+                    logger.info(f"Updating {log.name} with {log_item}")
+                else:
+                  log = frappe.db.sql("""
+                  SELECT
+                    name
+                  FROM `tabDevice Log`
+                  WHERE
+                    device=%s AND docstatus < 2 AND date=%s
+                  LIMIT 1   
+                  """, (device, ddate), as_dict = True)
+                  if var == 'Position':
+                    value = ','.join([ strjson['reading']['lat'], strjson['reading']['lon'] ])
+                    print(value)
+                  else:
+                    value = strjson['reading'][var.lower()]
+              
+                  log_item = {
+                    "sensor_var": var,
+                    "value": value,
+                    "data_date": strjson['reading']['data_date']
+                  }
+                  if log:
+                    doc = frappe.get_doc("Device Log", log[0]['name'])
+              
+                    doc.append("log_item", log_item)
+                    doc.save()
+                    frappe.db.commit()
+                    #print(f"Inserting {doc.name} with {log_item}")
+                    logger.info(f"Inserting {doc.name} with {log_item}")
+                  else:
+                    doc = frappe.get_doc({
+                      "doctype": 'Device Log',
+                      "date": datetime.datetime.now().strftime(DATETIME_FORMAT),
+                      "data_session": session.name,
+                      "device": device
+                    })
+                    doc.append("log_item", log_item)
+                  
+                    doc.insert()
+                    frappe.db.commit()
+                    #print(f"Inserting: {doc}")      
+                    logger.info(f"Inserting: {doc}")
+      else:
+        logger.warning("Device disabled {}".format(strvalue))
+        #print("Device disabled {}".format(strvalue))
+    else:
+      logger.warning("Error processing (not found device) {}".format(strvalue))
+      #print("Error processing (not found device) {}".format(strvalue))
+  
+  except KeyboardInterrupt:
+    print("[INFO] Keyboard Escape")
+    sys.exit()  
+  except Exception as error:
+    logger.warning("Error on_message {}".format(error))
+    logger.info("Error processing {}".format(strvalue))
+    #print("Exception [ {} ] in message {}".format(error, strvalue))
+    pass
+  finally:
+    message = None
+  
+def start_reading():
+  broker = frappe.get_doc('MQTT Settings', 'MQTT Settings')
+  client = mqtt.Client()
+  client.username_pw_set(broker.user, get_decrypted_password('MQTT Settings', 'MQTT Settings', 'secret', False))
+  client.connect(broker.broker_gateway, broker.port, 60)
+  topics = [('home/pibico/#', 0)]
+  client.subscribe(topics)
+  client.on_message = on_message
+  client.loop_forever()
+
+@frappe.whitelist()
+def read_mqtt_messages():
+  start_reading()
+
+def schedule_read_mqtt():
+  enqueue('pibidesk.pibidesk.custom.read_mqtt_messages')      

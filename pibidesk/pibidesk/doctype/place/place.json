@@ -47,7 +47,7 @@
    "link_fieldname": "place"
   }
  ],
- "modified": "2022-11-13 15:40:25.046458",
+ "modified": "2023-03-18 11:09:43.845570",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Place",
@@ -64,6 +64,15 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "pibiDesk",
+   "share": 1
   }
  ],
  "quick_entry": 1,

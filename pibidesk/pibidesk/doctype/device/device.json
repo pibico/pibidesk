@@ -142,7 +142,8 @@
    "fieldname": "alert_item",
    "fieldtype": "Table",
    "label": "Alert Items",
-   "options": "Alert Item"
+   "options": "Alert Item",
+   "permlevel": 1
   },
   {
    "collapsible": 1,
@@ -185,7 +186,8 @@
    "fieldname": "warning_item",
    "fieldtype": "Table",
    "label": "Warning Items",
-   "options": "Warning Item"
+   "options": "Warning Item",
+   "permlevel": 1
   },
   {
    "depends_on": "eval:frappe.session.user==\"Administrator\";",
@@ -196,7 +198,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-11-12 20:44:16.616461",
+ "modified": "2023-03-18 11:33:30.943166",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Device",
@@ -211,6 +213,16 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "pibiDesk",
    "share": 1,
    "write": 1
   }

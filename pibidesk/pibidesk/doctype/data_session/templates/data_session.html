@@ -187,7 +187,7 @@
                   <a href="/app/place/AT-Virtual-AT-Virtual" target="_blank"><img src='/assets/pibidesk/dist/leaflet/images/buoy.svg' width='18px' /></a>  
                   <b style="color: #4682b4;">AT-Virtual</b> IoT Data
                 </p>
-                <a href="http://iot-atvirtual.ddns.net" target="_blank"><i data-feather="globe" class="svg-icon"></i></a>
+                <a href="https://buoy00.ddns.net:4443" target="_blank"><i data-feather="globe" class="svg-icon"></i></a>
               </span>
               </div>
             </div>
@@ -601,28 +601,35 @@
               <div class="content">
                 <div class="block-icon block-icon__pibico">
                   <a href="/app/device/batt-bc572900d0b1" target="_blank">
-                  {% if values.get('batt-bc572900d0b1_Charge') | int >= 100 %}
-                    <span class="fa fa-battery-full">
-                  {% elif 100 > values.get('batt-bc572900d0b1_Charge') | int >= 75 %}  
-                    <span class="fa fa-battery-three-quarters">
-                  {% elif 75 > values.get('batt-bc572900d0b1_Charge') | int >= 50 %}  
-                    <span class="fa fa-battery-half">
-                  {% elif 50 > values.get('batt-bc572900d0b1_Charge') | int >= 25 %}  
-                    <span class="fa fa-battery-quarter">    
-                  {% else %}
-                    <span class="fa fa-battery-empty">
-                  {% endif %}  
+                    <span class="fa fa-sun-o">
                   </span></a>
                 </div>
                 <div class="header-summary">
                   <div class="header-block has-subtitle">
-                    <span class="title">pibiSun</span>
+                    <span class="title">Solar</span>
                   </div>
                   <div class="summary">
                     <span class="load-min">
-                      {{ values.get('batt-bc572900d0b1_Voltage') }} V<br>
+                      {{ values.get('batt-bc572900d0b1_Voltage') }} V <i class="fa fa-bolt"></i><br>
                       {{ values.get('batt-bc572900d0b1_Current') }} mA <i class="fa fa-plug"></i><br>
-                      {{ values.get('batt-bc572900d0b1_Charge') }} % <i class="fa fa-battery-full"></i>
+                      {{ values.get('batt-bc572900d0b1_Charge') }}%
+                      {% if values.get('batt-bc572900d0b1_Charge') | int >= 100 %}
+                        <i class="fa fa-battery-full"></i>
+                      {% elif 100 > values.get('batt-bc572900d0b1_Charge') | int >= 75 %}  
+                        <i class="fa fa-battery-three-quarters"></i>
+                      {% elif 75 > values.get('batt-bc572900d0b1_Charge') | int >= 50 %}  
+                        <i class="fa fa-battery-half"></i>
+                      {% elif 50 > values.get('batt-bc572900d0b1_Charge') | int >= 25 %}  
+                        <i class="fa fa-battery-quarter"></i>   
+                      {% else %}
+                        <i class="fa fa-battery-empty"></i>
+                      {% endif %}
+                      <br style="margin-bottom: 12px;"> 
+                      {% if values.get('plug-bc572900d0b1_Status') | int == 1 %}
+                        <i class="fa fa-power-off" style="color: crimson;"></i> on
+                      {% else %}
+                        <i class="fa fa-power-off" style="color: green;"></i> off
+                      {% endif %} 
                     </span>
                     <span style="font-size:45%;">
                       {{ frappe.utils.get_datetime(values.get('batt-bc572900d0b1_last')).strftime("%d/%m %H:%M") }}
@@ -1206,6 +1213,13 @@
                 {{ values.get(device + '_Temperature') }}&deg;C<br>
               {% elif 'flow' in device %}
                 {{ values.get(device + '_Flow') }} l/min
+              {% elif 'door' in device %}
+                {% set status = values.get(device + '_Status') %}
+                {% if status | int == 0 %}
+                  <i class="fa fa-window-minimize"></i> Closed
+                {% else %}
+                  <i class="fa fa-window-close-o"></i> Open
+                {% endif %}  
               {% endif %}  
             </span>
           </div>

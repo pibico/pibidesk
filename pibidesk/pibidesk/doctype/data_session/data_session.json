@@ -104,7 +104,7 @@
    "link_fieldname": "data_session"
   }
  ],
- "modified": "2022-11-14 09:59:44.094644",
+ "modified": "2023-03-18 11:09:29.267062",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Data Session",
@@ -121,6 +121,15 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "pibiDesk",
+   "share": 1
   }
  ],
  "route": "data-session",
