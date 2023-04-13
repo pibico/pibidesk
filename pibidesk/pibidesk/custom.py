@@ -73,7 +73,7 @@ def check_status():
       pos = device.device_shortcut.find("-")
       cmd = "take_" + device.device_shortcut[:pos]
       strcmd = "start_" + device.device_shortcut[:pos]
-      strboot = "boot"
+      strboot = "__boot__"
       ## Alert for lastseen taken from threshold items
       threshold = frappe.db.sql("""
         SELECT
@@ -104,15 +104,15 @@ def check_status():
                   n.alert_high = False
                   n.save() 
                   manage_alert(threshold[0]['sensor_var'], threshold[0]['uom'], time_minutes, 'high', 'finish', now.strftime("%Y-%m-%d %H:%M:%S"), dev)
-      elif gap_minutes < time_minutes <= gap_minutes * 5/4:
-        doAlert = True
-        send_mqtt(hostname, cstr(cmd))
-      elif time_minutes <= gap_minutes * 3/2:
-        doAlert = True
-        send_mqtt(hostname, cstr(strcmd))
-      elif time_minutes >= 2 * gap_minutes:   
-        doAlert = True
-        send_mqtt(hostname, cstr(strboot))    
+      #elif gap_minutes < time_minutes <= gap_minutes * 5/4:
+      #  doAlert = True
+      #  send_mqtt(hostname, cstr(cmd))
+      #elif time_minutes <= gap_minutes * 3/2:
+      #  doAlert = True
+      #  send_mqtt(hostname, cstr(strcmd))
+      #elif time_minutes >= 2 * gap_minutes:   
+      #  doAlert = True
+      #  send_mqtt(hostname, cstr(strboot))    
       
       if doAlert: 
         for n in dev.alert_item:

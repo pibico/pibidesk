@@ -33,7 +33,7 @@ def send_mqtt(receiver_list, msg, sender_name = '', success_msg = True):
 		msgprint(_("Please Update MQTT Settings"))
 
 def send_via_gateway(arg):
-	path = "/home/erpnext/erpnext-prd/sites/" 
+	path = '/'.join([frappe.utils.get_bench_path(), 'sites/']) 
 	client = frappe.get_doc('MQTT Settings', 'MQTT Settings')
 
 	msg = arg.get('message')
