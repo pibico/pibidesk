@@ -193,6 +193,175 @@ def get_chart(doc):
       
       return result
 
+@frappe.whitelist()
+def schedule_read_mqtt():
+  enqueue('pibidesk.pibidesk.custom.read_mqtt_log')
+
+@frappe.whitelist()
+def read_mqtt_log():
+  ## Get all devices in active and recording sessions that are not disabled
+  device = frappe.db.sql("""
+      SELECT
+        device as name
+      FROM `tabSession Item`
+      WHERE
+        parent IN
+        (
+         SELECT name 
+         FROM `tabData Session`
+         WHERE docstatus < 2 AND is_active AND recording
+        )
+      INTERSECT
+        SELECT name
+        FROM tabDevice
+        WHERE docstatus < 2 AND NOT disabled 
+      """, as_dict = True)
+  devices = set()
+  sensor_type = set()
+  deltas = set()
+  for dev in device:
+    dev_type = dev['name'].split('-')[0]
+    if dev_type not in sensor_type:
+      sensor_type.add(dev_type)
+    if dev['name'] not in devices:
+      devices.add(dev['name'])
+      sensor_vars = frappe.db.sql("""
+          SELECT LOWER(sensor_var) as sensor_var
+          FROM `tabVar Item`
+          WHERE parent = %s
+          """, (dev_type), as_dict = True)
+      for var in sensor_vars:
+        delta = ".".join([ dev['name'], var['sensor_var'] ])
+        if not delta in deltas:
+          deltas.add(delta)
+  
+  influx = frappe.get_doc('InfluxDB Settings', 'InfluxDB Settings')
+  influx_host = influx.influxdb_host
+  influx_port = influx.port
+  influx_user = influx.user
+  influx_key = get_decrypted_password('InfluxDB Settings', 'InfluxDB Settings', 'secret', False)
+  influx_db = influx.database
+  ## connect to influxdb
+  influx_client = InfluxDBClient(host=influx_host, port=influx_port, username=influx_user, password=influx_key)
+  influx_client.switch_database(influx_db)
+  
+  ## query for all measurements in database
+  existing_measurements = influx_client.query('SHOW MEASUREMENTS')
+  for measurement_name in existing_measurements:
+    for meas in measurement_name:
+      if (meas['name']) in deltas:
+        ## Calculate start and end times for query
+        end_time = datetime.datetime.utcnow()
+        start_time = end_time - timedelta(minutes=1)
+        ## Build and execute the query
+        # for all values
+        #query = 'SELECT * FROM "' + meas['name'] + '" WHERE time >= \'' + start_time.isoformat() + 'Z\' AND time <= \'' + end_time.isoformat() + 'Z\''
+        # for mean of values
+        query = 'SELECT MEAN("value") FROM "' + meas['name'] + '" WHERE time >= \'' + start_time.isoformat() + 'Z\' AND time <= \'' + end_time.isoformat() + 'Z\''
+        result = influx_client.query(query)
+        # Process the result
+        for values in result:
+          if values:
+            #print(meas['name'], values[0]['mean'], start_time)
+            sdate = datetime.datetime.now().strftime("%y%m%d")
+            sdelta = meas['name'].split(".")
+            device_log = "".join([sdate, '_', sdelta[0], '%'])
+            #get last log for variable and device and date in device_log
+            last = frappe.db.sql("""
+                SELECT
+                  *
+                FROM `tabLog Item`
+                WHERE
+                  parent LIKE %s AND docstatus < 2 AND sensor_var = %s
+                ORDER BY data_date DESC
+                LIMIT 1
+              """, (device_log, sdelta[1]), as_dict = True)
+            if last:
+              # 
+              if sdelta[1].capitalize() == 'Position':
+                value = '0,0'
+              else:
+                value = round(values[0]['mean'],1)
+              log = frappe.get_doc('Device Log', last[0]['parent'])
+              if sdelta[1].capitalize() == 'Position':
+                location = {}
+                location['type'] = "FeatureCollection"
+                
+                features = []
+                
+                feature = {}
+                feature['type'] = "Feature"
+                feature['properties'] = {}
+                
+                coords = []
+                for row in log.log_item:
+                  if row.sensor_var == 'Position':
+                    latlng = row.value.split(',')
+                    lat = latlng[0]
+                    lon = latlng[1]
+                    coords.append([ lon, lat ])
+                
+                    feature['geometry'] = {"type": "LineString", "coordinates": coords}
+                
+                    features.append(feature)
+                    location['features'] = features
+                
+                    log.move = str(json.dumps(location))
+                    
+              log_item = {
+                "sensor_var": sdelta[1].capitalize(),
+                "value": value,
+                "data_date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+              }
+              log.append("log_item", log_item)
+              log.save()
+              frappe.db.commit()
+              #print(f"Updating {log.name} with {log_item}")
+              logger.info(f"Updating {log.name} with {log_item}")
+
+            else:
+              # new device_log
+              log = frappe.db.sql("""
+                  SELECT
+                    name
+                  FROM `tabDevice Log`
+                  WHERE
+                    device=%s AND docstatus < 2 AND date=%s
+                  LIMIT 1   
+                """, (sdelta[0], sdate), as_dict = True)
+              if sdelta[1] == 'position':
+                value = '0,0'
+              else:
+                value = round(values[0]['mean'],1)
+              
+              log_item = {
+                "sensor_var": sdelta[1].capitalize(),
+                "value": value,
+                "data_date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+              }  
+              if log:
+                doc = frappe.get_doc("Device Log", log[0]['name'])
+              
+                doc.append("log_item", log_item)
+                doc.save()
+                frappe.db.commit()
+                #print(f"Inserting {doc.name} with {log_item}")
+                logger.info(f"Inserting {doc.name} with {log_item}")
+              else:
+                doc = frappe.get_doc({
+                  "doctype": 'Device Log',
+                  "date": datetime.datetime.now().strftime(DATETIME_FORMAT),
+                  "data_session": '',
+                  "device": sdelta[0]
+                })
+                doc.append("log_item", log_item)
+                  
+                doc.insert()
+                frappe.db.commit()
+                #print(f"Inserting: {doc}")      
+                logger.info(f"Inserting: {doc}")
+
+
 import paho.mqtt.client as mqtt
 logger = frappe.logger("mqtt_msg", allow_site=True, file_count=3)
 
@@ -389,72 +558,3 @@ def start_reading():
 @frappe.whitelist()
 def read_mqtt_messages():
   start_reading()
-
-def schedule_read_mqtt():
-  enqueue('pibidesk.pibidesk.custom.read_mqtt_messages')
-
-@frappe.whitelist()
-def read_mqtt_log():
-  ## Get all devices in active and recording sessions that are not disabled
-  device = frappe.db.sql("""
-    SELECT
-      device as name
-    FROM `tabSession Item`
-    WHERE
-      parent IN
-      (
-       SELECT name 
-       FROM `tabData Session`
-       WHERE docstatus < 2 AND is_active AND recording
-      )
-    INTERSECT
-      SELECT name
-      FROM tabDevice
-      WHERE docstatus < 2 AND NOT disabled 
-    """, as_dict = True)
-  devices = set()
-  sensor_type = set()
-  deltas = set()
-  for dev in device:
-    dev_type = dev['name'].split('-')[0]
-    if dev_type not in sensor_type:
-      sensor_type.add(dev_type)
-    if dev['name'] not in devices:
-      devices.add(dev['name'])
-      sensor_vars = frappe.db.sql("""
-        SELECT LOWER(sensor_var) as sensor_var
-        FROM `tabVar Item`
-        WHERE parent = %s
-        """, (dev_type), as_dict = True)
-      for var in sensor_vars:
-        delta = ".".join([ dev['name'], var['sensor_var'] ])
-        if not delta in deltas:
-          deltas.add(delta)
-  
-  influx_host = 'localhost'
-  influx_port = 8086
-  influx_user = 'root'
-  influx_key = '@dm1n4Pibi'
-  influx_db = 'mqtt_log'
-  ## connect to influxdb
-  influx_client = InfluxDBClient(host=influx_host, port=influx_port, username=influx_user, password=influx_key)
-  influx_client.switch_database(influx_db)
-  
-  ## query for all measurements in database
-  existing_measurements = influx_client.query('SHOW MEASUREMENTS')
-  for measurement_name in existing_measurements:
-    for meas in measurement_name:
-      if (meas['name']) in deltas:
-        ## Calculate start and end times for query
-        end_time = datetime.datetime.utcnow()
-        start_time = end_time - timedelta(minutes=1)
-        ## Build and execute the query
-        # for all values
-        #query = 'SELECT * FROM "' + meas['name'] + '" WHERE time >= \'' + start_time.isoformat() + 'Z\' AND time <= \'' + end_time.isoformat() + 'Z\''
-        # for mean of values
-        query = 'SELECT MEAN("value") FROM "' + meas['name'] + '" WHERE time >= \'' + start_time.isoformat() + 'Z\' AND time <= \'' + end_time.isoformat() + 'Z\''
-        result = influx_client.query(query)
-        # Process the result
-        for values in result:
-          if values:
-            print(meas['name'], values[0]['mean'], start_time)

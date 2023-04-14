@@ -131,11 +131,15 @@ class DeviceLog(Document):
             if doCreate:
               ## Append non existing data to childtable 
               stat = device.append("data_item", data_item)
+              #device.last_seen = now_datetime()
+              #device.connected = True
               device.save()
               frappe.db.commit()
           else:
             stat = device.append("data_item", data_item)
             ## Save and Commit Modifications
+            #device.last_seen = now_datetime()
+            #device.connected = True
             device.save()
             frappe.db.commit()         
           
