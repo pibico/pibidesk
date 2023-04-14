@@ -194,10 +194,6 @@ def get_chart(doc):
       return result
 
 @frappe.whitelist()
-def schedule_read_mqtt():
-  enqueue('pibidesk.pibidesk.custom.read_mqtt_log')
-
-@frappe.whitelist()
 def read_mqtt_log():
   ## Get all devices in active and recording sessions that are not disabled
   device = frappe.db.sql("""
@@ -348,10 +344,19 @@ def read_mqtt_log():
                 #print(f"Inserting {doc.name} with {log_item}")
                 logger.info(f"Inserting {doc.name} with {log_item}")
               else:
+                session = frappe.db.sql("""
+                  SELECT
+                    parent
+                  FROM `tabSession Item`
+                  WHERE
+                    device=%s AND docstatus < 2
+                  LIMIT 1   
+                """, (sdelta[0]), as_dict = True)
+              
                 doc = frappe.get_doc({
                   "doctype": 'Device Log',
                   "date": datetime.datetime.now().strftime(DATETIME_FORMAT),
-                  "data_session": '',
+                  "data_session": session[0]['parent'],
                   "device": sdelta[0]
                 })
                 doc.append("log_item", log_item)
@@ -361,6 +366,8 @@ def read_mqtt_log():
                 #print(f"Inserting: {doc}")      
                 logger.info(f"Inserting: {doc}")
 
+def sync_now():
+  enqueue('pibidesk.pibidesk.custom.read_mqtt_log', timeout=30000, queue="long")
 
 import paho.mqtt.client as mqtt
 logger = frappe.logger("mqtt_msg", allow_site=True, file_count=3)
@@ -515,6 +522,7 @@ def on_message(client, userdata, message):
                     #print(f"Inserting {doc.name} with {log_item}")
                     logger.info(f"Inserting {doc.name} with {log_item}")
                   else:
+                    
                     doc = frappe.get_doc({
                       "doctype": 'Device Log',
                       "date": datetime.datetime.now().strftime(DATETIME_FORMAT),

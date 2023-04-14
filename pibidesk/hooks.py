@@ -128,7 +128,7 @@ jenv = {
 
 scheduler_events = {
  	#"all": [
- 	#	"pibidesk.pibidesk.custom.read_mqtt_log"
+ 	#	"pibidesk.pibidesk.custom.sync_now"
  	#],
 # 	"daily": [
 # 		"pibidesk.tasks.daily"
@@ -148,7 +148,7 @@ scheduler_events = {
 		],
     "*/1 * * * *": [
 #      "pibidesk.pibidesk.custom.check_status",
-       "pibidesk.pibidesk.custom.schedule_read_mqtt",
+       "pibidesk.pibidesk.custom.sync_now",
     ]
 	}
 }

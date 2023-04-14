@@ -55,7 +55,7 @@ class DataSession(WebsiteGenerator):
     ## calculate all distances
     for device in devices:
       dev = frappe.get_doc("Device", device)
-      result[device + '_last'] = dev.last_seen
+      #result[device + '_last'] = dev.last_seen
       if len(dev.data_item) > 0:
         sensor_vars = []
         for d in dev.data_item:
@@ -65,6 +65,7 @@ class DataSession(WebsiteGenerator):
           for row in dev.data_item:
             if row.sensor_var == i:
               locals()[f"{device}{i}"] = row.value
+              result[device + '_last'] = row.last_recorded
             
         for i in sensor_vars:
           result[device + '_' + i] = locals()[f"{device}{i}"]
