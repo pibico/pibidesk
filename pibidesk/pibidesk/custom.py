@@ -13,8 +13,11 @@ from pibidesk.pibidesk.doctype.mqtt_settings.mqtt_settings import send_mqtt
 from pibidesk.pibidesk.doctype.device_log.device_log import manage_alert
 
 import json, datetime, requests, os, sys
+from datetime import timedelta
 #import urllib.request as urllib2
 import paho.mqtt.client as mqtt
+
+from influxdb import InfluxDBClient
 
 @frappe.whitelist()
 def mqtt_command(host, action):
@@ -388,4 +391,70 @@ def read_mqtt_messages():
   start_reading()
 
 def schedule_read_mqtt():
-  enqueue('pibidesk.pibidesk.custom.read_mqtt_messages')      
+  enqueue('pibidesk.pibidesk.custom.read_mqtt_messages')
+
+@frappe.whitelist()
+def read_mqtt_log():
+  ## Get all devices in active and recording sessions that are not disabled
+  device = frappe.db.sql("""
+    SELECT
+      device as name
+    FROM `tabSession Item`
+    WHERE
+      parent IN
+      (
+       SELECT name 
+       FROM `tabData Session`
+       WHERE docstatus < 2 AND is_active AND recording
+      )
+    INTERSECT
+      SELECT name
+      FROM tabDevice
+      WHERE docstatus < 2 AND NOT disabled 
+    """, as_dict = True)
+  devices = set()
+  sensor_type = set()
+  deltas = set()
+  for dev in device:
+    dev_type = dev['name'].split('-')[0]
+    if dev_type not in sensor_type:
+      sensor_type.add(dev_type)
+    if dev['name'] not in devices:
+      devices.add(dev['name'])
+      sensor_vars = frappe.db.sql("""
+        SELECT LOWER(sensor_var) as sensor_var
+        FROM `tabVar Item`
+        WHERE parent = %s
+        """, (dev_type), as_dict = True)
+      for var in sensor_vars:
+        delta = ".".join([ dev['name'], var['sensor_var'] ])
+        if not delta in deltas:
+          deltas.add(delta)
+  
+  influx_host = 'localhost'
+  influx_port = 8086
+  influx_user = 'root'
+  influx_key = '@dm1n4Pibi'
+  influx_db = 'mqtt_log'
+  ## connect to influxdb
+  influx_client = InfluxDBClient(host=influx_host, port=influx_port, username=influx_user, password=influx_key)
+  influx_client.switch_database(influx_db)
+  
+  ## query for all measurements in database
+  existing_measurements = influx_client.query('SHOW MEASUREMENTS')
+  for measurement_name in existing_measurements:
+    for meas in measurement_name:
+      if (meas['name']) in deltas:
+        ## Calculate start and end times for query
+        end_time = datetime.datetime.utcnow()
+        start_time = end_time - timedelta(minutes=1)
+        ## Build and execute the query
+        # for all values
+        #query = 'SELECT * FROM "' + meas['name'] + '" WHERE time >= \'' + start_time.isoformat() + 'Z\' AND time <= \'' + end_time.isoformat() + 'Z\''
+        # for mean of values
+        query = 'SELECT MEAN("value") FROM "' + meas['name'] + '" WHERE time >= \'' + start_time.isoformat() + 'Z\' AND time <= \'' + end_time.isoformat() + 'Z\''
+        result = influx_client.query(query)
+        # Process the result
+        for values in result:
+          if values:
+            print(meas['name'], values[0]['mean'], start_time)

@@ -1,4 +1,5 @@
 from . import __version__ as app_version
+import frappe
 
 app_name = "pibidesk"
 app_title = "Pibidesk"
@@ -214,6 +215,6 @@ fixtures = ['Role Profile', 'Role', 'Custom Field', 'Client Script', 'Property S
 
 default_mail_footer = """
     <div>
-        Sent via <a href="https://iot-enidh.ddns.net" target="_blank">pibiCo</a>
+        Sent via <a href="{}" target="_blank">pibiDesk by pibiCo</a>
     </div>
-"""
+""".format(frappe.utils.get_url())

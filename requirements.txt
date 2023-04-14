@@ -5,3 +5,4 @@ svglib
 paho-mqtt
 geopy
 pyais
+influxdb
