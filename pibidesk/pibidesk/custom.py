@@ -236,7 +236,8 @@ def read_mqtt_log():
   influx_port = influx.port
   influx_user = influx.user
   influx_key = get_decrypted_password('InfluxDB Settings', 'InfluxDB Settings', 'secret', False)
-  influx_db = influx.database
+  current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+  influx_db = current_date #influx.database
   ## connect to influxdb
   influx_client = InfluxDBClient(host=influx_host, port=influx_port, username=influx_user, password=influx_key)
   influx_client.switch_database(influx_db)
@@ -248,7 +249,7 @@ def read_mqtt_log():
       if (meas['name']) in deltas:
         ## Calculate start and end times for query
         end_time = datetime.datetime.utcnow()
-        start_time = end_time - timedelta(minutes=1)
+        start_time = end_time - timedelta(minutes=5)
         ## Build and execute the query
         # for all values
         #query = 'SELECT * FROM "' + meas['name'] + '" WHERE time >= \'' + start_time.isoformat() + 'Z\' AND time <= \'' + end_time.isoformat() + 'Z\''

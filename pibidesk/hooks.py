@@ -146,7 +146,7 @@ scheduler_events = {
     "0 0 * * *": [
 			"pibidesk.pibidesk.custom.alerts_reschedule"
 		],
-    "*/1 * * * *": [
+    "*/5 * * * *": [
 #      "pibidesk.pibidesk.custom.check_status",
        "pibidesk.pibidesk.custom.sync_now",
     ]
