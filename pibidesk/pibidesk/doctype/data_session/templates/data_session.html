@@ -412,7 +412,7 @@
         padding-left: 25px;
         padding-right: 25px;
       }
-      .cuyences .boiler {
+      .cuyences .cam {
         grid-column: 2/span 1;
         grid-row: 2/span 1;
         padding-left: 15px;
@@ -431,10 +431,11 @@
           padding-left: 0px;
           padding-right: 0px;
         }
-        .cuyences .boiler {
+        .cuyences .cam {
           padding-left: 0px;
           padding-right: 0px;
-        } 
+        }
+        
       }
       .cuyences .block {
         position: relative;
@@ -591,6 +592,18 @@
         position: absolute;
         overflow: hidden;
       }
+      .video-frame {
+        width: 100%;
+        height: auto;
+        margin: 4px auto;
+      }
+      @media screen and (max-width: 768px) {
+        .video-frame {
+          width: 90%;
+          height: auto;
+          margin: 1px auto;
+        }
+      }
       </style>
       
       <div class="col-xs-12 col-md-9">
@@ -640,6 +653,20 @@
             </div>
           </div>    
           
+          <div class="cam">
+            <div class="block">
+              <div class="content">
+                <span style="margin-right: 12px;">
+                  <iframe src="http://www.espib.co:5000/"
+                    scrolling="no"
+                    frameborder="0"
+                    class="video-frame">
+                  </iframe>
+                </span>
+              </div>
+            </div>
+          </div>
+          
           <div class="garden">
             <div class="block">
               <div class="content">
@@ -658,6 +685,13 @@
                     <span style="font-size:45%;">
                       {{ frappe.utils.get_datetime(values.get('th-bc572900d0b1_last')).strftime("%d/%m %H:%M") }}
                     </span>
+                    <!--<span style="margin-right: 12px;">
+                      <iframe src="http://www.espib.co:5000/"
+                        scrolling="no"
+                        frameborder="0"
+                        class="video-frame">
+                      </iframe>
+                    </span>-->
                   </div>
                 </div>
               </div>
@@ -989,6 +1023,13 @@
                     </span>
                     <span style="font-size:45%;">
                       {{ frappe.utils.get_datetime(values.get('temp-rpb3agardencut_last')).strftime("%d/%m %H:%M") }}
+                    </span>
+                    <!--<span style="margin-right: 12px;">
+                      <iframe src="http://192.168.1.39:5000/"
+                        width="100%"
+                        scrolling="no"
+                        frameborder="0">
+                      </iframe>-->
                     </span>
                   </div>
                 </div>
