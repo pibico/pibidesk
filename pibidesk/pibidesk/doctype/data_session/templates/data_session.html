@@ -375,10 +375,9 @@
     <!-- Start Data Session Cuyences --> 
     {% if name == 'cuyences-domotic' %}
       <style>
-
       .cuyences {
         display: grid;
-        grid-template-columns: repeat(3, 33.3333%);
+        grid-template-columns: repeat(3, 33.3%);
         column-gap: 3px;
         row-gap: 3px;
         margin-left: -1px;
@@ -388,7 +387,7 @@
       }
       .cuyences .cell {
         grid-column: 1/span 1;
-        grid-row: 3/span 1;
+        grid-row: 2/span 1;
         align-self: center;
       }
       .cuyences .box {
@@ -407,21 +406,8 @@
         background: linear-gradient(#fff, #4682b421);
       }
       .cuyences .garden {
-        grid-column: 3/span 1;
-        grid-row: 1/span 1;
-        padding-left: 25px;
-        padding-right: 25px;
-      }
-      .cuyences .cam {
         grid-column: 2/span 1;
-        grid-row: 2/span 1;
-        padding-left: 15px;
-        padding-right: 15px;
-      }
-      .cuyences .saloon {
-        grid-column: 3/span 1;
-        grid-row: 3/span 1;
-        align-self: center;
+        grid-row: 1/span 1;
         padding-left: 25px;
         padding-right: 25px;
       }
@@ -431,11 +417,6 @@
           padding-left: 0px;
           padding-right: 0px;
         }
-        .cuyences .cam {
-          padding-left: 0px;
-          padding-right: 0px;
-        }
-        
       }
       .cuyences .block {
         position: relative;
@@ -592,22 +573,51 @@
         position: absolute;
         overflow: hidden;
       }
-      .video-frame {
-        width: 100%;
-        height: auto;
-        margin: 4px auto;
+      .cam {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        margin: 3px;
       }
-      @media screen and (max-width: 768px) {
-        .video-frame {
-          width: 90%;
-          height: auto;
-          margin: 1px auto;
-        }
+      .cam iframe {
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 98%;
+        height: 100%;
+        display: block;
+      }
+      @media (max-width: 768px) {
+        .cam iframe {
+          display: block;
+          position: absolute;
+          top:    0;
+          bottom: 0;
+          left:   0;
+          right:  0;
+          width:  100px;
+          min-width:  98%;
+          height: 100px;
+          min-height: 100%;
+          object-fit: contain;
       }
       </style>
-      
+            
       <div class="col-xs-12 col-md-9">
+        
         <div class="cuyences">
+        
+          <div class="cam">
+                <span style="margin-right: 12px;">
+                  <iframe src="{{frappe.utils.get_url()}}:5000/"
+                    scrolling="no"
+                    frameborder="0"
+                    allowfullscreen>
+                  </iframe>
+                </span>
+            
+        </div>
           
           <div class="cell">
             <div class="block">
@@ -653,19 +663,7 @@
             </div>
           </div>    
           
-          <div class="cam">
-            <div class="block">
-              <div class="content">
-                <span style="margin-right: 12px;">
-                  <iframe src="{{frappe.utils.get_url()}}:5000/"
-                    scrolling="no"
-                    frameborder="0"
-                    class="video-frame">
-                  </iframe>
-                </span>
-              </div>
-            </div>
-          </div>
+          
           
           <div class="garden">
             <div class="block">
