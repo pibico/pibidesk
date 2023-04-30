@@ -35,13 +35,13 @@ def boiler():
   # connect to MQTT Broker to Publish Message
   pid = os.getpid()
   client_id = '{}:{}'.format('client', str(pid))
+  mqtt_topic = 'picaldera/mqttdevices'
   try:
     backend = mqtt.Client(client_id=client_id, clean_session=True)
     #backend.username_pw_set(user, password=secret)
     backend.connect(server, port)
 
     payload = cstr('boiler')
-    mqtt_topic = 'picaldera/mqttdevices'
     backend.publish(mqtt_topic, payload)
     backend.disconnect()
   except:
@@ -89,7 +89,7 @@ def check_status():
         gap_minutes = threshold[0]['high_value']
       else:
         gap_minutes = 12 #by default 12 minutes
-        
+
       if lastseen:
         time_minutes = (now - lastseen).total_seconds()/60
       else:
@@ -230,7 +230,7 @@ def read_mqtt_log():
         delta = ".".join([ dev['name'], var['sensor_var'] ])
         if not delta in deltas:
           deltas.add(delta)
-  
+
   influx = frappe.get_doc('InfluxDB Settings', 'InfluxDB Settings')
   influx_host = influx.influxdb_host
   influx_port = influx.port
@@ -241,7 +241,7 @@ def read_mqtt_log():
   ## connect to influxdb
   influx_client = InfluxDBClient(host=influx_host, port=influx_port, username=influx_user, password=influx_key)
   influx_client.switch_database(influx_db)
-  
+
   ## query for all measurements in database
   existing_measurements = influx_client.query('SHOW MEASUREMENTS')
   for measurement_name in existing_measurements:
@@ -254,7 +254,9 @@ def read_mqtt_log():
         # for all values
         #query = 'SELECT * FROM "' + meas['name'] + '" WHERE time >= \'' + start_time.isoformat() + 'Z\' AND time <= \'' + end_time.isoformat() + 'Z\''
         # for mean of values
-        query = 'SELECT MEAN("value") FROM "' + meas['name'] + '" WHERE time >= \'' + start_time.isoformat() + 'Z\' AND time <= \'' + end_time.isoformat() + 'Z\''
+        #query = 'SELECT MEAN("value") FROM "' + meas['name'] + '" WHERE time >= \'' + start_time.isoformat() + 'Z\' AND time <= \'' + end_time.isoformat() + 'Z\''
+        # for last value
+        query = 'SELECT LAST("value") FROM "' + meas['name'] + '" WHERE time >= \'' + start_time.isoformat() + 'Z\' AND time <= \'' + end_time.isoformat() + 'Z\''
         result = influx_client.query(query)
         # Process the result
         for values in result:
@@ -278,14 +280,16 @@ def read_mqtt_log():
               if sdelta[1].capitalize() == 'Position':
                 value = '0,0'
               else:
-                value = round(values[0]['mean'],1)
+                #value = round(values[0]['mean'],1)
+                value = round(values[0]['last'], 1)
               log = frappe.get_doc('Device Log', last[0]['parent'])
+
               if sdelta[1].capitalize() == 'Position':
                 location = {}
                 location['type'] = "FeatureCollection"
-                
+
                 features = []
-                
+
                 feature = {}
                 feature['type'] = "Feature"
                 feature['properties'] = {}
@@ -329,7 +333,8 @@ def read_mqtt_log():
               if sdelta[1] == 'position':
                 value = '0,0'
               else:
-                value = round(values[0]['mean'],1)
+                #value = round(values[0]['mean'],1)
+                value = round(values[0]['last'],1)
               
               log_item = {
                 "sensor_var": sdelta[1].capitalize(),

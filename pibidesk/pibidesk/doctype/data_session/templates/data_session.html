@@ -573,52 +573,12 @@
         position: absolute;
         overflow: hidden;
       }
-      .cam {
-        position: relative;
-        padding-bottom: 56.25%;
-        height: 0;
-        overflow: hidden;
-        margin: 3px;
-      }
-      .cam iframe {
-        position: absolute;
-        top:0;
-        left: 0;
-        width: 98%;
-        height: 100%;
-        display: block;
-      }
-      @media (max-width: 768px) {
-        .cam iframe {
-          display: block;
-          position: absolute;
-          top:    0;
-          bottom: 0;
-          left:   0;
-          right:  0;
-          width:  100px;
-          min-width:  98%;
-          height: 100px;
-          min-height: 100%;
-          object-fit: contain;
-      }
       </style>
             
       <div class="col-xs-12 col-md-9">
         
         <div class="cuyences">
         
-          <div class="cam">
-                <span style="margin-right: 12px;">
-                  <iframe src="{{frappe.utils.get_url()}}:5000/"
-                    scrolling="no"
-                    frameborder="0"
-                    allowfullscreen>
-                  </iframe>
-                </span>
-            
-        </div>
-          
           <div class="cell">
             <div class="block">
               <div class="content">
@@ -741,6 +701,18 @@
         padding-left: 25px;
         padding-right: 25px;
       }
+      .coyanza .kitchen {
+        grid-column: 3/span 1;
+        grid-row: 2/span 1;
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+      .coyanza .rooms {
+        grid-column: 1/span 1;
+        grid-row: 2/span 1;
+        padding-left: 25px;
+        padding-right: 25px;
+      }
       .coyanza .boiler {
         grid-column: 2/span 1;
         grid-row: 2/span 1;
@@ -760,7 +732,9 @@
           padding-left: 0px;
           padding-right: 0px;
         }
-        .coyanza .boiler {
+        .coyanza .boiler,
+        .coyanza .kitchen,
+        .coyanza .rooms {
           padding-left: 0px;
           padding-right: 0px;
         } 
@@ -940,6 +914,35 @@
           transform:translateX(51px)
         }
       }
+      .cam {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        margin: 3px;
+      }
+      .cam iframe {
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 98%;
+        height: 100%;
+        display: block;
+      }
+      @media (max-width: 768px) {
+        .cam iframe {
+          display: block;
+          position: absolute;
+          top:    0;
+          bottom: 0;
+          left:   0;
+          right:  0;
+          width:  100px;
+          min-width:  98%;
+          height: 100px;
+          min-height: 100%;
+          object-fit: contain;
+      }
       </style>
       
       <div class="col-xs-12 col-md-9">
@@ -997,13 +1000,23 @@
                   <div class="summary">
                     <span class="load">{{ '%.2f' % values.get('temp-picaldera_Temperature') | float }}&deg;C <i class="fa fa-thermometer"></i></span>
                     <span style="font-size:45%;">&nbsp;
-                      {{ frappe.utils.get_datetime(values.get('tempt-picaldera_last')).strftime("%d/%m %H:%M") }}
+                      {{ frappe.utils.get_datetime(values.get('temp-picaldera_last')).strftime("%d/%m %H:%M") }}
                     </span>
                   </div>
                 </div>  
               </div>
             </div>
           </div>
+          
+          <!--<div class="cam">
+            <span style="margin-right: 12px;">
+              <iframe src="{{frappe.utils.get_url() | replace(':8888','')}}:5555/"
+                scrolling="no"
+                frameborder="0"
+                allowfullscreen>
+              </iframe>
+            </span>
+          </div>-->
           
           <div class="garden">
             <div class="block">
@@ -1034,7 +1047,33 @@
               </div>
             </div>
           </div>  
+
+          <div class="kitchen">
+            <div class="block">
+              <div class="content">
+                <div class="block-icon block-icon__pibico">
+                  <a href="/app/device/th-bc572900d0c1" target="_blank"><span class="fa fa-cutlery"></span></a>
+                </div>
+                <div class="header-summary">
+                  <div class="header-block has-subtitle">
+                    <span class="title">Kitchen</span>
+                  </div>
+                  <div class="summary">
+                    <span class="load-min">
+                      {{ values.get('th-bc572900d0c1_Temperature') }}&deg;C <i class="fa fa-thermometer"></i><br>
+                      {{ values.get('th-bc572900d0c1_Humidity') }}% <i class="fa fa-eyedropper"></i>
+                    </span>
+                    <span style="font-size:45%;">&nbsp;
+                      {{ frappe.utils.get_datetime(values.get('th-bc572900d0c1_last')).strftime("%d/%m %H:%M") }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           
+
+
           <div class="boiler" style="margin-top: -60px;">
             <div class="block">
               <div class="content">
@@ -1100,16 +1139,14 @@
                   <div class="header-block has-subtitle">
                     <span class="title">Living</span>
                     <span style="font-size:75%;">
-                      {{ frappe.utils.get_datetime(values.get('th-bc572900d0c1_last')).strftime("%d/%m %H:%M") }}&nbsp;
+                      {{ frappe.utils.get_datetime(values.get('temp-b827ebccafc1_last')).strftime("%d/%m %H:%M") }}&nbsp;
                     </span>
                   </div>
                   <div class="summary">
                     
                     <span class="load-min">
-                      {{ values.get('temp-rpb4balztech_Temperature') }}&deg;C <i class="fa fa-thermometer"></i><br>
-                      {{ values.get('th-bc572900d0c1_Temperature') }}&deg;C <i class="fa fa-thermometer"></i><br>
-                      {{ values.get('th-bc572900d0c1_Humidity') }}% <i class="fa fa-eyedropper"></i><br>
-                      {{ values.get('power-rpb4balztech_Voltage') }}V <i class="fa fa-battery-half"></i><br>
+                      {{ '%.2f' % values.get('temp-b827ebccafc1_Temperature') | float }}&deg;C <i class="fa fa-thermometer"></i><br>
+                      {{ values.get('power-test_Voltage') }}V <i class="fa fa-battery-half"></i><br>
                       <br>
                       {{ '%.2f' %  values.get('cpu-rpb4balztech_Temperature') | float }}&deg;C <i class="fa fa-microchip"></i><br>
                       {{ values.get('cpu-rpb4balztech_Memory') }}% <i class="fa fa-desktop"></i><br>
@@ -1252,6 +1289,10 @@
                 {{ values.get(device + '_Temperature') }}&deg;C<br>
               {% elif 'flow' in device %}
                 {{ values.get(device + '_Flow') }} l/min
+              {% elif 'energy' in device %}
+                {{ values.get(device + '_Power') }} W<br>
+                {{ values.get(device + '_Current') }} mA<br>
+                {{ values.get(device + '_Voltage') }} W
               {% elif 'door' in device %}
                 {% set status = values.get(device + '_Status') %}
                 {% if status | int == 0 %}
