@@ -1266,7 +1266,7 @@
       </div>  
     {% endif %}
     
-    {% if name in ['sede-domotic', 'pibifarma-clientes'] %}
+    {% if name in ['sede-domotic', 'casa-gijon', 'pibifarma-clientes'] %}
       <style>
         .card {
           border: .1px solid #4682b4 !important;
@@ -1292,7 +1292,7 @@
               {% elif 'energy' in device %}
                 {{ values.get(device + '_Power') }} W<br>
                 {{ values.get(device + '_Current') }} mA<br>
-                {{ values.get(device + '_Voltage') }} W
+                {{ values.get(device + '_Voltage') }} V
               {% elif 'door' in device %}
                 {% set status = values.get(device + '_Status') %}
                 {% if status | int == 0 %}
