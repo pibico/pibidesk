@@ -35,6 +35,7 @@
   {
    "fieldname": "uom",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "UOM",
    "options": "UdM"
   },
@@ -47,7 +48,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-03-18 11:35:33.761175",
+ "modified": "2023-06-16 17:27:14.305257",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Sensor Var",
