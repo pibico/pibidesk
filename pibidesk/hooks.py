@@ -205,7 +205,7 @@ user_data_fields = [
 	}
 ]
 
-fixtures = ['Role Profile', 'Role', 'Custom Field', 'Client Script', 'Property Setter', 'Translation']
+fixtures = ['Role Profile', 'Role', 'Custom Field', 'Client Script', 'Property Setter']
 
 # Authentication and authorization
 # --------------------------------
