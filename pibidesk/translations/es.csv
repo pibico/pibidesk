@@ -446,62 +446,64 @@ You can only reply to one message at a time,Sólo puedes responder a un mensaje 
 You have selected a file and not a folder,Se ha seleccionado un archivo y no una carpeta
 You must select one message,Debes elegir un mensaje
 Transaction Feed,Alimentar Transacción
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
+Data Session,Sesión de Datos
+Devices,Dispositivos
+Device Views,Vistas Usuario
+Device Logs,Registros Dispositivo
+Device Alerts,Alertas Dispositivo
+Session Type,Tipo de Sesión
+Sensor Type,Tipo de Sensor
+Sensor Vars,Variables
+Clients,Clientes
+Weather Settings,Ajustes Metereología
+Telegram Settings,Ajustes de Telegram
+Email Accounts,Cuentas de Correo
+InfluxDB Settings,Ajustes InfluxDB
+Cellebration Start Date,Fecha Inicio
+Participants Number,Número Participantes
+Recording,Registrando
+Session Items,Elementos de la Sesión
+Place,Lugar
+Device,Dispositivo
+Log Item,Registros
+Data Date,Fecha Dato
+Humidity,Humedad
+Temperature,Temperatura
+Device Readings,Lecturas Dispositivos
+Device Logs,Registro Dispositivo
+Place Name,Nombre de Lugar
+Connection IP,IP de Conexión
+Connected,Conectado
+Warning Channels,Canales de Aviso
+Warning Items,Elementos de Aviso
+Channel Type,Canal de Aviso
+Data Items,Datos
+Reading,Lectura
+Last Recorded,Ultimo Registro
+Current Data,Datos Actuales
+Alert Thresholds,Umbrales de Alerta
+Alert Items,Elementos de Alerta
+Warning Disabled,Avisos desactivados
+Low Value,Bajo Valor
+Alert Low,Alerta por Bajo Nivel
+Active Low,En Alerta por Bajo
+Alert Hight,Alerta por Alto Nivel
+Active Hight,En Alerta por Alto
+Device Items,Dispositivos
+Weather URL,URL Meteo
+Broker Gateway,Pasarela Broker
+Is SSL,es SSL
+SSL Port,Puerto SSL
+Client CRT,CRT Cliente
+Client KEY,KEY Cliente
+Telegram Gateway URL,URL Pasarela Telegram
+Use different login,Usar login diferente
+Always use this email address as sender address,Usar siempre esta dirección como dirección del que envía
+Always use this name as sender name,Usar siempre este nombre como nombre del que envía
+Footer Content,Contenido del Pie de Pagina
+Brand Logo,Logo de Marca
+InfluxDB Host,Host InfluxDB
+Database,Base de Datos
+Device Log,Registro Dispositivo
 ,
 ,
