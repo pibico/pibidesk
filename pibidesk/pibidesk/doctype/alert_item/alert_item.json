@@ -8,15 +8,17 @@
  "field_order": [
   "sensor_var",
   "uom",
-  "warning_disabled",
+  "alert_cooldown",
   "cb_01",
   "low_value",
   "alert_low",
   "active_low",
+  "warning_disabled",
   "cb_02",
   "high_value",
   "alert_high",
-  "active_high"
+  "active_high",
+  "last_alert_time"
  ],
  "fields": [
   {
@@ -86,12 +88,24 @@
    "fieldname": "alert_high",
    "fieldtype": "Check",
    "label": "Alert High"
+  },
+  {
+   "description": "seconds after the first alert not to send more alerts",
+   "fieldname": "alert_cooldown",
+   "fieldtype": "Int",
+   "label": "Alert Cooldown"
+  },
+  {
+   "fieldname": "last_alert_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Last Alert Time"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-03-12 21:11:56.850946",
+ "modified": "2023-06-28 22:10:59.061549",
  "modified_by": "Administrator",
  "module": "Pibidesk",
  "name": "Alert Item",

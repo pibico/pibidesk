@@ -12,7 +12,8 @@ from frappe.core.doctype.sms_settings.sms_settings import send_sms
 
 from pibidesk.pibidesk.doctype.telegram_settings.telegram_settings import send_telegram
 
-import json, datetime
+import json, datetime, time
+from datetime import timedelta
 
 class DeviceLog(Document):
   def on_update(self):
@@ -88,30 +89,39 @@ class DeviceLog(Document):
             threshold = [n for n in thresholds if n.sensor_var == i]
             if len(threshold) > 0:
               if not threshold[0].warning_disabled:
+                current_time = time.time()
+                current_time_datetime = datetime.datetime.fromtimestamp(current_time)
                 ## Low Alert
                 if threshold[0].active_low:
-                  ## If value in low alert and not alerted before
-                  if float(seq[0]) <= float(threshold[0].low_value) and not threshold[0].alert_low:
-                    threshold[0].alert_low = True
-                    threshold[0].save()
-                    manage_alert(i, var_uom, seq[0], 'low', 'start', last_recorded, device) 
-                  ## If value recovered and alerted before
-                  if float(seq[0]) > float(threshold[0].low_value) and threshold[0].alert_low:
-                    threshold[0].alert_low = False
-                    threshold[0].save()
-                    manage_alert(i, var_uom, seq[0], 'low', 'finish', last_recorded, device)   
+                  # Check if the cooldown period has passed
+                  if threshold[0].last_alert_time is None or (current_time_datetime - threshold[0].last_alert_time) >= timedelta(seconds=threshold[0].alert_cooldown):
+                    ## If value in low alert and not alerted before
+                    if float(seq[0]) <= float(threshold[0].low_value) and not threshold[0].alert_low:
+                      threshold[0].alert_low = True
+                      threshold[0].last_alert_time = current_time_datetime  # Update the last alert time
+                      threshold[0].save()
+                      manage_alert(i, var_uom, seq[0], 'low', 'start', last_recorded, device) 
+                    ## If value recovered and alerted before
+                    if float(seq[0]) > float(threshold[0].low_value) and threshold[0].alert_low:
+                      threshold[0].alert_low = False
+                      threshold[0].save()
+                      manage_alert(i, var_uom, seq[0], 'low', 'finish', last_recorded, device)   
                 ## High Alert
                 if threshold[0].active_high:
-                  ## If value in high alert and not alerted before
-                  if float(seq[0]) >= float(threshold[0].high_value) and not threshold[0].alert_high:
-                    threshold[0].alert_high = True
-                    threshold[0].save()
-                    manage_alert(i, var_uom, seq[0], 'high', 'start', last_recorded, device) 
-                  ## If value recovered and alerted before
-                  if float(seq[0]) < float(threshold[0].high_value) and threshold[0].alert_high:
-                    threshold[0].alert_high = False
-                    threshold[0].save()
-                    manage_alert(i, var_uom, seq[0], 'high', 'finish', last_recorded, device)
+                  # Check if the cooldown period has passed
+                  if threshold[0].last_alert_time is None or (current_time_datetime - threshold[0].last_alert_time) >= timedelta(seconds=threshold[0].alert_cooldown): 
+                    ## If value in high alert and not alerted before
+                    if float(seq[0]) >= float(threshold[0].high_value) and not threshold[0].alert_high:
+                      threshold[0].alert_high = True
+                      threshold[0].last_alert_time = current_time_datetime  # Update the last alert time
+                      threshold[0].save()
+                      manage_alert(i, var_uom, seq[0], 'high', 'start', last_recorded, device) 
+                    ## If value recovered and alerted before
+                    if float(seq[0]) < float(threshold[0].high_value) and threshold[0].alert_high:
+                      threshold[0].alert_high = False
+                      threshold[0].save()
+                      manage_alert(i, var_uom, seq[0], 'high', 'finish', last_recorded, device)
+          
           ## Check if Data Item Childtable has values or not
           ## And Append or Update data_item to device
           if len(device.data_item) > 0:
@@ -200,6 +210,7 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
     if c['channel_type'] == 'Telegram':
       if c['mobile'] not in telegram_recipients:
         telegram_recipients.append(c['mobile'])
+    
   ## Prepare Alerts for Device on each Sensor Var
   alert_log_item = frappe.get_list(
     doctype = "Alert Log Item",
@@ -257,6 +268,11 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
     frappe.db.commit()
   
   date_alert = datadate.strftime("%d/%m/%y %H:%M")
+  message = """
+  This email is generated by Automatic Alarm Monitoring on pibiDesk.\r\n
+  Site time: {}.\r\n
+  You are receiving this email because your e-mail address is registered to receive alarms from pibiDesk. In case you no longer want to   receive them, go to admin view in pibiDesk and disable or remove yourself from the recipients channel.\r\n
+  """.format(date_alert)
     
   ## Finally enqueu to send messages through channels
   if reason == 'start':
@@ -265,7 +281,7 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
       #strAlert = sensor_var + " high by " + str(value) + uom + ' at ' + date_alert + ". Please check"
     if cmd == 'low':
       strAlert = "{} low by {}{} at {}.Please check".format(sensor_var, str(value), str(uom), date_alert)
-      strAlert = sensor_var + " low by " + str(value) + uom + ' at ' + date_alert + ". Please check"
+      #strAlert = sensor_var + " low by " + str(value) + uom + ' at ' + date_alert + ". Please check"
   if reason == 'finish':
     if cmd == 'high':
       strAlert = sensor_var + " high finished by " + str(value) + uom + ' at ' + date_alert + ". Please check"
@@ -274,10 +290,12 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
   if len(email_recipients) > 0:
     subject = ""
     if reason == 'start':
-      subject = "Alert Started by pibiDesk on " + doc.alias + " (" + doc.name + ")"
+      subject = f"PROBLEM - {doc.name}: Alert Started on {doc.alias}"
     if reason == 'finish':
-      subject = "Alert Finished by pibiDesk on " + doc.alias + " (" + doc.name + ")"
-    emlAlert = "[Email pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")"
+      subject = f"RECOVERY - {doc.name}: Alert Finished on {doc.alias}"
+    emlAlert = "[Email pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")\r\n"
+    emlAlert += message
+    
     #frappe.sendmail(recipients=email_recipients, subject=subject, message=cstr(emlAlert))
     email_args = {
 		  'recipients': email_recipients,
@@ -291,7 +309,9 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
     enqueue(method=frappe.sendmail,queue='short',timeout=300,now=True,**email_args)  
     
   if len(sms_recipients) > 0:
-    smsAlert = "[SMS pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")"
+    smsAlert = "[SMS pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")\r\n"
+    smsAlert += message
+    
     #send_sms(sms_recipients, cstr(smsAlert))
     sms_args = {
       'receiver_list': sms_recipients,
@@ -301,7 +321,9 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
     }
     enqueue(method=send_sms,queue='short',timeout=300,now=True,**sms_args)             
   if len(telegram_recipients) > 0:
-    tgAlert = "[TGM pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")"
+    tgAlert = "[TGM pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")\r\n"
+    tgAlert += message
+    
     #send_telegram(telegram_recipients, cstr(tgAlert))
     tg_args = {
       'receiver_list': telegram_recipients,
