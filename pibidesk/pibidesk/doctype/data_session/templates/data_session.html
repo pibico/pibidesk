@@ -1293,6 +1293,8 @@
                 {{ values.get(device + '_Power') }} W<br>
                 {{ values.get(device + '_Current') }} mA<br>
                 {{ values.get(device + '_Voltage') }} V
+              {% elif 'power' in device %}
+                {{ values.get(device + '_Voltage') }} V
               {% elif 'door' in device %}
                 {% set status = values.get(device + '_Status') %}
                 {% if status | int == 0 %}
