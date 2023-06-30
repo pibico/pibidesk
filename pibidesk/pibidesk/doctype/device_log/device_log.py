@@ -295,10 +295,10 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
   if len(email_recipients) > 0:
     subject = ""
     if reason == 'start':
-      subject = f"PROBLEM - {doc.name}: Alert Started on {doc.alias}"
+      subject = f"PROBLEM - {doc.place}: Alert Started on {doc.alias}"
     if reason == 'finish':
-      subject = f"RECOVERY - {doc.name}: Alert Finished on {doc.alias}"
-    emlAlert = "[Email pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")<br>"
+      subject = f"RECOVERY - {doc.place}: Alert Finished on {doc.alias}"
+    emlAlert = "[Email pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.place + ")<br>"
     emlAlert += message_html
     
     #frappe.sendmail(recipients=email_recipients, subject=subject, message=cstr(emlAlert))
@@ -314,7 +314,7 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
     enqueue(method=frappe.sendmail,queue='short',timeout=300,now=True,**email_args)  
     
   if len(sms_recipients) > 0:
-    smsAlert = "[SMS pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")\r\n"
+    smsAlert = "[SMS pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.place + ")\r\n"
     smsAlert += message
     
     #send_sms(sms_recipients, cstr(smsAlert))
@@ -326,7 +326,7 @@ def manage_alert(sensor_var, uom, value, cmd, reason, datadate, doc):
     }
     enqueue(method=send_sms,queue='short',timeout=300,now=True,**sms_args)             
   if len(telegram_recipients) > 0:
-    tgAlert = "[TGM pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.name + ")\r\n"
+    tgAlert = "[TGM pibiDesk]: " + strAlert + " in " + doc.alias + " (" + doc.place + ")\r\n"
     tgAlert += message
     
     #send_telegram(telegram_recipients, cstr(tgAlert))
